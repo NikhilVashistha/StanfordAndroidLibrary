@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Stanford Android Library</title>
+		<link href="../style.css" type="text/css" rel="stylesheet" />
+		<style type="text/css">
+			body {
+				padding: 1em;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1>The Stanford Android Library</h1>
+		
+		<p>
+			Android is hard, so we make it easier.
+			Written by Marty Stepp (stepp AT stanford DOT edu)
+		</p>
+		
+		<h2>The library:</h2>
+		
+		<ul>
+			<li>
+				<strong><a href="stanford-android-lib.jar"><img src="../images/icon_jar.gif" class="icon" alt="icon" />
+					stanford-android-lib.jar</a></strong>
+				(last updated 2016/04/07)
+		</ul>
+		
+		<p>
+			For instructions about how to add the library to your Android Studio project, see the slides and/or the screencast of lecture #5.
+		</p>
+		
+		
+		<h2>Documentation:</h2>
+		
+		<p>
+			The following PDF slides include documentation and instructions for how to install and use the library.
+			For more detailed documentation, consult the following generated Javadoc HTML page which contains the complete API.
+			Documentation is currently a work in progress.
+		</p>
+		
+		<ul>
+			<li>
+				<a target="_blank" class="popup" href="stanford-android-library.pdf"><img src="../images/icon_pdf.gif" class="icon" alt="icon" />
+					slides on using the Stanford Android library</a>
+			<li>
+				<a target="_blank" class="popup" href="javadoc/"><img src="../images/icon_html.gif" class="icon" alt="icon" />
+					JavaDoc documentation</a> (entire library)
+					
+					<ul>
+						<li>
+							<a target="_blank" class="popup" href="javadoc/stanford/androidlib/SimpleActivity.html"><img src="../images/icon_html.gif" class="icon" alt="icon" />
+								JavaDoc: SimpleActivity</a>
+						<li>
+							<a target="_blank" class="popup" href="javadoc/stanford/androidlib/graphics/GCanvas.html"><img src="../images/icon_html.gif" class="icon" alt="icon" />
+								JavaDoc: GCanvas</a>
+					</ul>
+		</ul>
+		
+		<p>
+			If you ever want to see how a given library method works, in your own code at the location where you're calling our library method, right-click its name and choose <strong>"Go To" &rarr; "Declaration"</strong>.
+			This will jump you into the source code of the relevant method.
+		</p>
+		
+		<h2>License and Terms:</h2>
+		
+		<p>
+			The library is completely open and free to use, modify, sell, etc. for any purposes, commercial or otherwise.
+			Full source code coming soon on GitHub.
+		</p>
+		
+		<h2>FAQ:</h2>
+		
+		<dl>
+			<dt>
+				<strong>Q:</strong> I'm looking at the docs, and a feature that's listed isn't compiling!
+				I don't think the feature is there in my JAR at all.
+			</dt>
+			
+			<dd>
+				<strong>A:</strong> Are you sure you have the latest version of the JAR?
+				Try re-downloading it from here into your project's app/libs/ folder and compiling again.
+			</dd>
+		<dl>
+		
+		
+		<h2>Recent Changes:</h2>
+		
+		<ul>
+			<li>
+				2016/04/07: SimpleList library changed to accept resource IDs or ListView references.
+			<li>
+				2016/04/05: Made many 'void' methods in SimpleXxx classes return 'this' for chainability.
+			<li>
+				2016/03/01: Added XML to JSON conversion.
+				Added findViewGroup, networkConnectionExists methods to SimpleActivity.
+				Bug fixes in GSprite class.
+			<li>
+				2016/02/26: Added initial version of SimpleNotification class.
+				Improvements to SimpleService class.
+				Added initial version of SimpleIntentService class.
+			<li>
+				2016/02/23: Improvements to SimpleDatabase and related database classes.
+			<li>
+				2016/02/19: Added SimpleDatabase, SimpleCursor, Row classes.
+			<li>
+				2016/02/19: Added GArrow; SimpleActivity getLocation; localization methods.
+			<li>
+				2016/02/09: Added SimpleCanvas, GCanvas, and GObject classes for 2D graphics.
+			<li>
+				2016/02/03: Added getScreenWidth/Height.
+			<li>
+				2016/02/01: Added hasPreference, hasSharedPreference.
+			<li>
+				2016/01/30: Refactored dialog methods to use global settings for cancelable and icon.
+				Enabled global dialog icon, title, cancelable, etc. settings in res/values/strings.xml.
+				Refactored openXxxStream methods.
+			<li>
+				2016/01/29: Added methods related to popping up date/time pickers and progress dialogs.
+				Bug fixes for some dialog methods.
+			<li>
+				2016/01/28: Added methods related to popping up alert dialogs: showAlertDialog, showInputDialog, etc.
+			<li>
+				2016/01/27: Added setTraceLifecycle, handleEnterKeyPress, onEnterKeyPress, getExtra.
+				Media player bug fix.
+				Added initial version of SimpleCanvas and SimpleSprite for 2D graphics and basic games.
+			<li>
+				2016/01/26: getDocumentsDirectory, ..., getPhotosDirectory.
+				Added overloads of openExternal... file methods that accept a File for a directory.
+				Added fragment methods: addFragment, remove, replace, hide, showFragment.
+				Added methods to convert between resource names and IDs, and to get all resources of a given type.
+			<li>
+				2016/01/25: Added isPortrait, isLandscape, photoGallery methods; improved JavaDoc comments.
+			<li>
+				2016/01/20: Fixed bug with listSetItems.
+			<li>
+				2016/01/20: Added speechToTextSupported, textToSpeechSupported.
+			<li>
+				2016/01/20: Added soundPause, soundGetPosition.
+			<li>
+				2016/01/20: Fixed bug with unloading TextToSpeech engine in onDestroy.
+			<li>
+				2016/01/18: Initial version of library.
+		</ul>
+	</body>
+</html>
