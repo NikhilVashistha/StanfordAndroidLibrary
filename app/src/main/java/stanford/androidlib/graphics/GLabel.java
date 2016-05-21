@@ -5,8 +5,6 @@
 
 package stanford.androidlib.graphics;
 
-/* Class: GLabel */
-
 import android.content.Context;
 import android.graphics.*;
 import android.support.annotation.StringRes;
@@ -16,15 +14,23 @@ import android.support.annotation.StringRes;
  * consists of a text string.
  */
 public class GLabel extends GObject {
+    /**
+     * The serialization code for this class.  This value should be incremented
+     * whenever you change the structure of this class in an incompatible way,
+     * typically by adding a new instance variable.
+     */
+    static final long serialVersionUID = 1L;
 
-/* Constant: DEFAULT_FONT */
     /**
      * The default font used to display strings.  You can change the font by invoking
      * the <a href="#setFont(Font)"><code>setFont</code></a> method.
      */
-    public static final Typeface DEFAULT_FONT = Typeface.create("sansserif", 16);
+    public static final Typeface DEFAULT_FONT = Typeface.create("sansserif", 20);
 
-/* Constructor: GLabel() */
+    // private fields
+    private String label;
+    private Typeface labelFont;
+
     /**
      * Creates a new empty <code>GLabel</code> object with its top-left corner at (0, 0).
      *
@@ -34,7 +40,6 @@ public class GLabel extends GObject {
         this("", 0, 0);
     }
 
-/* Constructor: GLabel(str) */
     /**
      * Creates a new <code>GLabel</code> object at with its top-left corner (0, 0),
      * initialized to contain the specified string.
@@ -46,7 +51,6 @@ public class GLabel extends GObject {
         this(str, 0, 0);
     }
 
-/* Constructor: GLabel(str, x, y) */
     /**
      * Creates a new <code>GLabel</code> object with its top-left corner at the specified position.
      *
@@ -62,7 +66,6 @@ public class GLabel extends GObject {
         setLocation(x, y);
     }
 
-/* Constructor: GLabel(id) */
     /**
      * Creates a new <code>GLabel</code> object at with its top-left corner (0, 0),
      * initialized to contain the string with the specified resource ID.
@@ -74,7 +77,6 @@ public class GLabel extends GObject {
         this(id, 0, 0);
     }
 
-/* Constructor: GLabel(str, x, y) */
     /**
      * Creates a new <code>GLabel</code> object with its top-left corner at the specified position.
      *
@@ -90,7 +92,6 @@ public class GLabel extends GObject {
         setLocation(x, y);
     }
 
-/* Method: getFont() */
     /**
      * Returns the font in which the <code>GLabel</code> is displayed.
      *
@@ -108,7 +109,6 @@ public class GLabel extends GObject {
         return labelFont.getStyle();
     }
 
-/* Method: getLabel() */
     /**
      * Returns the string displayed by this object.
      *
@@ -119,7 +119,6 @@ public class GLabel extends GObject {
         return label;
     }
 
-/* Method: getText() */
     /**
      * Returns the string displayed by this object.
      *
@@ -130,7 +129,6 @@ public class GLabel extends GObject {
         return label;
     }
 
-/* Method: paint(g) */
     /**
      * Implements the <code>paint</code> operation for this graphical object.  This method
      * is not called directly by clients.
@@ -139,30 +137,27 @@ public class GLabel extends GObject {
     public void paint(Canvas canvas) {
         // shift downward by height so that x/y coord passed represents top-left
         Paint paint = getPaint();
-        canvas.drawText(this.label,
-                (float) getX(),
-                (float) getY() + getHeight(),
-                paint);
+        canvas.drawText(this.label, getX(), getY() + getHeight(), paint);
     }
 
-/* Method: getWidth() */
     /**
      * Returns the width of this string, as it appears on the display.
      *
      * @usage float width = glabel.getWidth();
      * @return The width of this object
      */
+    @Override
     public float getWidth() {
         return getPaint().measureText(label);
     }
 
-/* Method: getHeight() */
     /**
      * Returns the height of this string, as it appears on the display.
      *
      * @usage float height = glabel.getHeight();
      * @return The height of this string
      */
+    @Override
     public float getHeight() {
         Rect bounds = new Rect();
         getPaint().getTextBounds(label, 0, label.length(), bounds);
@@ -186,7 +181,6 @@ public class GLabel extends GObject {
         repaint();
     }
 
-/* Method: setFont(font) */
     /**
      * Changes the font used to display the <code>GLabel</code>.  This call will
      * usually change the size of the displayed object and will therefore affect
@@ -230,7 +224,6 @@ public class GLabel extends GObject {
         }
     }
 
-/* Method: setFont(str) */
     /**
      * Changes the font used to display the <code>GLabel</code> as specified by
      * the string <code>str</code>.
@@ -250,7 +243,6 @@ public class GLabel extends GObject {
         repaint();
     }
 
-/* Method: setLabel(str) */
     /**
      * Changes the string stored within the <code>GLabel</code> object, so that
      * a new text string appears on the display.
@@ -263,7 +255,6 @@ public class GLabel extends GObject {
         repaint();
     }
 
-/* Method: setLabel(str) */
     /**
      * Changes the string stored within the <code>GLabel</code> object, so that
      * a new text string appears on the display.
@@ -276,7 +267,6 @@ public class GLabel extends GObject {
         repaint();
     }
 
-/* Method: setText(str) */
     /**
      * Changes the string stored within the <code>GLabel</code> object, so that
      * a new text string appears on the display.
@@ -288,7 +278,6 @@ public class GLabel extends GObject {
         setLabel(id);
     }
 
-/* Method: setText(str) */
     /**
      * Changes the string stored within the <code>GLabel</code> object, so that
      * a new text string appears on the display.
@@ -305,127 +294,4 @@ public class GLabel extends GObject {
         Context context = GCanvas.__getCanvasContext();
         return context.getResources().getString(id);
     }
-
-/* Inherited method: getSize() */
-/**
- * @inherited GObject#GDimension getSize()
- * Returns the size of the bounding box for this object.
- */
-
-/* Inherited method: contains(x, y) */
-/**
- * @inherited GObject#boolean contains(float x, float y)
- * Checks to see whether a point is "inside" the string, which is defined to be
- * inside the bounding rectangle.
- */
-
-/* Inherited method: contains(pt) */
-/**
- * @inherited GObject#boolean contains(GPoint pt)
- * Checks to see whether a point is inside the object.
- */
-
-/* Inherited method: setLocation(x, y) */
-/**
- * @inherited GObject#void setLocation(float x, float y)
- * Sets the location of the <code>GLabel</code> to the point (<code>x</code>, <code>y</code>).
- * For a <code>GLabel</code>, the location is the point on the text baseline at which the
- * text starts.
- */
-
-/* Inherited method: setLocation(pt) */
-/**
- * @inherited GObject#void setLocation(GPoint pt)
- * Sets the location of this object to the specified point.
- */
-
-/* Inherited method: getLocation() */
-/**
- * @inherited GObject#GPoint getLocation()
- * Returns the location of the <code>GLabel</code> as a <code>GPoint</code> object.
- */
-
-/* Inherited method: getX() */
-/**
- * @inherited GObject#float getX()
- * Returns the x-coordinate of the object.
- */
-
-/* Inherited method: getY() */
-/**
- * @inherited GObject#float getY()
- * Returns the y-coordinate of the object.
- */
-
-/* Inherited method: move(dx, dy) */
-/**
- * @inherited GObject#void move(float dx, float dy)
- * Moves the object on the screen using the displacements <code>dx</code> and <code>dy</code>.
- */
-
-/* Inherited method: movePolar(r, theta) */
-/**
- * @inherited GObject#void movePolar(float r, float theta)
- * Moves the object using displacements given in polar coordinates.
- */
-
-/* Inherited method: sendToFront() */
-/**
- * @inherited GObject#void sendToFront()
- * Moves this object to the front of the display in the <i>z</i> dimension.
- */
-
-/* Inherited method: sendToBack() */
-/**
- * @inherited GObject#void sendToBack()
- * Moves this object to the back of the display in the <i>z</i> dimension.
- */
-
-/* Inherited method: sendForward() */
-/**
- * @inherited GObject#void sendForward()
- * Moves this object one step toward the front in the <i>z</i> dimension.
- */
-
-/* Inherited method: sendBackward() */
-/**
- * @inherited GObject#void sendBackward()
- * Moves this object one step toward the back in the <i>z</i> dimension.
- */
-
-/* Inherited method: setColor(color) */
-/**
- * @inherited GObject#void setColor(Color color)
- * Sets the color used to display the text of the <code>GLabel</code>.
- */
-
-/* Inherited method: getColor() */
-/**
- * @inherited GObject#Color getColor()
- * Returns the color used to display the text of the <code>GLabel</code>.
- */
-
-/* Inherited method: setVisible(visible) */
-/**
- * @inherited GObject#void setVisible(boolean visible)
- * Sets the visibility status of the <code>GLabel</code>.
- */
-
-/* Inherited method: isVisible() */
-/**
- * @inherited GObject#boolean isVisible()
- * Checks to see whether the <code>GLabel</code> is visible.
- */
-
-    /* Private instance variables */
-    private String label;
-    private Typeface labelFont;
-
-/* Serial version UID */
-    /**
-     * The serialization code for this class.  This value should be incremented
-     * whenever you change the structure of this class in an incompatible way,
-     * typically by adding a new instance variable.
-     */
-    static final long serialVersionUID = 1L;
 }

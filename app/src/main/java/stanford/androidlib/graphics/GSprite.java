@@ -1,4 +1,6 @@
 /*
+ * @version 2016/05/21
+ * - fixed minor bugs with setSize, isInBounds
  * @version 2016/02/29
  * - fixed bug with setBitmap(s) size
  * @version 2016/02/17
@@ -20,6 +22,7 @@ import android.os.Bundle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,11 +74,10 @@ public class GSprite extends GObject {
     // velocity and acceleration
     private float dx = 0;
     private float dy = 0;
-    private float accelerationX;
-    private float accelerationY;
+    private float accelerationX = 0;
+    private float accelerationY = 0;
 
     // flags
-    private boolean visible = true;
     private boolean collidable = true;
 
     // extra properties
@@ -118,14 +120,17 @@ public class GSprite extends GObject {
      */
     public GSprite(Bitmap bitmap, float x, float y) {
         this(bitmap, x, y,
-                bitmap == null ? 0 : bitmap.getWidth(),
-                bitmap == null ? 0 : bitmap.getHeight());
+                bitmap.getWidth(),
+                bitmap.getHeight());
     }
 
     /**
      * Constructs a new sprite at the given x/y location and size that displays the given bitmap.
      */
     public GSprite(Bitmap bitmap, float x, float y, float width, float height) {
+        if (bitmap == null) {
+            throw new NullPointerException();
+        }
         this.paint = new Paint();
         this.bitmaps.add(bitmap);
         this.rect = new RectF(x, y, x + width, y + height);
@@ -136,7 +141,7 @@ public class GSprite extends GObject {
      * Constructs a new sprite at the given x/y location that displays the given graphical object.
      */
     public GSprite(GObject object) {
-        this(object, object.getX(), (float) object.getY(), object.getWidth(), object.getHeight());
+        this(object, object.getX(), object.getY(), object.getWidth(), object.getHeight());
     }
 
     /**
@@ -149,6 +154,9 @@ public class GSprite extends GObject {
 
     // helper constructor
     private GSprite(GObject object, float x, float y, float width, float height) {
+        if (object == null) {
+            throw new NullPointerException();
+        }
         this.paint = new Paint();
         this.shape = object;
         this.rect = new RectF(x, y, x + width, y + height);
@@ -195,7 +203,7 @@ public class GSprite extends GObject {
      */
     public void paint(Canvas canvas) {
         if (visible) {
-            if (bitmaps != null && !bitmaps.isEmpty()) {
+            if (bitmaps != null && bitmaps.size() > currentBitmap) {
                 Bitmap bitmap = bitmaps.get(currentBitmap);
                 canvas.drawBitmap(bitmap, getX(), getY(), /* paint */ null);
             } else if (shape != null) {
@@ -271,6 +279,7 @@ public class GSprite extends GObject {
     /**
      * Returns this sprite's leftmost x-coordinate.
      */
+    @Override
     public float getX() {
         return rect.left;
     }
@@ -278,38 +287,9 @@ public class GSprite extends GObject {
     /**
      * Returns this sprite's top y-coordinate.
      */
+    @Override
     public float getY() {
         return rect.top;
-    }
-
-    /**
-     * Returns this sprite's leftmost x-coordinate.
-     */
-    public float getLeftX() {
-        return rect.left;
-    }
-
-    /**
-     * Returns this sprite's rightmost x-coordinate.
-     * This is equal to its leftmost x-coordinate plus its width.
-     */
-    public float getRightX() {
-        return rect.right;
-    }
-
-    /**
-     * Returns this sprite's top y-coordinate.
-     */
-    public float getTopY() {
-        return rect.top;
-    }
-
-    /**
-     * Returns this sprite's bottom y-coordinate.
-     * This is equal to its top y-coordinate plus its height.
-     */
-    public float getBottomY() {
-        return rect.bottom;
     }
 
     /**
@@ -424,10 +404,12 @@ public class GSprite extends GObject {
      * Sets the list of bitmaps for this sprite.
      */
     public void setBitmaps(ArrayList<Bitmap> bitmaps) {
-        this.bitmaps = bitmaps;
-        this.currentBitmap = 0;
-        if (!bitmaps.isEmpty()) {
-            setSizeFromBitmap(bitmaps.get(0));
+        synchronized (this) {
+            this.bitmaps = bitmaps;
+            this.currentBitmap = 0;
+            if (!bitmaps.isEmpty()) {
+                setSizeFromBitmap(bitmaps.get(0));
+            }
         }
     }
 
@@ -435,13 +417,14 @@ public class GSprite extends GObject {
      * Sets the list of bitmaps for this sprite.
      */
     public void setBitmaps(Bitmap... bitmaps) {
-        this.bitmaps = new ArrayList<>();
-        for (Bitmap bitmap : bitmaps) {
-            this.bitmaps.add(bitmap);
-        }
-        this.currentBitmap = 0;
-        if (bitmaps.length > 0) {
-            setSizeFromBitmap(bitmaps[0]);
+        ArrayList<Bitmap> newBitmaps = new ArrayList<>();
+        Collections.addAll(newBitmaps, bitmaps);
+        synchronized (this) {
+            this.currentBitmap = 0;
+            this.bitmaps = newBitmaps;
+            if (bitmaps.length > 0) {
+                setSizeFromBitmap(bitmaps[0]);
+            }
         }
     }
 
@@ -449,7 +432,7 @@ public class GSprite extends GObject {
      * Returns the index of the bitmap currently being displayed
      * in this sprite's list of bitmaps.
      */
-    public int setCurrentBitmapIndex() {
+    public int getCurrentBitmapIndex() {
         return this.currentBitmap;
     }
 
@@ -458,6 +441,9 @@ public class GSprite extends GObject {
      * in this sprite's list of bitmaps.
      */
     public void setCurrentBitmapIndex(int index) {
+        if (index < 0 || index >= this.bitmaps.size()) {
+            throw new IndexOutOfBoundsException(String.valueOf(index));
+        }
         this.currentBitmap = index;
     }
 
@@ -476,6 +462,9 @@ public class GSprite extends GObject {
      * to the next frame bitmap.
      */
     public void setFramesPerBitmap(int framesPerBitmap) {
+        if (framesPerBitmap <= 0) {
+            throw new IllegalArgumentException("must be > 0: " + framesPerBitmap);
+        }
         this.framesPerBitmap = framesPerBitmap;
     }
 
@@ -506,14 +495,16 @@ public class GSprite extends GObject {
      * Returns whether this sprite is within the bounds of the given canvas.
      */
     public boolean isInBounds(Canvas canvas) {
-        return isInBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        return canvas != null
+                && isInBounds(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
     /**
      * Returns whether this sprite is within the bounds of the given rectangle.
      */
     public boolean isInBounds(RectF rect) {
-        return isInBounds(rect.left, rect.top, rect.right, rect.bottom);
+        return rect != null
+                && isInBounds(rect.left, rect.top, rect.right, rect.bottom);
     }
 
     /**
@@ -535,14 +526,14 @@ public class GSprite extends GObject {
      * Returns whether this sprite is within the horizontal (x) bounds of the given canvas.
      */
     public boolean isInBoundsHorizontal(Canvas canvas) {
-        return isInBoundsHorizontal(0, canvas.getWidth());
+        return canvas != null && isInBoundsHorizontal(0, canvas.getWidth());
     }
 
     /**
      * Returns whether this sprite is within the horizontal (x) bounds of the given rectangle.
      */
     public boolean isInBoundsHorizontal(RectF rect) {
-        return isInBoundsHorizontal(rect.left, rect.right);
+        return rect != null && isInBoundsHorizontal(rect.left, rect.right);
     }
 
     /**
@@ -564,14 +555,14 @@ public class GSprite extends GObject {
      * Returns whether this sprite is within the vertical (y) bounds of the given canvas.
      */
     public boolean isInBoundsVertical(Canvas canvas) {
-        return isInBoundsVertical(0, canvas.getHeight());
+        return canvas != null && isInBoundsVertical(0, canvas.getHeight());
     }
 
     /**
      * Returns whether this sprite is within the vertical (y) bounds of the given rectangle.
      */
     public boolean isInBoundsVertical(RectF rect) {
-        return isInBoundsVertical(rect.top, rect.bottom);
+        return rect != null && isInBoundsVertical(rect.top, rect.bottom);
     }
 
     /**
@@ -597,7 +588,9 @@ public class GSprite extends GObject {
      * favoring the top/left edges if needed.
      */
     public void bound(Canvas canvas) {
-        bound(0, 0, canvas.getWidth(), canvas.getHeight());
+        if (canvas != null) {
+            bound(0, 0, canvas.getWidth(), canvas.getHeight());
+        }
     }
 
     /**
@@ -606,7 +599,9 @@ public class GSprite extends GObject {
      * favoring the top/left edges if needed.
      */
     public void bound(RectF rect) {
-        bound(rect.left, rect.top, rect.right, rect.bottom);
+        if (rect != null) {
+            bound(rect.left, rect.top, rect.right, rect.bottom);
+        }
     }
 
     /**
@@ -634,7 +629,9 @@ public class GSprite extends GObject {
      * favoring the left edge if needed.
      */
     public void boundHorizontal(Canvas canvas) {
-        boundHorizontal(0, canvas.getWidth());
+        if (canvas != null) {
+            boundHorizontal(0, canvas.getWidth());
+        }
     }
 
     /**
@@ -643,7 +640,9 @@ public class GSprite extends GObject {
      * favoring the left edge if needed.
      */
     public void boundHorizontal(RectF rect) {
-        boundHorizontal(rect.left, rect.right);
+        if (rect != null) {
+            boundHorizontal(rect.left, rect.right);
+        }
     }
 
     /**
@@ -675,7 +674,9 @@ public class GSprite extends GObject {
      * favoring the top edge if needed.
      */
     public void boundVertical(Canvas canvas) {
-        boundVertical(0, canvas.getHeight());
+        if (canvas != null) {
+            boundVertical(0, canvas.getHeight());
+        }
     }
 
     /**
@@ -684,7 +685,9 @@ public class GSprite extends GObject {
      * favoring the top edge if needed.
      */
     public void boundVertical(RectF rect) {
-        boundVertical(rect.top, rect.bottom);
+        if (rect != null) {
+            boundVertical(rect.top, rect.bottom);
+        }
     }
 
     /**
@@ -699,14 +702,6 @@ public class GSprite extends GObject {
         if (rect.top < topY) {
             setY(topY);
         }
-    }
-
-    /**
-     * Returns whether the sprite is visible.
-     * This will be true unless you have called setVisible.
-     */
-    public boolean isVisible() {
-        return visible;
     }
 
     /**
@@ -849,10 +844,16 @@ public class GSprite extends GObject {
      * If the sprite uses a cycle of multiple bitmaps, use setBitmaps instead.
      */
     public void setBitmap(Bitmap bitmap) {
-        bitmaps = new ArrayList<>();
-        bitmaps.add(bitmap);
-        currentBitmap = 0;
-        setSizeFromBitmap(bitmap);
+        if (bitmap == null) {
+            throw new NullPointerException();
+        }
+        ArrayList<Bitmap> newBitmaps = new ArrayList<>();
+        newBitmaps.add(bitmap);
+        synchronized (this) {
+            currentBitmap = 0;
+            bitmaps = newBitmaps;
+            setSizeFromBitmap(bitmap);
+        }
     }
 
     /**
@@ -866,6 +867,7 @@ public class GSprite extends GObject {
     /**
      * Moves this sprite to the given x/y location.
      */
+    @Override
     public void setLocation(float x, float y) {
         super.setLocation(x, y);
         float mX = getCollisionMarginX();
@@ -880,20 +882,16 @@ public class GSprite extends GObject {
     /**
      * Sets this sprite to use the given size.
      */
+    @Override
     public void setSize(float width, float height) {
-        float marginX = getCollisionMarginX();
-        float marginY = getCollisionMarginY();
+        super.setSize(width, height);
+        float marginLeft = getCollisionMarginLeft();
+        float marginTop = getCollisionMarginTop();
+        float marginRight = getCollisionMarginRight();
+        float marginBottom = getCollisionMarginBottom();
         rect.set(rect.left, rect.top, rect.left + width, rect.top + height);
-        collisionRect.set(rect.left + marginX, rect.top + marginY, rect.right + marginX, rect.bottom + marginY);
-    }
-
-    /**
-     * Sets whether this sprite is visible.
-     * By default sprites are visible.
-     * If false, will not be drawn on the screen.
-     */
-    public void setVisible(boolean visible) {
-        this.visible = visible;
+        collisionRect.set(rect.left + marginLeft, rect.top + marginTop,
+                rect.right - marginRight, rect.bottom - marginBottom);
     }
 
     /**
@@ -1027,12 +1025,14 @@ public class GSprite extends GObject {
 
         // animate bitmap if necessary
         if (bitmaps != null && !bitmaps.isEmpty()) {
-            frameCount++;
-            if (frameCount % framesPerBitmap == 0) {
-                // if loopBitmaps flag is turned off,
-                // stay stopped at the last bitmap when sequence ends
-                if (currentBitmap != bitmaps.size() - 1 || loopBitmaps) {
-                    currentBitmap = (currentBitmap + 1) % bitmaps.size();
+            synchronized (this) {
+                frameCount++;
+                if (frameCount % framesPerBitmap == 0) {
+                    // if loopBitmaps flag is turned off,
+                    // stay stopped at the last bitmap when sequence ends
+                    if (currentBitmap != bitmaps.size() - 1 || loopBitmaps) {
+                        currentBitmap = (currentBitmap + 1) % bitmaps.size();
+                    }
                 }
             }
         }

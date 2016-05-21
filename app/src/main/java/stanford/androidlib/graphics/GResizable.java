@@ -1,13 +1,10 @@
 package stanford.androidlib.graphics;
 
-/* Interface: GResizable */
 /**
  * Specifies the characteristics of a graphical object that supports the
  * <code>setSize</code> and <code>setBounds</code> methods.
  */
 public interface GResizable {
-
-/* Method: setSize(width, height) */
     /**
      * Changes the size of this object to the specified width and height.
      *
@@ -17,7 +14,6 @@ public interface GResizable {
      */
     public void setSize(float width, float height);
 
-/* Method: setSize(size) */
     /**
      * Changes the size of this object as specified by the <code>GDimension</code>
      * object.
@@ -27,7 +23,6 @@ public interface GResizable {
      */
     public void setSize(GDimension size);
 
-/* Method: setBounds(x, y, width, height) */
     /**
      * Changes the bounds of this object to the specified values.
      *
@@ -39,7 +34,6 @@ public interface GResizable {
      */
     public void setBounds(float x, float y, float width, float height);
 
-/* Method: setBounds(bounds) */
     /**
      * Changes the bounds of this object to the values from the specified
      * <code>GRectangle</code>.
@@ -48,5 +42,4 @@ public interface GResizable {
      * @param bounds A <code>GRectangle</code> specifying the new bounds
      */
     public void setBounds(GRectangle bounds);
-
 }

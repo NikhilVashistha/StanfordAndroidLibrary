@@ -1,7 +1,5 @@
 package stanford.androidlib.graphics;
 
-/* Class: GRectangle */
-
 import java.io.Serializable;
 
 /**
@@ -9,8 +7,19 @@ import java.io.Serializable;
  * in <code>java.awt</code>.
  */
 public class GRectangle implements Serializable {
+    /**
+     * The serialization code for this class.  This value should be incremented
+     * whenever you change the structure of this class in an incompatible way,
+     * typically by adding a new instance variable.
+     */
+    static final long serialVersionUID = 1L;
 
-/* Constructor: GRectangle() */
+    // private fields
+    private float xc;
+    private float yc;
+    private float myWidth;
+    private float myHeight;
+
     /**
      * Constructs a new empty <code>GRectangle</code>.
      *
@@ -20,7 +29,6 @@ public class GRectangle implements Serializable {
         this(0, 0, 0, 0);
     }
 
-/* Constructor: GRectangle(x, y, width, height) */
     /**
      * Constructs a new <code>GRectangle</code> with the specified coordinates and size.
      *
@@ -37,7 +45,6 @@ public class GRectangle implements Serializable {
         myHeight = height;
     }
 
-/* Constructor: GRectangle(width, height) */
     /**
      * Constructs a <code>GRectangle</code> at the origin with the specified width and height.
      *
@@ -49,7 +56,6 @@ public class GRectangle implements Serializable {
         this(0, 0, width, height);
     }
 
-/* Constructor: GRectangle(pt, size) */
     /**
      * Constructs a new <code>GRectangle</code> with the specified location and size.
      *
@@ -61,7 +67,6 @@ public class GRectangle implements Serializable {
         this(pt.getX(), pt.getY(), size.getWidth(), size.getHeight());
     }
 
-/* Constructor: GRectangle(pt) */
     /**
      * Constructs a new empty <code>GRectangle</code> at the specified location.
      *
@@ -72,7 +77,6 @@ public class GRectangle implements Serializable {
         this(pt.getX(), pt.getY(), 0, 0);
     }
 
-/* Constructor: GRectangle(size) */
     /**
      * Constructs a new <code>GRectangle</code> at the origin with the specified size.
      *
@@ -83,7 +87,6 @@ public class GRectangle implements Serializable {
         this(0, 0, size.getWidth(), size.getHeight());
     }
 
-/* Constructor: GRectangle(r) */
     /**
      * Constructs a new <code>GRectangle</code> from an existing one.
      *
@@ -94,7 +97,6 @@ public class GRectangle implements Serializable {
         this(r.xc, r.yc, r.myWidth, r.myHeight);
     }
 
-/* Method: getX() */
     /**
      * Returns the x coordinate of this <code>GRectangle</code>.
      *
@@ -105,7 +107,6 @@ public class GRectangle implements Serializable {
         return xc;
     }
 
-/* Method: getY() */
     /**
      * Returns the y coordinate of this <code>GRectangle</code>.
      *
@@ -116,7 +117,6 @@ public class GRectangle implements Serializable {
         return yc;
     }
 
-/* Method: getWidth() */
     /**
      * Returns the width of this <code>GDimension</code>.
      *
@@ -127,7 +127,6 @@ public class GRectangle implements Serializable {
         return myWidth;
     }
 
-/* Method: getHeight() */
     /**
      * Returns the height of this <code>GDimension</code>.
      *
@@ -138,7 +137,6 @@ public class GRectangle implements Serializable {
         return myHeight;
     }
 
-/* Method: setBounds(x, y, width, height) */
     /**
      * Sets the components of a <code>GRectangle</code> from the specified values.
      *
@@ -155,7 +153,6 @@ public class GRectangle implements Serializable {
         myHeight = height;
     }
 
-/* Method: setBounds(pt, size) */
     /**
      * Sets the components of a <code>GRectangle</code> from the specified location and size.
      *
@@ -167,7 +164,6 @@ public class GRectangle implements Serializable {
         setBounds(pt.getX(), pt.getY(), size.getWidth(), size.getHeight());
     }
 
-/* Method: setBounds(bounds) */
     /**
      * Sets the bounds of one <code>GRectangle</code> equal to that of another.
      *
@@ -178,7 +174,6 @@ public class GRectangle implements Serializable {
         setBounds(bounds.xc, bounds.yc, bounds.myWidth, bounds.myHeight);
     }
 
-/* Method: getBounds() */
     /**
      * Returns a new <code>GRectangle</code> whose bounds are the same as this one.
      *
@@ -189,7 +184,6 @@ public class GRectangle implements Serializable {
         return new GRectangle(this);
     }
 
-/* Method: setLocation(x, y) */
     /**
      * Sets the location of the <code>GRectangle</code> to the specified <code>x</code>
      * and <code>y</code> values.
@@ -203,7 +197,6 @@ public class GRectangle implements Serializable {
         yc = y;
     }
 
-/* Method: setLocation(pt) */
     /**
      * Sets the location of the <code>GRectangle</code> to the specified point.
      *
@@ -214,7 +207,6 @@ public class GRectangle implements Serializable {
         setLocation(pt.getX(), pt.getY());
     }
 
-/* Method: getLocation() */
     /**
      * Returns a new <code>GPoint</code> with the location of the rectangle.
      *
@@ -225,7 +217,6 @@ public class GRectangle implements Serializable {
         return new GPoint(xc, yc);
     }
 
-/* Method: translate(dx, dy) */
     /**
      * Adjusts the coordinates of a rectangle by the specified <code>dx</code> and
      * <code>dy</code> offsets.
@@ -239,7 +230,6 @@ public class GRectangle implements Serializable {
         yc += dy;
     }
 
-/* Method: setSize(width, height) */
     /**
      * Sets the size of the <code>GRectangle</code> to the specified values.
      *
@@ -252,7 +242,6 @@ public class GRectangle implements Serializable {
         myHeight = height;
     }
 
-/* Method: setSize(size) */
     /**
      * Sets the size of the <code>GRectangle</code> to the specified dimension.
      *
@@ -263,7 +252,6 @@ public class GRectangle implements Serializable {
         setSize(size.getWidth(), size.getHeight());
     }
 
-/* Method: getSize() */
     /**
      * Returns a new <code>GDimension</code> object with the size of the <code>GRectangle</code>.
      * @usage size = rect.getSize();
@@ -273,7 +261,6 @@ public class GRectangle implements Serializable {
         return new GDimension(myWidth, myHeight);
     }
 
-/* Method: grow(dx, dy) */
     /**
      * Adjusts the edges of a rectangle by the specified <code>dx</code> and <code>dy</code>
      * offsets along each of its borders.
@@ -289,7 +276,6 @@ public class GRectangle implements Serializable {
         myHeight += 2 * dy;
     }
 
-/* Method: isEmpty() */
     /**
      * Returns <code>true</code> if the rectangle is empty.
      *
@@ -300,7 +286,6 @@ public class GRectangle implements Serializable {
         return myWidth <= 0 || myHeight <= 0;
     }
 
-/* Method: contains(x, y) */
     /**
      * Returns <code>true</code> if the <code>GRectangle</code> contains the specified point.
      *
@@ -314,7 +299,6 @@ public class GRectangle implements Serializable {
         return x >= xc && y >= yc && x < xc + myWidth && y < yc + myHeight;
     }
 
-/* Method: contains(pt) */
     /**
      * Returns <code>true</code> if the <code>GRectangle</code> contains the specified point.
      *
@@ -327,7 +311,6 @@ public class GRectangle implements Serializable {
         return contains(pt.getX(), pt.getY());
     }
 
-/* Method: intersects(r2) */
     /**
      * Returns <code>true</code> if <code>r1</code> and <code>r2</code> have a nonempty
      * intersection.
@@ -345,7 +328,6 @@ public class GRectangle implements Serializable {
         return true;
     }
 
-/* Method: intersection(r2) */
     /**
      * Returns the largest rectangle that is contained in both
      * <code>r1</code> and <code>r2</code>.
@@ -363,7 +345,6 @@ public class GRectangle implements Serializable {
         return new GRectangle(x1, y1, x2 - x1, y2 - y1);
     }
 
-/* Method: union(r) */
     /**
      * Returns the smallest rectangle that contains both
      * <code>r1</code> and <code>r2</code>.
@@ -383,7 +364,6 @@ public class GRectangle implements Serializable {
         return new GRectangle(x1, y1, x2 - x1, y2 - y1);
     }
 
-/* Method: add(r) */
     /**
      * Adjusts the bounds of the current <code>GRectangle</code> so that it contains
      * the rectangle represented by the argument.
@@ -405,7 +385,6 @@ public class GRectangle implements Serializable {
         myHeight = y2 - yc;
     }
 
-/* Method: add(x, y) */
     /**
      * Adds the specified point to the rectangle.
      *
@@ -426,7 +405,6 @@ public class GRectangle implements Serializable {
         myHeight = y2 - yc;
     }
 
-/* Method: hashCode() */
     /**
      * Returns an integer hash code for the rectangle.  The hash code for a
      * <code>GRectangle</code> is constructed from the hash codes from the
@@ -445,7 +423,6 @@ public class GRectangle implements Serializable {
         return hash;
     }
 
-/* Method: equals(obj) */
     /**
      * Tests whether two <code>GRectangle</code> objects are equal.
      * Because floating-point values are inexact, this method checks for
@@ -468,7 +445,6 @@ public class GRectangle implements Serializable {
         return true;
     }
 
-/* Method: toString() */
     /**
      * Converts this <code>GRectangle</code> to its string representation.
      *
@@ -480,18 +456,4 @@ public class GRectangle implements Serializable {
         return "[" + (float) xc + ", " + (float) yc + ", "
                 + (float) myWidth + "x" + (float) myHeight + "]";
     }
-
-    /* Private instance variables */
-    private float xc;
-    private float yc;
-    private float myWidth;
-    private float myHeight;
-
-/* Serial version UID */
-    /**
-     * The serialization code for this class.  This value should be incremented
-     * whenever you change the structure of this class in an incompatible way,
-     * typically by adding a new instance variable.
-     */
-    static final long serialVersionUID = 1L;
 }
