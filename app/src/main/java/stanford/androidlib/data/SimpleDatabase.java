@@ -1,4 +1,7 @@
 /*
+ * @version 2016/05/17
+ * - made methods non-static to decrease confusion
+ * - added delete, exists, list, open, query() methods
  * @version 2016/02/23
  * - initial version
  */
@@ -42,9 +45,17 @@ public class SimpleDatabase {
     /**
      * Sets whether Log.d statements should print as queries are run.
      */
-    public static SimpleDatabase setLogging(boolean logging) {
+    public SimpleDatabase setLogging(boolean logging) {
         SimpleDatabase.logging = logging;
         return INSTANCE;
+    }
+
+    /**
+     * Deletes the database with the given name, if it exists.
+     * Returns whether the database was deleted successfully.
+     */
+    public boolean delete(String databaseName) {
+        return context.deleteDatabase(databaseName);
     }
 
     /**
@@ -93,11 +104,34 @@ public class SimpleDatabase {
     }
 
     /**
+     * Returns true if a database with the given name exists.
+     */
+    public boolean exists(String databaseName) {
+        return context.databaseExists(databaseName);
+    }
+
+    /**
+     * Returns an array of the names of all databases in this app.
+     */
+    public String[] getDatabaseNames() {
+        return context.databaseList();
+    }
+
+    /**
      * Returns the names of all tables in the given database as an array.
      * (Omits the private SQLite/Android table names like android_metadata.)
      * Reference: http://stackoverflow.com/questions/15383847/how-to-get-all-table-names-in-android-sqlite-database
      */
-    public static String[] getTableNames(SQLiteDatabase db) {
+    public String[] getTableNames(String databaseName) {
+        return getTableNames(context.openOrCreateDatabase(databaseName));
+    }
+
+    /**
+     * Returns the names of all tables in the given database as an array.
+     * (Omits the private SQLite/Android table names like android_metadata.)
+     * Reference: http://stackoverflow.com/questions/15383847/how-to-get-all-table-names-in-android-sqlite-database
+     */
+    public String[] getTableNames(SQLiteDatabase db) {
         Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
 
         List<String> list = new ArrayList<>();
@@ -111,6 +145,41 @@ public class SimpleDatabase {
         }
         c.close();
         return list.toArray(new String[list.size()]);
+    }
+
+    /**
+     * Opens the database with the given name, or creates it if it doesn't exist.
+     * Equivalent to openOrCreateDatabase on an activity.
+     */
+    public SQLiteDatabase open(String databaseName) {
+        return context.openOrCreateDatabase(databaseName);
+    }
+
+    /**
+     * Performs the given database query on the given database and returns a view of the results.
+     * Intended usage:
+     *
+     * <pre>
+     * for (SimpleRow row : SimpleDatabase.with(this).query(db, myQuery)) { ... }
+     * </pre>
+     */
+    public SimpleCursor query(SQLiteDatabase db, String query) {
+        Cursor cursor = db.rawQuery(query, null);
+        return rows(cursor);
+    }
+
+    /**
+     * Performs the given database query on the database with the given name
+     * and returns a view of the results.
+     * Intended usage:
+     *
+     * <pre>
+     * for (SimpleRow row : SimpleDatabase.with(this).query(db, myQuery)) { ... }
+     * </pre>
+     */
+    public SimpleCursor query(String databaseName, String query) {
+        SQLiteDatabase db = context.openOrCreateDatabase(databaseName);
+        return query(db, query);
     }
 
     /**
