@@ -854,6 +854,15 @@ public abstract class SimpleActivity extends AppCompatActivity implements
 
     /**
      * Attaches a listener so that this activity's onEnterKeyPress method will be called
+     * when the Enter key is pressed on the view with the given ID.
+     * Now also supports keyboard cursor movement with arrow keys and Home/End for physical keyboards.
+     */
+    public void handleEnterKeyPress(@IdRes int viewID) {
+        handleEnterKeyPress(findViewById(viewID));
+    }
+
+    /**
+     * Attaches a listener so that this activity's onEnterKeyPress method will be called
      * when the Enter key is pressed on the given view.
      * Now also supports keyboard cursor movement with arrow keys and Home/End for physical keyboards.
      */
