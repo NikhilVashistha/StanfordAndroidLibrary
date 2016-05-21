@@ -1,2 +1,4 @@
 todo-stanford-android-library.txt
+build/*
+local.properties
 private/

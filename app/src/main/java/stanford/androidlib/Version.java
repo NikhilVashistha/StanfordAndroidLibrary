@@ -7,7 +7,7 @@ public final class Version {
     /// begin static constants
 
     // version of library (NOTE TO MARTY: 0-pad the month, day, and hour to 2 digits)
-    private static final String LIBRARY_VERSION = "2016/04/07 02:29am";
+    private static final String LIBRARY_VERSION = "2016/05/21 09:25am";
 
     // URL at which library source code can be found
     private static final String LIBRARY_URL = "https://github.com/stepp/StanfordAndroidLibrary";
