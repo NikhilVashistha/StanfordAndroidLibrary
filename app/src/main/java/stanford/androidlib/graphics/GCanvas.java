@@ -8,6 +8,7 @@
 
 package stanford.androidlib.graphics;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.*;
 import android.support.annotation.CallSuper;
@@ -48,7 +49,7 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
     }
 
     private Paint background = new Paint(GColor.WHITE);
-    private List<GObject> gobjects = new ArrayList<>();
+    private final List<GObject> gobjects = new ArrayList<>();
     private Bitmap displayBuffer = null;
     private Rect drawSrc = null;
     private RectF drawDst = null;
@@ -75,7 +76,6 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
             throw new NullPointerException("GObject parameter is null");
         }
         obj.setGCanvas(this);
-        obj.setCanvas(this.getCanvas());
         gobjects.add(obj);
     }
 
@@ -88,7 +88,6 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
             throw new NullPointerException("GObject parameter is null");
         }
         obj.setGCanvas(this);
-        obj.setCanvas(this.getCanvas());
         obj.setLocation(x, y);
         gobjects.add(obj);
     }
