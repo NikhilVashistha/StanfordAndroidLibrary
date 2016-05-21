@@ -40,7 +40,7 @@ public final class SimpleDialog {
     private static final SimpleDialog INSTANCE = new SimpleDialog();
 
     /**
-     * Returns a singleton SimpleMedia instance bound to the given context.
+     * Returns a singleton SimpleDialog instance bound to the given context.
      */
     public static SimpleDialog with(Context context) {
         SimpleDialog.context = context;
@@ -50,6 +50,13 @@ public final class SimpleDialog {
             throw new IllegalArgumentException("context passed must be a SimpleActivity or a class that implements the DialogListener interface");
         }
         return INSTANCE;
+    }
+
+    /**
+     * Returns a singleton SimpleDialog instance bound to the given view's context.
+     */
+    public static SimpleDialog with(View context) {
+        return with(context.getContext());
     }
 
     /**

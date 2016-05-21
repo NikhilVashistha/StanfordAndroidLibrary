@@ -7,6 +7,7 @@ package stanford.androidlib;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.speech.RecognizerIntent;
@@ -14,6 +15,7 @@ import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.util.Log;
+import android.view.View;
 
 import java.util.List;
 import java.util.Locale;
@@ -31,15 +33,22 @@ public final class SimpleSpeech {
      */
     public static final int REQ_CODE_SPEECH_TO_TEXT = 0x193b;
 
-    private static Activity context = null;
+    private static Context context = null;
     private static final SimpleSpeech INSTANCE = new SimpleSpeech();
 
     /**
-     * Returns a singleton SimpleMedia instance bound to the given context.
+     * Returns a singleton SimpleSpeech instance bound to the given context.
      */
-    public static SimpleSpeech with(Activity context) {
+    public static SimpleSpeech with(Context context) {
         SimpleSpeech.context = context;
         return INSTANCE;
+    }
+
+    /**
+     * Returns a singleton SimpleSpeech instance bound to the given view's context.
+     */
+    public static SimpleSpeech with(View context) {
+        return with(context.getContext());
     }
 
     private TextToSpeech textToSpeech = null;
@@ -159,6 +168,22 @@ public final class SimpleSpeech {
 
     /**
      * Asks the device to start recording speech and converting it to text.
+     * The prompt text represented by the given string resource ID is shown on the screen
+     * to prompt the user to speak.
+     * When the spoken words are done converting to text, the method onSpeechToTextReady
+     * will be called.  Subclasses should override that method to grab the spoken text
+     * as a string.
+     * Logs the error if the action failed (e.g. if this device cannot support speech-to-text).
+     * You may want to call speechToTextSupported first.
+     */
+    public SimpleSpeech speechToText(@StringRes int promptID) {
+        String prompt = context.getResources().getString(promptID);
+        speechToText(prompt);
+        return this;
+    }
+
+    /**
+     * Asks the device to start recording speech and converting it to text.
      * The given prompt text is shown on the screen to prompt the user to speak.
      * When the spoken words are done converting to text, the method onSpeechToTextReady
      * will be called.  Subclasses should override that method to grab the spoken text
@@ -173,7 +198,11 @@ public final class SimpleSpeech {
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
             // prompt text is shown on screen to tell user what to say
             intent.putExtra(RecognizerIntent.EXTRA_PROMPT, prompt);
-            context.startActivityForResult(intent, REQ_CODE_SPEECH_TO_TEXT);
+            if (context instanceof Activity) {
+                ((Activity) context).startActivityForResult(intent, REQ_CODE_SPEECH_TO_TEXT);
+            } else {
+                throw new IllegalStateException("context must be an activity");
+            }
         } catch (ActivityNotFoundException anfe) {
             Log.wtf("SimpleSpeech", anfe);
         }

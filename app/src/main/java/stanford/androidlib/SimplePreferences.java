@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.view.View;
 
 /**
  * A utility class for getting and setting preferences.
@@ -27,6 +28,25 @@ public final class SimplePreferences {
     public static SimplePreferences with(Activity context) {
         SimplePreferences.context = context;
         return INSTANCE;
+    }
+
+    /**
+     * Returns a singleton SimplePreferences instance bound to the given context.
+     * The context must be an Activity, or an IllegalArgumentException will be thrown.
+     */
+    public static SimplePreferences with(Context context) {
+        if (!(context instanceof Activity)) {
+            throw new IllegalArgumentException("context must be an Activity");
+        }
+        SimplePreferences.context = (Activity) context;
+        return INSTANCE;
+    }
+
+    /**
+     * Returns a singleton SimplePreferences instance bound to the given view's context.
+     */
+    public static SimplePreferences with(View context) {
+        return with(context.getContext());
     }
 
     private SimplePreferences() {

@@ -29,6 +29,13 @@ public final class SimpleEvents {
         return INSTANCE;
     }
 
+    /**
+     * Returns a singleton SimpleEvents instance bound to the given view's context.
+     */
+    public static SimpleEvents with(View context) {
+        return with(context.getContext());
+    }
+
     public interface EnterKeyPressListener {
         void onEnterKeyPress(View editText);
     }

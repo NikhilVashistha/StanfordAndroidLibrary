@@ -7,12 +7,14 @@ package stanford.androidlib;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 
 import java.io.File;
 
@@ -24,7 +26,7 @@ import java.io.File;
  * </pre>
  */
 public final class SimpleCamera {
-    private static Activity context = null;
+    private static Context context = null;
     private static final SimpleCamera INSTANCE = new SimpleCamera();
 
     /**
@@ -40,9 +42,16 @@ public final class SimpleCamera {
     /**
      * Returns a singleton SimpleCamera instance bound to the given context.
      */
-    public static SimpleCamera with(Activity context) {
+    public static SimpleCamera with(Context context) {
         SimpleCamera.context = context;
         return INSTANCE;
+    }
+
+    /**
+     * Returns a singleton SimpleCamera instance bound to the given view's context.
+     */
+    public static SimpleCamera with(View context) {
+        return with(context.getContext());
     }
 
     private SimpleCamera() {
@@ -66,7 +75,11 @@ public final class SimpleCamera {
     public SimpleCamera takePhoto() {
         try {
             Intent picIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            context.startActivityForResult(picIntent, REQ_CODE_TAKE_PICTURE);
+            if (context instanceof Activity) {
+                ((Activity) context).startActivityForResult(picIntent, REQ_CODE_TAKE_PICTURE);
+            } else {
+                throw new IllegalStateException("cannot take photo; context is not an Activity");
+            }
         } catch (ActivityNotFoundException anfe) {
             Log.wtf("SimpleSpeech", anfe);
         }
@@ -89,7 +102,11 @@ public final class SimpleCamera {
         }
         File photoFile = new File(photosDir, filename);
         picIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-        context.startActivityForResult(picIntent, REQ_CODE_TAKE_PICTURE);
+        if (context instanceof Activity) {
+            ((Activity) context).startActivityForResult(picIntent, REQ_CODE_TAKE_PICTURE);
+        } else {
+            throw new IllegalStateException("cannot take photo; context is not an Activity");
+        }
         return this;
     }
 
@@ -102,7 +119,11 @@ public final class SimpleCamera {
     // @RequiresPermission("android.permission.READ_EXTERNAL_STORAGE")
     public SimpleCamera photoGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        context.startActivityForResult(intent, REQ_CODE_PHOTO_GALLERY);
+        if (context instanceof Activity) {
+            ((Activity) context).startActivityForResult(intent, REQ_CODE_PHOTO_GALLERY);
+        } else {
+            throw new IllegalStateException("cannot start photo gallery; context is not an Activity");
+        }
         return this;
     }
 }

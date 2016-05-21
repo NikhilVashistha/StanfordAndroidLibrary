@@ -9,6 +9,8 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.annotation.RawRes;
+import android.view.View;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +30,17 @@ public final class SimpleMedia {
      */
     public static SimpleMedia with(Context context) {
         SimpleMedia.context = context;
+        return INSTANCE;
+    }
+
+    /**
+     * Returns a singleton SimpleMedia instance bound to the given view's context.
+     */
+    public static SimpleMedia with(View context) {
+        Context newContext = context.getContext();
+        if (SimpleMedia.context == null || newContext != null) {
+            SimpleMedia.context = newContext;
+        }
         return INSTANCE;
     }
 

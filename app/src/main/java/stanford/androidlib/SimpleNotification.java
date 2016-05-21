@@ -19,6 +19,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
 import android.support.v7.app.NotificationCompat;
+import android.view.View;
 import android.widget.*;
 
 import stanford.androidlib.util.IntentUtils;
@@ -34,8 +35,18 @@ import stanford.androidlib.util.IntentUtils;
  * </p>
  */
 public class SimpleNotification extends NotificationCompat.Builder {
+    /**
+     * Returns a singleton SimpleNotification instance bound to the given context.
+     */
     public static SimpleNotification with(Context context) {
         return new SimpleNotification(context);
+    }
+
+    /**
+     * Returns a singleton SimpleNotification instance bound to the given view's context.
+     */
+    public static SimpleNotification with(View context) {
+        return with(context.getContext());
     }
 
     private Context context;

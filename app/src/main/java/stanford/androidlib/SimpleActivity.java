@@ -830,7 +830,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * Returns the bitmap image for the resource file with the given ID.
      */
     public Bitmap getBitmap(@DrawableRes int id) {
-        return BitmapFactory.decodeResource(getResources(), id);
+        return SimpleBitmap.with(this).get(id);
     }
 
     /**
@@ -838,14 +838,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * @throws IORuntimeException if the URL cannot be read or is not a valid image.
      */
     public Bitmap getBitmap(@NonNull String url) {
-        try {
-            URL theUrl = new URL(url);
-            return BitmapFactory.decodeStream(theUrl.openStream());
-        } catch (MalformedURLException mfurle) {
-            throw new IllegalArgumentException("Invalid URL: " + url, mfurle);
-        } catch (IOException ioe) {
-            throw new IORuntimeException(ioe);
-        }
+        return SimpleBitmap.with(this).get(url);
     }
 
     /// end methods related to app resources

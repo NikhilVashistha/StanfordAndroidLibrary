@@ -7,6 +7,7 @@ package stanford.androidlib;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.view.View;
 
 /**
  * A version of ProgressDialog that auto-closes when it reaches 100% progress.
@@ -17,6 +18,13 @@ public class SimpleProgressDialog extends ProgressDialog {
      */
     public SimpleProgressDialog(Context context) {
         super(context);
+    }
+
+    /**
+     * Constructs a new dialog.
+     */
+    public SimpleProgressDialog(View context) {
+        super(context.getContext());
     }
 
     /**

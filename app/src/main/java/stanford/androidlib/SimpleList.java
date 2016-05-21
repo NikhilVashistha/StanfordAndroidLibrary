@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
+import android.view.View;
 import android.widget.*;
 import java.util.*;
 
@@ -31,6 +32,13 @@ public final class SimpleList {
     public static SimpleList with(Context context) {
         SimpleList.context = context;
         return INSTANCE;
+    }
+
+    /**
+     * Returns a singleton SimpleList instance bound to the given view's context.
+     */
+    public static SimpleList with(View context) {
+        return with(context.getContext());
     }
 
     private SimpleList() {

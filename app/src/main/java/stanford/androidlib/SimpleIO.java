@@ -9,6 +9,8 @@ import android.content.Context;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.RawRes;
+import android.view.View;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,11 +38,18 @@ public final class SimpleIO {
     private static final SimpleIO INSTANCE = new SimpleIO();
 
     /**
-     * Returns a singleton SimpleMedia instance bound to the given context.
+     * Returns a singleton SimpleIO instance bound to the given context.
      */
     public static SimpleIO with(Context context) {
         SimpleIO.context = context;
         return INSTANCE;
+    }
+
+    /**
+     * Returns a singleton SimpleIO instance bound to the given view's context.
+     */
+    public static SimpleIO with(View context) {
+        return with(context.getContext());
     }
 
     private SimpleIO() {
