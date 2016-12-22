@@ -1,6 +1,7 @@
 /**
  * @version 2016/12/22
  * - added layoutID to avoid need for on*** lifecycle methods
+ * - added init(), start() to match Stanford/ACM Java lib
  * @version 2016/01/27
  * - added setTraceLifecycle
  * @version 2016/01/25
@@ -124,6 +125,23 @@ public class SimpleFragment extends DialogFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         traceLifecycleLog("onActivityCreated", "bundle=" + savedInstanceState);
+        init();
+    }
+
+    /**
+     * Code to run when fragment is being created.
+     * This implementation is empty, but can be overridden in subclass.
+     */
+    protected void init() {
+        // empty; override me
+    }
+
+    /**
+     * Code to run when activity is being started.
+     * This implementation is empty, but can be overridden in subclass.
+     */
+    protected void start() {
+        // empty; override me
     }
 
     /**
@@ -232,6 +250,7 @@ public class SimpleFragment extends DialogFragment implements
     public void onStart() {
         super.onStart();
         traceLifecycleLog("onStart");
+        start();
     }
 
     /**
