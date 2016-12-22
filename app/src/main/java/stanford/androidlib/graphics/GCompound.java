@@ -1,3 +1,8 @@
+/*
+ * @version 2016/12/22
+ * - added illegal arg checking to some methods e.g. add, remove
+ * - alphabetized methods
+ */
 package stanford.androidlib.graphics;
 
 import android.graphics.Canvas;
@@ -37,8 +42,12 @@ public class GCompound extends GObject implements GScalable, Iterable<GObject> {
      *
      * @usage gcomp.add(gobj);
      * @param gobj The graphical object to add
+     * @throws NullPointerException if gobj is null
      */
     public void add(GObject gobj) {
+        if (gobj == null) {
+            throw new NullPointerException();
+        }
         if (complete) {
             throw new IllegalStateException("You can't add objects to a GCompound that has been "
                     + "marked as complete.");
@@ -55,6 +64,7 @@ public class GCompound extends GObject implements GScalable, Iterable<GObject> {
      * @param gobj The graphical object to add
      * @param x The new x-coordinate for the object
      * @param y The new y-coordinate for the object
+     * @throws NullPointerException if gobj is null
      */
     public final void add(GObject gobj, float x, float y) {
         gobj.setLocation(x, y);
@@ -67,38 +77,42 @@ public class GCompound extends GObject implements GScalable, Iterable<GObject> {
      * @usage gc.add(gobj, pt);
      * @param gobj The graphical object to add
      * @param pt A <code>GPoint</code> object giving the coordinates of the point
+     * @throws NullPointerException if gobj is null
      */
     public final void add(GObject gobj, GPoint pt) {
         add(gobj, pt.getX(), pt.getY());
     }
 
     /**
-     * Removes a graphical object from this <code>GCompound</code>.
+     * Checks to see whether a point is "inside" the compound, which means that it is
+     * inside one of the components.
      *
-     * @usage gcomp.remove(gobj);
-     * @param gobj The graphical object to remove
+     * @usage if (gcomp.contains(x, y)) . . .
+     * @param x The x-coordinate of the point being tested
+     * @param y The y-coordinate of the point being tested
+     * @return <code>true</code> if the point (<code>x</code>,&nbsp;<code>y</code>) is inside
+     *         the compound, and <code>false</code> otherwise
      */
-    public void remove(GObject gobj) {
-        if (complete) {
-            throw new IllegalStateException("You can't remove objects from a GCompound that has been "
-                    + "marked as complete.");
-        }
-        contents.remove(gobj);
-        repaint();
+    @Override
+    public boolean contains(float x, float y) {
+        return getElementAt(x, y) != null;
     }
 
     /**
-     * Removes all graphical objects from this <code>GCompound</code>.
+     * Returns the bounding rectangle for this compound object, which consists of
+     * the union of the bounding rectangles for each of the components.
      *
-     * @usage gcomp.removeAll();
+     * @usage GRectangle bounds = gcomp.getBounds();
+     * @return A <code>GRectangle</code> that bounds the components of this object
      */
-    public void removeAll() {
-        if (complete) {
-            throw new IllegalStateException("You can't remove objects from a GCompound that has been "
-                    + "marked as complete.");
+    @Override
+    public GRectangle getBounds() {
+        GRectangle bounds = new GRectangle();
+        for (GObject obj : contents) {
+            bounds = bounds.union(obj.getBounds());
         }
-        contents.clear();
-        repaint();
+        bounds.translate(getX(), getY());
+        return bounds;
     }
 
     /**
@@ -169,6 +183,7 @@ public class GCompound extends GObject implements GScalable, Iterable<GObject> {
      * @return An <code>Iterator</code> ranging over the elements of the
      *         container from back to front
      */
+    @Override
     public Iterator<GObject> iterator() {
         return contents.iterator();
     }
@@ -177,13 +192,48 @@ public class GCompound extends GObject implements GScalable, Iterable<GObject> {
      * Implements the <code>paint</code> operation for this graphical object.  This method
      * is not called directly by clients.
      * @noshow
+     * @throws NullPointerException if canvas is null
      */
+    @Override
     public void paint(Canvas canvas) {
         canvas.translate(GMath.round(getX()), GMath.round(getY()));
         for (GObject obj : contents) {
             obj.paint(canvas);
         }
         canvas.translate(-GMath.round(getX()), -GMath.round(getY()));
+    }
+
+    /**
+     * Removes a graphical object from this <code>GCompound</code>.
+     *
+     * @usage gcomp.remove(gobj);
+     * @param gobj The graphical object to remove
+     * @throws NullPointerException if gobj is null
+     */
+    public void remove(GObject gobj) {
+        if (gobj == null) {
+            throw new NullPointerException();
+        }
+        if (complete) {
+            throw new IllegalStateException("You can't remove objects from a GCompound that has been "
+                    + "marked as complete.");
+        }
+        contents.remove(gobj);
+        repaint();
+    }
+
+    /**
+     * Removes all graphical objects from this <code>GCompound</code>.
+     *
+     * @usage gcomp.removeAll();
+     */
+    public void removeAll() {
+        if (complete) {
+            throw new IllegalStateException("You can't remove objects from a GCompound that has been "
+                    + "marked as complete.");
+        }
+        contents.clear();
+        repaint();
     }
 
     /**
@@ -194,9 +244,13 @@ public class GCompound extends GObject implements GScalable, Iterable<GObject> {
      * @usage gcomp.scale(sx, sy);
      * @param sx The factor used to scale all coordinates in the x direction
      * @param sy The factor used to scale all coordinates in the y direction
+     * @throws IllegalArgumentException if sx or sy is not a positive number
      */
     @Override
     public void scale(float sx, float sy) {
+        if (sx <= 0 || sy <= 0) {
+            throw new IllegalArgumentException("Illegal scale factors: " + sx + "x" + sy);
+        }
         for (int i = getElementCount() - 1; i >= 0; i--) {
             GObject gobj = getElement(i);
             gobj.setLocation(sx * gobj.getX(), sy * gobj.getY());
@@ -205,38 +259,6 @@ public class GCompound extends GObject implements GScalable, Iterable<GObject> {
             }
         }
         repaint();
-    }
-
-    /**
-     * Returns the bounding rectangle for this compound object, which consists of
-     * the union of the bounding rectangles for each of the components.
-     *
-     * @usage GRectangle bounds = gcomp.getBounds();
-     * @return A <code>GRectangle</code> that bounds the components of this object
-     */
-    @Override
-    public GRectangle getBounds() {
-        GRectangle bounds = new GRectangle();
-        for (GObject obj : contents) {
-            bounds = bounds.union(obj.getBounds());
-        }
-        bounds.translate(getX(), getY());
-        return bounds;
-    }
-
-    /**
-     * Checks to see whether a point is "inside" the compound, which means that it is
-     * inside one of the components.
-     *
-     * @usage if (gcomp.contains(x, y)) . . .
-     * @param x The x-coordinate of the point being tested
-     * @param y The y-coordinate of the point being tested
-     * @return <code>true</code> if the point (<code>x</code>,&nbsp;<code>y</code>) is inside
-     *         the compound, and <code>false</code> otherwise
-     */
-    @Override
-    public boolean contains(float x, float y) {
-        return getElementAt(x, y) != null;
     }
 
 ///* Method: getCanvasPoint(localPoint) */
@@ -320,9 +342,13 @@ public class GCompound extends GObject implements GScalable, Iterable<GObject> {
      * Implements the <code>sendToFront</code> function from the <code>GContainer</code>
      * interface.  Clients should not be calling this method, but the semantics of
      * interfaces forces it to be exported.
+     * @throws NullPointerException if gobj is null
      * @noshow
      */
     protected void sendToFront(GObject gobj) {
+        if (gobj == null) {
+            throw new NullPointerException();
+        }
         for (GObject obj : contents) {
             obj.sendToFront();
         }
@@ -333,9 +359,13 @@ public class GCompound extends GObject implements GScalable, Iterable<GObject> {
      * Implements the <code>sendToBack</code> function from the <code>GContainer</code>
      * interface.  Clients should not be calling this method, but the semantics of
      * interfaces forces it to be exported.
+     * @throws NullPointerException if gobj is null
      * @noshow
      */
     protected void sendToBack(GObject gobj) {
+        if (gobj == null) {
+            throw new NullPointerException();
+        }
         for (GObject obj : contents) {
             obj.sendToBack();
         }
@@ -346,9 +376,13 @@ public class GCompound extends GObject implements GScalable, Iterable<GObject> {
      * Implements the <code>sendForward</code> function from the <code>GContainer</code>
      * interface.  Clients should not be calling this method, but the semantics of
      * interfaces forces it to be exported.
+     * @throws NullPointerException if gobj is null
      * @noshow
      */
     protected void sendForward(GObject gobj) {
+        if (gobj == null) {
+            throw new NullPointerException();
+        }
         for (GObject obj : contents) {
             obj.sendForward();
         }
@@ -359,9 +393,13 @@ public class GCompound extends GObject implements GScalable, Iterable<GObject> {
      * Implements the <code>sendBackward</code> function from the <code>GContainer</code>
      * interface.  Clients should not be calling this method, but the semantics of
      * interfaces forces it to be exported.
+     * @throws NullPointerException if gobj is null
      * @noshow
      */
     protected void sendBackward(GObject gobj) {
+        if (gobj == null) {
+            throw new NullPointerException();
+        }
         for (GObject obj : contents) {
             obj.sendBackward();
         }

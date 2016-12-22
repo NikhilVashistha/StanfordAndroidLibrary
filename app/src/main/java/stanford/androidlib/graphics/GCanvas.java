@@ -1,4 +1,6 @@
 /*
+ * @version 2016/12/22
+ * - added illegal arg / nullness checking to some methods
  * @version 2016/02/15
  * - added __getCanvasContext
  * @version 2016/02/11
@@ -8,7 +10,6 @@
 
 package stanford.androidlib.graphics;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.*;
 import android.support.annotation.CallSuper;
@@ -70,10 +71,11 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
     /**
      * Adds the given GObject to this canvas.
      * On every repaint / onDraw operation, all added GObjects will be drawn.
+     * @throws NullPointerException if obj is null
      */
     public void add(GObject obj) {
         if (obj == null) {
-            throw new NullPointerException("GObject parameter is null");
+            throw new NullPointerException();
         }
         obj.setGCanvas(this);
         gobjects.add(obj);
@@ -82,10 +84,11 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
     /**
      * Adds the given GObject to this canvas at the given x/y location.
      * On every repaint / onDraw operation, all added GObjects will be drawn.
+     * @throws NullPointerException if obj is null
      */
     public void add(GObject obj, float x, float y) {
         if (obj == null) {
-            throw new NullPointerException("GObject parameter is null");
+            throw new NullPointerException();
         }
         obj.setGCanvas(this);
         obj.setLocation(x, y);
@@ -95,6 +98,7 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
     /**
      * Adds the given GObject to this canvas at the given x/y location.
      * On every repaint / onDraw operation, all added GObjects will be drawn.
+     * @throws NullPointerException if obj or point is null
      */
     public void add(GObject obj, GPoint point) {
         add(obj, point.getX(), point.getY());
@@ -102,8 +106,12 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
 
     /**
      * Returns whether this canvas contains the given graphical object.
+     * @throws NullPointerException if obj is null
      */
     public boolean contains(GObject obj) {
+        if (obj == null) {
+            throw new NullPointerException();
+        }
         return gobjects.contains(obj);
     }
 
@@ -126,6 +134,7 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
      * Returns the GObject found at the given x/y location in this canvas.
      * If no object touches that location, null is returned.
      * If multiple objects touch that loaction, the highest one in the Z-ordering is returned.
+     * @throws NullPointerException if the point is null
      */
     public GObject getElementAt(GPoint point) {
         return getElementAt(point.getX(), point.getY());
@@ -152,6 +161,7 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
      * The locations are tried in order.
      * If no object touches any of these locations, null is returned.
      * If multiple objects touch the first found loaction, the highest one in the Z-ordering is returned.
+     * @throws NullPointerException if any point is null
      */
     public GObject getElementAt(GPoint... points) {
         for (GPoint point : points) {
@@ -166,6 +176,7 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
     /**
      * Returns the graphical object at the specified index,
      * numbering from back (0) to front in the the z ordering.
+     * @throws IndexOutOfBoundsException if index is negative or exceeds number of objects in canvas
      */
     public GObject getElement(int index) {
         return gobjects.get(index);
@@ -215,8 +226,12 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
 
     /**
      * Removes the given graphical object, if it was contained in this canvas.
+     * @throws NullPointerException if obj is null
      */
     public void remove(GObject obj) {
+        if (obj == null) {
+            throw new NullPointerException();
+        }
         gobjects.remove(obj);
     }
 
@@ -230,8 +245,12 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
     /**
      * Moves the given GObject back/down by 1 in the Z-ordering.
      * If the given GObject is not added to this canvas, has no effect.
+     * @throws NullPointerException if obj is null
      */
     public void sendBackward(GObject obj) {
+        if (obj == null) {
+            throw new NullPointerException();
+        }
         int index = gobjects.indexOf(obj);
         if (index > 0) {
             synchronized (gobjects) {
@@ -244,8 +263,12 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
     /**
      * Moves the given GObject forward/up by 1 in the Z-ordering.
      * If the given GObject is not added to this canvas, has no effect.
+     * @throws NullPointerException if obj is null
      */
     public void sendForward(GObject obj) {
+        if (obj == null) {
+            throw new NullPointerException();
+        }
         int index = gobjects.indexOf(obj);
         if (index >= 0 && index < gobjects.size() - 1) {
             synchronized (gobjects) {
@@ -258,8 +281,12 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
     /**
      * Moves the given GObject to the back/bottom of the Z-ordering.
      * If the given GObject is not added to this canvas, has no effect.
+     * @throws NullPointerException if obj is null
      */
     public void sendToBack(GObject obj) {
+        if (obj == null) {
+            throw new NullPointerException();
+        }
         int index = gobjects.indexOf(obj);
         if (index > 0) {
             synchronized (gobjects) {
@@ -272,8 +299,12 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
     /**
      * Moves the given GObject to the front/top of the Z-ordering.
      * If the given GObject is not added to this canvas, has no effect.
+     * @throws NullPointerException if obj is null
      */
     public void sendToFront(GObject obj) {
+        if (obj == null) {
+            throw new NullPointerException();
+        }
         int index = gobjects.indexOf(obj);
         if (index >= 0 && index < gobjects.size() - 1) {
             synchronized (gobjects) {
@@ -325,8 +356,12 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
     /**
      * Sets a background color that will be drawn on this canvas.
      * If no background has been set, the default background is white.
+     * @throws NullPointerException if color is null
      */
     public void setBackgroundColor(Paint color) {
+        if (color == null) {
+            throw new NullPointerException();
+        }
         this.background = color;
     }
 

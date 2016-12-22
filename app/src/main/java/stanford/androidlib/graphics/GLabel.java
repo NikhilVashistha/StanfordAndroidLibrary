@@ -48,7 +48,7 @@ public class GLabel extends GObject {
      * @param str The initial contents of the <code>GLabel</code>
      */
     public GLabel(String str) {
-        this(str, 0, 0);
+        this(str, /* x */ 0, /* y */ 0);
     }
 
     /**
@@ -58,8 +58,12 @@ public class GLabel extends GObject {
      * @param str The initial contents of the <code>GLabel</code>
      * @param x The x-coordinate of the label origin
      * @param y The y-coordinate of the baseline for the label
+     * @throws NullPointerException if str is null
      */
     public GLabel(String str, float x, float y) {
+        if (str == null) {
+            throw new NullPointerException();
+        }
         paint.setStrokeWidth(0f);
         label = str;
         setFont(DEFAULT_FONT);
@@ -84,10 +88,14 @@ public class GLabel extends GObject {
      * @param id The ID of the resource string for the initial contents of the <code>GLabel</code>
      * @param x The x-coordinate of the label origin
      * @param y The y-coordinate of the baseline for the label
+     * @throws NullPointerException if no string found for given resource ID
      */
     public GLabel(@StringRes int id, float x, float y) {
         paint.setStrokeWidth(0f);
         label = getStringFromId(id);
+        if (label == null) {
+            throw new NullPointerException();
+        }
         setFont(DEFAULT_FONT);
         setLocation(x, y);
     }
@@ -132,9 +140,14 @@ public class GLabel extends GObject {
     /**
      * Implements the <code>paint</code> operation for this graphical object.  This method
      * is not called directly by clients.
+     * @throws NullPointerException if canvas is null
      * @noshow
      */
     public void paint(Canvas canvas) {
+        if (canvas == null) {
+            throw new NullPointerException();
+        }
+
         // shift downward by height so that x/y coord passed represents top-left
         Paint paint = getPaint();
         canvas.drawText(this.label, getX(), getY() + getHeight(), paint);
@@ -174,6 +187,7 @@ public class GLabel extends GObject {
     /**
      * Sets this label to use the given font style,
      * such as TypeFace.BOLD.
+     * @throws IllegalArgumentException if style is not a valid font style
      */
     public void setFontStyle(int style) {
         verifyFontStyle(style);
@@ -189,8 +203,12 @@ public class GLabel extends GObject {
      *
      * @usage glabel.setFont(font);
      * @param font A <code>Font</code> object indicating the new font
+     * @throws NullPointerException if font is null
      */
     public void setFont(Typeface font) {
+        if (font == null) {
+            throw new NullPointerException();
+        }
         labelFont = font;
         getPaint().setTypeface(font);
         repaint();
@@ -198,8 +216,13 @@ public class GLabel extends GObject {
 
     /**
      * Sets this GLabel to use the given font at the given size.
+     * @throws IllegalArgumentException if size is 0 or negative
+     * @throws NullPointerException if font is null
      */
     public void setFont(Typeface font, float size) {
+        if (font == null) {
+            throw new NullPointerException();
+        }
         labelFont = font;
         getPaint().setTypeface(font);
         setFontSize(size);
@@ -207,8 +230,13 @@ public class GLabel extends GObject {
 
     /**
      * Sets this GLabel to use the given font at the given style and size.
+     * @throws IllegalArgumentException if size is 0 or negative, or style is not a valid font style
+     * @throws NullPointerException if font family is null
      */
     public void setFont(Typeface fontFamily, int style, float size) {
+        if (fontFamily == null) {
+            throw new NullPointerException();
+        }
         verifyFontStyle(style);
         labelFont = Typeface.create(fontFamily, style);
         setFontSize(size);
@@ -230,15 +258,23 @@ public class GLabel extends GObject {
      *
      * @usage glabel.setFont(str);
      * @param str A <code>String</code> specifying the new font
+     * @throws NullPointerException if the string is null
      */
     public void setFont(String str) {
+        if (str == null) {
+            throw new NullPointerException();
+        }
         setFont(Typeface.create(str, 12));
     }
 
     /**
      * Sets this label to use a font of the given size.
+     * @throws IllegalArgumentException if size is 0 or negative
      */
     public void setFontSize(float size) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("Illegal font size: " + size);
+        }
         getPaint().setTextSize(size);
         repaint();
     }
@@ -251,7 +287,7 @@ public class GLabel extends GObject {
      * @param id The new string to display's resource ID
      */
     public void setLabel(@StringRes int id) {
-        label = getStringFromId(id);
+        label = getStringFromId(id);   // cannot be null
         repaint();
     }
 
@@ -261,8 +297,12 @@ public class GLabel extends GObject {
      *
      * @usage glabel.setLabel(str);
      * @param str The new string to display
+     * @throws NullPointerException if string is null
      */
     public void setLabel(String str) {
+        if (str == null) {
+            throw new NullPointerException();
+        }
         label = str;
         repaint();
     }
@@ -284,6 +324,7 @@ public class GLabel extends GObject {
      *
      * @usage glabel.setText(str);
      * @param str The new string to display
+     * @throws NullPointerException if string is null
      */
     public void setText(String str) {
         setLabel(str);

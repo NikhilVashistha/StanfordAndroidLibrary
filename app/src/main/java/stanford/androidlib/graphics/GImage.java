@@ -1,3 +1,8 @@
+/*
+ * @version 2016/12/22
+ * - added nullness and range checking to some methods
+ */
+
 package stanford.androidlib.graphics;
 
 /* Class: GImage */
@@ -16,6 +21,7 @@ import android.view.View;
 public class GImage extends GObject implements GResizable {
     /**
      * Creates a new GImage object at the origin.
+     * @throws NullPointerException if image is null
      */
     public GImage(Bitmap image) {
         this(image, 0, 0);
@@ -23,6 +29,7 @@ public class GImage extends GObject implements GResizable {
 
     /**
      * Creates a new GImage object at the specified coordinates.
+     * @throws NullPointerException if image is null
      */
     public GImage(Bitmap image, float x, float y) {
         setImage(image);
@@ -31,6 +38,7 @@ public class GImage extends GObject implements GResizable {
 
     /**
      * Creates a new GImage object at the origin inside the given view.
+     * @throws NullPointerException if view or image is null
      */
     public GImage(View view, Bitmap image) {
         this(view, image, 0, 0);
@@ -38,6 +46,7 @@ public class GImage extends GObject implements GResizable {
 
     /**
      * Creates a new GImage object at the given x/y location inside the given view.
+     * @throws NullPointerException if view or image is null
      */
     public GImage(View view, Bitmap image, float x, float y) {
         this.context = view.getContext();
@@ -47,6 +56,7 @@ public class GImage extends GObject implements GResizable {
 
     /**
      * Creates a new GImage object at the origin inside the given context.
+     * @throws NullPointerException if context is null
      */
     public GImage(Context context, @DrawableRes int imageID) {
         this(context, imageID, 0, 0);
@@ -54,6 +64,7 @@ public class GImage extends GObject implements GResizable {
 
     /**
      * Creates a new GImage object at the origin inside the given view.
+     * @throws NullPointerException if view is null
      */
     public GImage(View view, @DrawableRes int imageID) {
         this(view, imageID, 0, 0);
@@ -61,6 +72,7 @@ public class GImage extends GObject implements GResizable {
 
     /**
      * Creates a new GImage object at the given x/y location inside the given view.
+     * @throws NullPointerException if view is null
      */
     public GImage(View view, @DrawableRes int imageID, float x, float y) {
         this(view.getContext(), imageID, x, y);
@@ -68,6 +80,7 @@ public class GImage extends GObject implements GResizable {
 
     /**
      * Creates a new GImage object at the given x/y location inside the given context.
+     * @throws NullPointerException if context is null
      */
     public GImage(Context context, @DrawableRes int imageID, float x, float y) {
         this(BitmapFactory.decodeResource(context.getResources(), imageID), x, y);
@@ -81,8 +94,12 @@ public class GImage extends GObject implements GResizable {
      *
      * @usage gimage.setImage(image);
      * @param image The image to use as the contents of this <code>GImage</code>
+     * @throws NullPointerException if image is null
      */
     public void setImage(Bitmap image) {
+        if (image == null) {
+            throw new NullPointerException();
+        }
         myImage = image;
         sizeDetermined = false;
         determineSize();
@@ -116,6 +133,7 @@ public class GImage extends GObject implements GResizable {
     /**
      * Implements the <code>paint</code> operation for this graphical object.  This method
      * is not called directly by clients.
+     * @throws NullPointerException if canvas is null
      * @noshow
      */
     public void paint(Canvas canvas) {
@@ -145,15 +163,23 @@ public class GImage extends GObject implements GResizable {
 //        scale(sf, sf);
 //    }
 //
+
+    /**
+     * Sets the context used by this image.
+     * Can be null.
+     * @param context the context to use
+     */
     public void setContext(Context context) {
         this.context = context;
     }
 
     /**
      * Returns a two-dimensional array of pixel values from the stored image.
+     * Not yet implemented.
      *
      * @usage int[][] array = gimage.getPixelArray();
      * @return A two-dimensional array of pixel values from the stored image
+     * @noshow
      */
     public int[][] getPixelArray() {
         // return MediaTools.getPixelArray(myImage);
@@ -230,8 +256,13 @@ public class GImage extends GObject implements GResizable {
      * @param blue The blue component of the pixel (0 to 255)
      * @param alpha The transparency value of the pixel (0 to 255)
      * @return A pixel value containing these components
+     * @throws IllegalArgumentException if any of r/g/b/a are not in range 0-255
      */
     public static int createRGBPixel(int red, int green, int blue, int alpha) {
+        GColor.ensureLegalColorComponent(red);
+        GColor.ensureLegalColorComponent(green);
+        GColor.ensureLegalColorComponent(blue);
+        GColor.ensureLegalColorComponent(alpha);
         return (alpha << 24) | (red << 16) | (green << 8) | blue;
     }
 

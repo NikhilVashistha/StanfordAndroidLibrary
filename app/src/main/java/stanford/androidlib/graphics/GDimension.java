@@ -1,3 +1,8 @@
+/*
+ * @version 2016/12/22
+ * - added @throws documentation to some methods
+ */
+
 package stanford.androidlib.graphics;
 
 import java.io.Serializable;
@@ -84,6 +89,7 @@ public class GDimension implements Serializable {
      *
      * @usage dim.setSize(size);
      * @param size A <code>GDimension</code> object specifying the new size
+     * @throws NullPointerException if size is null
      */
     public void setSize(GDimension size) {
         setSize(size.myWidth, size.myHeight);
@@ -112,7 +118,7 @@ public class GDimension implements Serializable {
      * @noshow
      */
     public int hashCode() {
-        return new Float((float) myWidth).hashCode() ^ (37 * new Float((float) myHeight).hashCode());
+        return Float.valueOf((float) myWidth).hashCode() ^ (37 * Float.valueOf((float) myHeight).hashCode());
     }
 
 /* Method: equals(obj) */
@@ -129,9 +135,12 @@ public class GDimension implements Serializable {
      * @noshow
      */
     public boolean equals(Object obj) {
-        if (!(obj instanceof GDimension)) return false;
+        if (!(obj instanceof GDimension)) {
+            return false;
+        }
         GDimension dim = (GDimension) obj;
-        return ((float) myWidth == (float) dim.myWidth) && ((float) myHeight == (float) dim.myHeight);
+        return ((float) myWidth == (float) dim.myWidth)
+                && ((float) myHeight == (float) dim.myHeight);
     }
 
 /* Method: toString() */

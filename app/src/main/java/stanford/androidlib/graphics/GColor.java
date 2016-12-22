@@ -1,3 +1,8 @@
+/*
+ * @version 2016/12/22
+ * - added illegal arg checking to some methods e.g. makeColor
+ */
+
 package stanford.androidlib.graphics;
 
 import android.graphics.Paint;
@@ -72,6 +77,7 @@ public class GColor {
 
     /**
      * Returns a new paint that is slightly brighter than the given paint.
+     * @throws NullPointerException if paint is null
      */
     public static Paint brighter(Paint paint) {
         int argb  = paint.getColor();
@@ -84,6 +90,7 @@ public class GColor {
 
     /**
      * Returns a new paint that is slightly darker than the given paint.
+     * @throws NullPointerException if paint is null
      */
     public static Paint darker(Paint paint) {
         int argb  = paint.getColor();
@@ -96,8 +103,12 @@ public class GColor {
 
     /**
      * Returns a new paint with the given RGB components from 0-255.
+     * @throws IllegalArgumentException if any of r/g/b is not between 0-255
      */
     public static Paint makeColor(int r, int g, int b) {
+        ensureLegalColorComponent(r);
+        ensureLegalColorComponent(g);
+        ensureLegalColorComponent(b);
         Paint paint = new Paint();
         paint.setARGB(/* alpha */ 255, r, g, b);
         paint.setAntiAlias(true);
@@ -125,5 +136,15 @@ public class GColor {
         int g = (int) (Math.random() * 256);
         int b = (int) (Math.random() * 256);
         return makeColor(r, g, b);
+    }
+
+    /*
+     * Helper to check that an int is between 0-255.
+     */
+    protected static void ensureLegalColorComponent(int rgb) {
+        if (rgb < COMPONENT_MIN || rgb > COMPONENT_MAX) {
+            throw new IllegalArgumentException("RGB component out of range "
+                    + COMPONENT_MIN + "-" + COMPONENT_MAX + ": " + rgb);
+        }
     }
 }

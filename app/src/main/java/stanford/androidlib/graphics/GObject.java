@@ -1,4 +1,6 @@
 /*
+ * @version 2016/12/22
+ * - added illegal arg checking to some methods e.g. setSize
  * @version 2016/02/17
  * - added setLocation(GObject)
  */
@@ -40,8 +42,12 @@ public abstract class GObject {
 
     /**
      * Checks to see whether a point is inside the object.
+     * @throws NullPointerException if pt is null
      */
     public boolean contains(GPoint pt) {
+        if (pt == null) {
+            throw new NullPointerException();
+        }
         return getBounds().contains(pt);
     }
 
@@ -165,6 +171,7 @@ public abstract class GObject {
 
     /**
      * True if this object touches the other object.
+     * @throws NullPointerException if obj is null
      */
     public final boolean intersects(GObject obj) {
         return getBounds().intersects(obj.getBounds());
@@ -198,12 +205,13 @@ public abstract class GObject {
      * Moves the object using displacements given in polar coordinates.
      */
     public final void moveByPolar(float r, float theta) {
-        double d = theta * 3.141592653589793D / 180.0D;
+        double d = theta * Math.PI / 180;
         translate((float) (r * Math.cos(d)), (float) (-r * Math.sin(d)));
     }
 
     /**
      * Moves this GObject to have the same location as the given other GObject.
+     * @throws NullPointerException if gobj is null
      */
     public final void moveTo(GObject gobj) {
         setLocation(gobj.getX(), gobj.getY());
@@ -215,8 +223,12 @@ public abstract class GObject {
      * @usage gobj.scale(sx, sy);
      * @param sx The factor used to scale all coordinates in the x direction
      * @param sy The factor used to scale all coordinates in the y direction
+     * @throws IllegalArgumentException if sx or sy is not a positive number
      */
     public void scale(float sx, float sy) {
+        if (sx <= 0.0 || sy <= 0.0) {
+            throw new IllegalArgumentException("illegal scale factors: " + sx + "x" + sy);
+        }
         width *= sx;
         height *= sy;
         repaint();
@@ -228,6 +240,7 @@ public abstract class GObject {
      *
      * @usage gobj.scale(sf);
      * @param sf The factor used to scale all coordinates in both dimensions
+     * @throws IllegalArgumentException if sf is not a positive number
      */
     public final void scale(float sf) {
         scale(sf, sf);
@@ -256,7 +269,8 @@ public abstract class GObject {
     }
 
     /**
-     * All subclasses of GObject must define a paint method which allows the object to draw itself on the Graphics context passed in as the parameter g.
+     * All subclasses of GObject must define a paint method which allows the object to draw itself
+     * on the Graphics context passed in as the parameter g.
      */
     public abstract void paint(Canvas canvas);
 
@@ -313,6 +327,7 @@ public abstract class GObject {
 
     /**
      * Sets the canvas this object is in.
+     * If null is passed, this object will not be associated with any canvas.
      */
     public final void setCanvas(Canvas canvas) {
         this.canvas = canvas;
@@ -321,16 +336,24 @@ public abstract class GObject {
 
     /**
      * Sets the color used to display this object.
+     * @throws NullPointerException if paint is null.
      */
     public final void setColor(Paint paint) {
+        if (paint == null) {
+            throw new NullPointerException();
+        }
         GColor.matchColor(paint, this.paint);
         repaint();
     }
 
     /**
      * Sets the color used to display this object.
+     * @throws NullPointerException if paint is null.
      */
     public final void setPaint(Paint paint) {
+        if (paint == null) {
+            throw new NullPointerException();
+        }
         this.paint = paint;
         repaint();
     }
@@ -346,6 +369,7 @@ public abstract class GObject {
 
     /**
      * Moves this GObject to have the same location as the given other GObject.
+     * @throws NullPointerException if gobj is null.
      */
     public final void setLocation(GObject gobj) {
         setLocation(gobj.getX(), gobj.getY());
@@ -393,6 +417,7 @@ public abstract class GObject {
      * @param y The new y-coordinate for the object
      * @param width The new width of the object
      * @param height The new height of the object
+     * @throws IllegalArgumentException if width or height is negative
      */
     public final void setBounds(float x, float y, float width, float height) {
         setSize(width, height);
@@ -405,6 +430,7 @@ public abstract class GObject {
      *
      * @usage gimage.setBounds(bounds);
      * @param bounds A <code>GRectangle</code> specifying the new bounds
+     * @throws IllegalArgumentException if rect's width or height is negative
      */
     public final void setBounds(GRectangle bounds) {
         setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
@@ -425,8 +451,12 @@ public abstract class GObject {
      *
      * @usage gobj.setFillColor(color);
      * @param color The color used to display the filled region of this object
+     * @throws NullPointerException if color is null
      */
     public final void setFillColor(Paint color) {
+        if (color == null) {
+            throw new NullPointerException();
+        }
         fillColor = new Paint(color);
         fillColor.setStyle(Paint.Style.FILL);
         isFilled = true;
@@ -436,10 +466,15 @@ public abstract class GObject {
      * Sets the canvas on which this GObject should be drawn.
      * You probably should not call this directly, and should call add(GObject) on
      * the canvas instead.
+     * If gcanvas is null, this object will not be associated with any canvas.
      */
     public final void setGCanvas(GCanvas gcanvas) {
         this.gcanvas = gcanvas;
-        this.canvas = gcanvas.getCanvas();
+        if (gcanvas == null) {
+            this.canvas = null;
+        } else {
+            this.canvas = gcanvas.getCanvas();
+        }
     }
 
     /**
@@ -456,6 +491,7 @@ public abstract class GObject {
      * @usage gimage.setSize(size);
      * @param size A <code>GDimension</code> object specifying the size
      * @noshow
+     * @throws NullPointerException if size is null
      */
     public final void setSize(GDimension size) {
         setSize(size.getWidth(), size.getHeight());
@@ -468,8 +504,12 @@ public abstract class GObject {
      * @usage gimage.setSize(width, height);
      * @param width The new width of the object
      * @param height The new height of the object
+     * @throws IllegalArgumentException if width or height is negative
      */
     public void setSize(float width, float height) {
+        if (width < 0 || height < 0) {
+            throw new IllegalArgumentException("illegal size: " + width + "x" + height);
+        }
         this.width = width;
         this.height = height;
     }

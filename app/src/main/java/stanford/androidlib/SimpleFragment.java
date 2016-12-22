@@ -1,4 +1,6 @@
 /**
+ * @version 2016/12/22
+ * - added layoutID to avoid need for on*** lifecycle methods
  * @version 2016/01/27
  * - added setTraceLifecycle
  * @version 2016/01/25
@@ -13,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.CallSuper;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.*;
@@ -53,7 +56,24 @@ public class SimpleFragment extends DialogFragment implements
         OnSwipeListener.OnSwipeListenerImpl,
         OnSwipeListener.OnScaleListenerImpl {
 
+    private @LayoutRes int layoutID = -1;
     private boolean traceLifecycleMethods = false;
+
+    /**
+     * Constructs a new simple fragment with no known layout resource ID.
+     * Suggested idiom: In your subclass, write a zero-arg constructor that calls setLayoutID.
+     */
+    public SimpleFragment() {
+        // empty
+    }
+
+    /**
+     * Returns the resource ID of the layout to use for this fragment, as passed to the
+     * constructor or setLayoutID.
+     */
+    public @LayoutRes int getLayoutID() {
+        return layoutID;
+    }
 
     /**
      * Returns the activity that contains this fragment as a SimpleActivity.
@@ -84,6 +104,14 @@ public class SimpleFragment extends DialogFragment implements
         } else {
             return defaultValue;
         }
+    }
+
+    /**
+     * Sets the resource ID of the layout to use for this fragment.
+     * Does not re-lay-out the fragment.
+     */
+    public void setLayoutID(@LayoutRes int layoutID) {
+        this.layoutID = layoutID;
     }
 
     /// begin lifecycle methods
@@ -139,7 +167,11 @@ public class SimpleFragment extends DialogFragment implements
     // @CallSuper
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         traceLifecycleLog("onCreateView", "bundle=" + savedInstanceState);
-        return super.onCreateView(inflater, container, savedInstanceState);
+        if (layoutID >= 0) {
+            return inflater.inflate(layoutID, container, /* attachToRoot */ false);
+        } else {
+            return super.onCreateView(inflater, container, savedInstanceState);
+        }
     }
 
     /**

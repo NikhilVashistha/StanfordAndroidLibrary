@@ -1,4 +1,6 @@
 /*
+ * @version 2016/12/22
+ * - added illegal arg / nullness checking to some methods e.g. setSize
  * @version 2016/05/21
  * - fixed minor bugs with setSize, isInBounds
  * @version 2016/02/29
@@ -741,7 +743,11 @@ public class GSprite extends GObject {
      * would mean that only the innermost 10x10 pixels would count as a collision.
      */
     public void setCollisionMargin(float px) {
-        setCollisionMargin(px, px);
+        setCollisionMargin(
+                /* left */   px,
+                /* top */    px,
+                /* right */  px,
+                /* bottom */ px);
     }
 
     /**
@@ -753,13 +759,11 @@ public class GSprite extends GObject {
      * would mean that only the innermost 12x8 pixels would count as a collision.
      */
     public void setCollisionMargin(float pxX, float pxY) {
-        collisionRect.left = rect.left + pxX;
-        collisionRect.top = rect.top + pxY;
-        collisionRect.right = rect.right - pxX;
-        collisionRect.bottom = rect.bottom - pxY;
-        if (rect.left > rect.right || rect.top > rect.bottom) {
-            throw new IllegalArgumentException("Collision margin of " + pxX + " x " + pxY + " too large; exceeds sprite size");
-        }
+        setCollisionMargin(
+                /* left */   pxX,
+                /* top */    pxY,
+                /* right */  pxX,
+                /* bottom */ pxY);
     }
 
     /**
@@ -775,66 +779,87 @@ public class GSprite extends GObject {
         collisionRect.top = rect.top + pxTop;
         collisionRect.right = rect.right - pxRight;
         collisionRect.bottom = rect.bottom - pxBottom;
+        if (collisionRect.left > collisionRect.right || collisionRect.top > collisionRect.bottom) {
+            throw new IllegalArgumentException("Collision margin too large"
+                    + " (left=" + pxLeft + " top=" + pxTop + " right=" + pxRight + " bottom=" + pxBottom + ")"
+                    + "; exceeds sprite size");
+        }
     }
 
     /**
      * Sets a collision margin for this sprite on the left and right sides.
      */
     public void setCollisionMarginX(float pxX) {
-        collisionRect.left = rect.left + pxX;
-        collisionRect.right = rect.right - pxX;
+        setCollisionMargin(
+                /* left */   pxX,
+                /* top */    getCollisionMarginTop(),
+                /* right */  pxX,
+                /* bottom */ getCollisionMarginBottom());
     }
 
     /**
      * Sets a collision margin for this sprite on the left side only.
      */
     public void setCollisionMarginLeft(float pxLeft) {
-        collisionRect.left = rect.left + pxLeft;
+        setCollisionMarginX(pxLeft);
     }
 
     /**
      * Sets a collision margin for this sprite on the right side only.
      */
     public void setCollisionMarginRight(float pxRight) {
-        collisionRect.right = rect.right - pxRight;
+        setCollisionMargin(
+                /* left */   getCollisionMarginLeft(),
+                /* top */    getCollisionMarginTop(),
+                /* right */  pxRight,
+                /* bottom */ getCollisionMarginBottom());
     }
 
     /**
      * Sets a collision margin for this sprite on the left and right sides.
      */
     public void setCollisionMarginX(float pxLeft, float pxRight) {
-        collisionRect.left = rect.left + pxLeft;
-        collisionRect.right = rect.right - pxRight;
+        setCollisionMargin(
+                /* left */   pxLeft,
+                /* top */    getCollisionMarginTop(),
+                /* right */  pxRight,
+                /* bottom */ getCollisionMarginBottom());
     }
 
     /**
      * Sets a collision margin for this sprite on the top and bottom sides.
      */
     public void setCollisionMarginY(float pxY) {
-        collisionRect.top = rect.top + pxY;
-        collisionRect.bottom = rect.bottom - pxY;
+        setCollisionMarginY(pxY, pxY);
     }
 
     /**
      * Sets a collision margin for this sprite on the top and bottom sides.
      */
     public void setCollisionMarginY(float pxTop, float pxBottom) {
-        collisionRect.top = rect.top + pxTop;
-        collisionRect.bottom = rect.bottom - pxBottom;
+        setCollisionMargin(
+                /* left */   getCollisionMarginLeft(),
+                /* top */    pxTop,
+                /* right */  getCollisionMarginRight(),
+                /* bottom */ pxBottom);
     }
 
     /**
      * Sets a collision margin for this sprite on the top side.
      */
     public void setCollisionMarginTop(float pxTop) {
-        collisionRect.top = rect.top + pxTop;
+        setCollisionMarginY(pxTop);
     }
 
     /**
      * Sets a collision margin for this sprite on the bottom side.
      */
     public void setCollisionMarginBottom(float pxBottom) {
-        collisionRect.bottom = rect.bottom - pxBottom;
+        setCollisionMargin(
+                /* left */   getCollisionMarginLeft(),
+                /* top */    getCollisionMarginTop(),
+                /* right */  getCollisionMarginRight(),
+                /* bottom */ pxBottom);
     }
 
     /**
@@ -890,8 +915,7 @@ public class GSprite extends GObject {
         float marginRight = getCollisionMarginRight();
         float marginBottom = getCollisionMarginBottom();
         rect.set(rect.left, rect.top, rect.left + width, rect.top + height);
-        collisionRect.set(rect.left + marginLeft, rect.top + marginTop,
-                rect.right - marginRight, rect.bottom - marginBottom);
+        setCollisionMargin(marginLeft, marginTop, marginRight, marginBottom);
     }
 
     /**
