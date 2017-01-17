@@ -1,4 +1,6 @@
 /**
+ * @version 2016/12/23
+ * - bug fix in $/find methods to return T extends View
  * @version 2016/12/22
  * - added layoutID to avoid need for onCreate
  * - added auto-inference of default layout ID
@@ -378,7 +380,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * does not need to typecast the returned result.
      */
     @SuppressWarnings("unchecked")
-    public <T> T $(@IdRes int id) {
+    public <T extends View> T $(@IdRes int id) {
         return (T) super.findViewById(id);
     }
 
@@ -387,7 +389,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * does not need to typecast the returned result.
      */
     @SuppressWarnings("unchecked")
-    public <T> T find(@IdRes int id) {
+    public <T extends View> T find(@IdRes int id) {
         return (T) super.findViewById(id);
     }
 
@@ -396,7 +398,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * does not need to typecast the returned result.
      */
     @SuppressWarnings("unchecked")
-    public <T> T findById(@IdRes int id) {
+    public <T extends View> T findById(@IdRes int id) {
         return (T) super.findViewById(id);
     }
 
