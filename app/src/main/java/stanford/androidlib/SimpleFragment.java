@@ -1,4 +1,8 @@
 /**
+ * @version 2017/02/06
+ * - added more getXxxExtra methods
+ * - added $A() to get simple activity
+ * - added log, println methods (mirror of SimpleActivity versions, for convenience)
  * @version 2016/12/22
  * - added layoutID to avoid need for on*** lifecycle methods
  * - added init(), start() to match Stanford/ACM Java lib
@@ -23,6 +27,7 @@ import android.view.*;
 import android.widget.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * A SimpleFragment is meant as a drop-in replacement for Android's Fragment
@@ -85,7 +90,194 @@ public class SimpleFragment extends DialogFragment implements
     }
 
     /**
-     * Returns an 'extra' parameter with the given name from this activity's intent.
+     * Returns the activity that contains this fragment as a SimpleActivity.
+     * @throws ClassCastException If the activity containing this fragment does not extend SimpleActivity.
+     */
+    public SimpleActivity $A() {
+        return getSimpleActivity();
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns false.
+     */
+    public boolean getBooleanExtra(@NonNull String name) {
+        return getBooleanExtra(name, /* defaultValue */ false);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public boolean getBooleanExtra(@NonNull String name, boolean defaultValue) {
+        Intent intent = getActivity().getIntent();
+        return intent.getBooleanExtra(name, defaultValue);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns 0.0.
+     */
+    public double getDoubleExtra(@NonNull String name) {
+        return getDoubleExtra(name, /* defaultValue */ 0.0);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public double getDoubleExtra(@NonNull String name, double defaultValue) {
+        Intent intent = getActivity().getIntent();
+        return intent.getFloatExtra(name, (float) defaultValue);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns 0.
+     */
+    public int getIntExtra(@NonNull String name) {
+        return getIntExtra(name, /* defaultValue */ 0);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public int getIntExtra(@NonNull String name, int defaultValue) {
+        Intent intent = getActivity().getIntent();
+        return intent.getIntExtra("name", defaultValue);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns an empty list of 0 elements.
+     */
+    public ArrayList<Integer> getIntegerArrayListExtra(@NonNull String name) {
+        return getIntegerArrayListExtra(name, /* defaultValue */ new ArrayList<Integer>());
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public ArrayList<Integer> getIntegerArrayListExtra(@NonNull String name, ArrayList<Integer> defaultValue) {
+        Intent intent = getActivity().getIntent();
+        ArrayList<Integer> result = intent.getIntegerArrayListExtra(name);
+        if (result == null) {
+            return defaultValue;
+        } else {
+            return result;
+        }
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns 0.
+     */
+    public long getLongExtra(@NonNull String name) {
+        return getLongExtra(name, /* defaultValue */ 0L);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public long getLongExtra(@NonNull String name, long defaultValue) {
+        Intent intent = getActivity().getIntent();
+        return intent.getLongExtra("name", defaultValue);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns null.
+     */
+    public <T extends Serializable> T getSerializableExtra(@NonNull String name) {
+        return getSerializableExtra(name, /* defaultValue */ null);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends Serializable> T getSerializableExtra(@NonNull String name, T defaultValue) {
+        Intent intent = getActivity().getIntent();
+        T result = (T) intent.getSerializableExtra(name);
+        if (result == null) {
+            return defaultValue;
+        } else {
+            return result;
+        }
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns an empty string.
+     */
+    public String getStringExtra(@NonNull String name) {
+        return getStringExtra(name, /* defaultValue */ "");
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public String getStringExtra(@NonNull String name, String defaultValue) {
+        Intent intent = getActivity().getIntent();
+        String result = intent.getStringExtra(name);
+        if (result == null) {
+            return defaultValue;
+        } else {
+            return result;
+        }
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns an empty array of 0 elements.
+     */
+    public String[] getStringArrayExtra(@NonNull String name) {
+        return getStringArrayExtra(name, /* defaultValue */ new String[0]);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public String[] getStringArrayExtra(@NonNull String name, String[] defaultValue) {
+        Intent intent = getActivity().getIntent();
+        String[] result = intent.getStringArrayExtra(name);
+        if (result == null) {
+            return defaultValue;
+        } else {
+            return result;
+        }
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns an empty list of 0 elements.
+     */
+    public ArrayList<String> getStringArrayListExtra(@NonNull String name) {
+        return getStringArrayListExtra(name, /* defaultValue */ new ArrayList<String>());
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public ArrayList<String> getStringArrayListExtra(@NonNull String name, ArrayList<String> defaultValue) {
+        Intent intent = getActivity().getIntent();
+        ArrayList<String> result = intent.getStringArrayListExtra(name);
+        if (result == null) {
+            return defaultValue;
+        } else {
+            return result;
+        }
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
      * If there is no such 'extra' parameter, returns null.
      */
     @SuppressWarnings("unchecked")
@@ -94,7 +286,7 @@ public class SimpleFragment extends DialogFragment implements
     }
 
     /**
-     * Returns an 'extra' parameter with the given name from this activity's intent.
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
      * If there is no such 'extra' parameter, returns null.
      */
     @SuppressWarnings("unchecked")
@@ -114,6 +306,13 @@ public class SimpleFragment extends DialogFragment implements
     public void setLayoutID(@LayoutRes int layoutID) {
         this.layoutID = layoutID;
     }
+
+    /// begin findViewById convenience methods
+
+
+
+    /// end findViewById convenience methods
+
 
     /// begin lifecycle methods
 
@@ -627,4 +826,57 @@ public class SimpleFragment extends DialogFragment implements
     }
 
     /// end empty event listener methods (copied from SimpleActivity)
+
+    /// begin log/print/toast convenience methods
+
+    /**
+     * Prints a debug (.d) log message containing the given text.
+     */
+    public void log(Object message) {
+        Log.d("SimpleFragment log", String.valueOf(message));
+    }
+
+    /**
+     * Prints a debug (.d) log message containing the given text.
+     */
+    public void log(String message) {
+        Log.d("SimpleFragment log", message);
+    }
+
+    /**
+     * Prints a WTF (.wtf) log message containing the given text and exception.
+     */
+    public void log(String message, Throwable exception) {
+        Log.wtf("SimpleFragment log", message, exception);
+    }
+
+    /**
+     * Prints a WTF (.wtf) log message containing the given exception.
+     */
+    public void log(Throwable exception) {
+        Log.wtf("SimpleFragment log", "exception was thrown", exception);
+    }
+
+    /**
+     * Prints a verbose (.v) log message containing the given formatted string.
+     */
+    public void printf(String message, Object... args) {
+        Log.v("SimpleActivity printf", String.format(message, args));
+    }
+
+    /**
+     * Prints a verbose (.v) log message containing the given text.
+     */
+    public void println(Object message) {
+        Log.v("SimpleFragment println", String.valueOf(message));
+    }
+
+    /**
+     * Prints a verbose (.v) log message containing the given text.
+     */
+    public void println(String message) {
+        Log.v("SimpleFragment println", message);
+    }
+    
+    /// end log/print/toast convenience methods
 }
