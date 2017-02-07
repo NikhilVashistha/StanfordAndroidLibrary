@@ -1376,7 +1376,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     }
 
     /**
-     * Returns all children, grandchildren, etc. of this view group that are instances of the given class.
+     * Returns all children, grandchildren, etc of this view group that are instances of the given class.
      * An alias for SimpleView.with(this).findDescendents.
      */
     public final <T extends View> ArrayList<T> findDescendents(@IdRes int parentID, @NonNull Class<T> viewClass) {
@@ -1384,7 +1384,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     }
 
     /**
-     * Returns all children, grandchildren, etc. of this view group that are instances of the given class.
+     * Returns all children, grandchildren, etc of this view group that are instances of the given class.
      * An alias for SimpleView.with(this).findDescendents.
      */
     public final <T extends View> ArrayList<T> findDescendents(@NonNull ViewGroup parent, @NonNull Class<T> viewClass) {
@@ -1392,7 +1392,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     }
 
     /**
-     * Returns all children, grandchildren, etc. of this view group that are instances of one of the given classes.
+     * Returns all children, grandchildren, etc of this view group that are instances of one of the given classes.
      * An alias for SimpleView.with(this).findDescendents.
      */
     @SafeVarargs
@@ -1401,7 +1401,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     }
 
     /**
-     * Returns all children, grandchildren, etc. of this view group that are instances of one of the given classes.
+     * Returns all children, grandchildren, etc of this view group that are instances of one of the given classes.
      * An alias for SimpleView.with(this).findDescendents.
      */
     @SafeVarargs
@@ -1410,7 +1410,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     }
 
     /**
-     * Returns all children, grandchildren, etc. of this view group that use the given tag.
+     * Returns all children, grandchildren, etc of this view group that use the given tag.
      * An alias for SimpleView.with(this).findDescendents.
      */
     public ArrayList<View> findDescendents(@IdRes int parentID, @NonNull Object tag) {
@@ -1418,7 +1418,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     }
 
     /**
-     * Returns all children, grandchildren, etc. of this view group that use the given tag.
+     * Returns all children, grandchildren, etc of this view group that use the given tag.
      * An alias for SimpleView.with(this).findDescendents.
      */
     public ArrayList<View> findDescendents(@NonNull ViewGroup parent, @NonNull Object tag) {
@@ -1426,7 +1426,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     }
 
     /**
-     * Returns all children, grandchildren, etc. of this view group that are instances of the given class.
+     * Returns all children, grandchildren, etc of this view group that are instances of the given class.
      * An alias for SimpleView.with(this).findDescendents.
      */
     public <T extends View> ArrayList<T> $$(@IdRes int parentID, @NonNull Class<T> viewClass) {
@@ -1434,7 +1434,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     }
 
     /**
-     * Returns all children, grandchildren, etc. of this view group that are instances of the given class.
+     * Returns all children, grandchildren, etc of this view group that are instances of the given class.
      * An alias for SimpleView.with(this).findDescendents.
      */
     public <T extends View> ArrayList<T> $$(@NonNull ViewGroup parent, @NonNull Class<T> viewClass) {
@@ -1442,7 +1442,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     }
 
     /**
-     * Returns all children, grandchildren, etc. of this view group that are instances of one of the given classes.
+     * Returns all children, grandchildren, etc of this view group that are instances of one of the given classes.
      * An alias for SimpleView.with(this).findDescendents.
      */
     @SafeVarargs
@@ -1451,7 +1451,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     }
 
     /**
-     * Returns all children, grandchildren, etc. of this view group that are instances of one of the given classes.
+     * Returns all children, grandchildren, etc of this view group that are instances of one of the given classes.
      * An alias for SimpleView.with(this).findDescendents.
      */
     @SafeVarargs
@@ -1460,7 +1460,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     }
 
     /**
-     * Returns all children, grandchildren, etc. of this view group that use the given tag.
+     * Returns all children, grandchildren, etc of this view group that use the given tag.
      * An alias for SimpleView.with(this).findDescendents.
      */
     public ArrayList<View> $$(@IdRes int parentID, @NonNull Object tag) {
@@ -1468,7 +1468,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     }
 
     /**
-     * Returns all children, grandchildren, etc. of this view group that use the given tag.
+     * Returns all children, grandchildren, etc of this view group that use the given tag.
      * An alias for SimpleView.with(this).findDescendents.
      */
     public ArrayList<View> $$(@NonNull ViewGroup parent, @NonNull Object tag) {
