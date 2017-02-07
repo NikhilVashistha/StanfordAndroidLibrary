@@ -76,9 +76,10 @@ public class GPoint {
      * @param x The new x-coordinate for the point
      * @param y The new y-coordinate for the point
      */
-    public void setLocation(float x, float y) {
+    public GPoint setLocation(float x, float y) {
         xc = x;
         yc = y;
+        return this;
     }
 
     /**
@@ -87,8 +88,8 @@ public class GPoint {
      * @usage pt.setLocation(p);
      * @param p An existing <code>GPoint</code> specifying the new location
      */
-    public void setLocation(GPoint p) {
-        setLocation(p.xc, p.yc);
+    public GPoint setLocation(GPoint p) {
+        return setLocation(p.xc, p.yc);
     }
 
     /**
@@ -109,9 +110,10 @@ public class GPoint {
      * @param dx The change in the x direction (positive is rightward)
      * @param dy The change in the y direction (positive is downward)
      */
-    public void translate(float dx, float dy) {
+    public GPoint translate(float dx, float dy) {
         xc += dx;
         yc += dy;
+        return this;
     }
 
     /**
@@ -125,7 +127,7 @@ public class GPoint {
      * @noshow
      */
     public int hashCode() {
-        return new Float((float) xc).hashCode() ^ (37 * new Float((float) yc).hashCode());
+        return Float.valueOf((float) xc).hashCode() ^ (37 * Float.valueOf((float) yc).hashCode());
     }
 
     /**

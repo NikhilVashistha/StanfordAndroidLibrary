@@ -146,11 +146,12 @@ public class GRectangle implements Serializable {
      * @param width The width of the rectangle
      * @param height The height of the rectangle
      */
-    public void setBounds(float x, float y, float width, float height) {
+    public GRectangle setBounds(float x, float y, float width, float height) {
         xc = x;
         yc = y;
         myWidth = width;
         myHeight = height;
+        return this;
     }
 
     /**
@@ -160,8 +161,8 @@ public class GRectangle implements Serializable {
      * @param pt The location of the upper left corner of the rectangle
      * @param size The dimensions of the rectangle
      */
-    public void setBounds(GPoint pt, GDimension size) {
-        setBounds(pt.getX(), pt.getY(), size.getWidth(), size.getHeight());
+    public GRectangle setBounds(GPoint pt, GDimension size) {
+        return setBounds(pt.getX(), pt.getY(), size.getWidth(), size.getHeight());
     }
 
     /**
@@ -170,8 +171,8 @@ public class GRectangle implements Serializable {
      * @usage rect.setBounds(bounds);
      * @param bounds A <code>GRectangle</code> specifying the new bounds
      */
-    public void setBounds(GRectangle bounds) {
-        setBounds(bounds.xc, bounds.yc, bounds.myWidth, bounds.myHeight);
+    public GRectangle setBounds(GRectangle bounds) {
+        return setBounds(bounds.xc, bounds.yc, bounds.myWidth, bounds.myHeight);
     }
 
     /**
@@ -192,9 +193,10 @@ public class GRectangle implements Serializable {
      * @param x The new x-coordinate for the rectangle
      * @param y The new y-coordinate for the rectangle
      */
-    public void setLocation(float x, float y) {
+    public GRectangle setLocation(float x, float y) {
         xc = x;
         yc = y;
+        return this;
     }
 
     /**
@@ -203,8 +205,8 @@ public class GRectangle implements Serializable {
      * @usage rect.setLocation(pt);
      * @param pt The new location for the rectangle
      */
-    public void setLocation(GPoint pt) {
-        setLocation(pt.getX(), pt.getY());
+    public GRectangle setLocation(GPoint pt) {
+        return setLocation(pt.getX(), pt.getY());
     }
 
     /**
@@ -225,9 +227,10 @@ public class GRectangle implements Serializable {
      * @param dx The change in the x direction (positive is rightward)
      * @param dy The change in the y direction (positive is downward)
      */
-    public void translate(float dx, float dy) {
+    public GRectangle translate(float dx, float dy) {
         xc += dx;
         yc += dy;
+        return this;
     }
 
     /**
@@ -237,9 +240,10 @@ public class GRectangle implements Serializable {
      * @param width The new width of the rectangle
      * @param height The new height of the rectangle
      */
-    public void setSize(float width, float height) {
+    public GRectangle setSize(float width, float height) {
         myWidth = width;
         myHeight = height;
+        return this;
     }
 
     /**
@@ -248,8 +252,8 @@ public class GRectangle implements Serializable {
      * @usage rect.setSize(size);
      * @param size The new dimensions of the rectangle
      */
-    public void setSize(GDimension size) {
-        setSize(size.getWidth(), size.getHeight());
+    public GRectangle setSize(GDimension size) {
+        return setSize(size.getWidth(), size.getHeight());
     }
 
     /**
@@ -269,11 +273,12 @@ public class GRectangle implements Serializable {
      * @param dx The offset to extend each of the left and right borders
      * @param dy The offset to extend each of the top and bottom borders
      */
-    public void grow(float dx, float dy) {
+    public GRectangle grow(float dx, float dy) {
         xc -= dx;
         yc -= dy;
         myWidth += 2 * dx;
         myHeight += 2 * dy;
+        return this;
     }
 
     /**
@@ -371,11 +376,12 @@ public class GRectangle implements Serializable {
      * @usage rect.add(r);
      * @param r A new rectangle to include in this one
      */
-    public void add(GRectangle r) {
-        if (r.isEmpty()) return;
+    public GRectangle add(GRectangle r) {
+        if (r.isEmpty()) {
+            return this;
+        }
         if (isEmpty()) {
-            setBounds(r);
-            return;
+            return setBounds(r);
         }
         float x2 = Math.max(xc + myWidth, r.xc + r.myWidth);
         float y2 = Math.max(yc + myHeight, r.yc + r.myHeight);
@@ -383,6 +389,7 @@ public class GRectangle implements Serializable {
         yc = Math.min(r.yc, yc);
         myWidth = x2 - xc;
         myHeight = y2 - yc;
+        return this;
     }
 
     /**
@@ -392,10 +399,9 @@ public class GRectangle implements Serializable {
      * @param x The x coordinate of the new point
      * @param y The y coordinate of the new point
      */
-    public void add(float x, float y) {
+    public GRectangle add(float x, float y) {
         if (isEmpty()) {
-            setBounds(x, y, 0, 0);
-            return;
+            return setBounds(x, y, 0, 0);
         }
         float x2 = Math.max(x + myWidth, x);
         float y2 = Math.max(y + myHeight, y);
@@ -403,6 +409,7 @@ public class GRectangle implements Serializable {
         yc = Math.min(y, yc);
         myWidth = x2 - xc;
         myHeight = y2 - yc;
+        return this;
     }
 
     /**
@@ -416,10 +423,10 @@ public class GRectangle implements Serializable {
      * @noshow
      */
     public int hashCode() {
-        int hash = new Float((float) xc).hashCode();
-        hash = (37 * hash) ^ new Float((float) yc).hashCode();
-        hash = (37 * hash) ^ new Float((float) myWidth).hashCode();
-        hash = (37 * hash) ^ new Float((float) myHeight).hashCode();
+        int hash = Float.valueOf((float) xc).hashCode();
+        hash = (37 * hash) ^ Float.valueOf((float) yc).hashCode();
+        hash = (37 * hash) ^ Float.valueOf((float) myWidth).hashCode();
+        hash = (37 * hash) ^ Float.valueOf((float) myHeight).hashCode();
         return hash;
     }
 

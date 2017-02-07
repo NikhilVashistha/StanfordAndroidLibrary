@@ -34,6 +34,24 @@ public abstract class GObject {
     }
 
     /**
+     * Adds this GObject to the given graphical canvas.
+     * A convenience method that just calls the canvas's add(GObject) method.
+     */
+    public GObject addTo(GCanvas canvas) {
+        canvas.add(this);
+        return this;
+    }
+
+    /**
+     * Adds this GObject to the given graphical canvas.
+     * A convenience method that just calls the canvas's add(GObject) method.
+     */
+    public GObject addTo(GCanvas canvas, float x, float y) {
+        canvas.add(this, x, y);
+        return this;
+    }
+
+    /**
      * Checks to see whether a point is inside the object.
      */
     public boolean contains(float x, float y) {
@@ -197,24 +215,24 @@ public abstract class GObject {
     /**
      * Moves the object on the screen using the displacements dx and dy.
      */
-    public final void moveBy(float dx, float dy) {
-        translate(dx, dy);
+    public final GObject moveBy(float dx, float dy) {
+        return translate(dx, dy);
     }
 
     /**
      * Moves the object using displacements given in polar coordinates.
      */
-    public final void moveByPolar(float r, float theta) {
+    public final GObject moveByPolar(float r, float theta) {
         double d = theta * Math.PI / 180;
-        translate((float) (r * Math.cos(d)), (float) (-r * Math.sin(d)));
+        return translate((float) (r * Math.cos(d)), (float) (-r * Math.sin(d)));
     }
 
     /**
      * Moves this GObject to have the same location as the given other GObject.
      * @throws NullPointerException if gobj is null
      */
-    public final void moveTo(GObject gobj) {
-        setLocation(gobj.getX(), gobj.getY());
+    public final GObject moveTo(GObject gobj) {
+        return setLocation(gobj.getX(), gobj.getY());
     }
 
     /**
@@ -225,13 +243,14 @@ public abstract class GObject {
      * @param sy The factor used to scale all coordinates in the y direction
      * @throws IllegalArgumentException if sx or sy is not a positive number
      */
-    public void scale(float sx, float sy) {
+    public GObject scale(float sx, float sy) {
         if (sx <= 0.0 || sy <= 0.0) {
             throw new IllegalArgumentException("illegal scale factors: " + sx + "x" + sy);
         }
         width *= sx;
         height *= sy;
         repaint();
+        return this;
     }
 
     /**
@@ -242,30 +261,30 @@ public abstract class GObject {
      * @param sf The factor used to scale all coordinates in both dimensions
      * @throws IllegalArgumentException if sf is not a positive number
      */
-    public final void scale(float sf) {
-        scale(sf, sf);
+    public final GObject scale(float sf) {
+        return scale(sf, sf);
     }
 
     /**
      * Moves the object on the screen using the displacements dx and dy.
      */
-    public final void translate(float dx, float dy) {
-        setLocation(x + dx, y + dy);
+    public final GObject translate(float dx, float dy) {
+        return setLocation(x + dx, y + dy);
     }
 
     /**
      * Moves the object on the screen using the displacements dx and dy.
      */
-    public final void moveTo(float x, float y) {
-        setLocation(x, y);
+    public final GObject moveTo(float x, float y) {
+        return setLocation(x, y);
     }
 
     /**
      * Moves the object using displacements given in polar coordinates.
      */
-    public final void moveToPolar(float r, float theta) {
+    public final GObject moveToPolar(float r, float theta) {
         double d = theta * 3.141592653589793D / 180.0D;
-        moveTo((float) (r * Math.cos(d)), (float) (-r * Math.sin(d)));
+        return moveTo((float) (r * Math.cos(d)), (float) (-r * Math.sin(d)));
     }
 
     /**
@@ -284,111 +303,122 @@ public abstract class GObject {
     /**
      * Moves this object one step toward the back in the z dimension.
      */
-    public final void sendBackward() {
+    public final GObject sendBackward() {
         if (gcanvas == null) {
             throw new IllegalStateException("Cannot sendToBack if not added to a gcanvas");
         }
         gcanvas.sendBackward(this);
         repaint();
+        return this;
     }
 
     /**
      * Moves this object one step toward the front in the z dimension.
      */
-    public final void sendForward() {
+    public final GObject sendForward() {
         if (gcanvas == null) {
             throw new IllegalStateException("Cannot sendToBack if not added to a gcanvas");
         }
         gcanvas.sendForward(this);
         repaint();
+        return this;
     }
 
     /**
      * Moves this object to the back of the display in the z dimension.
      */
-    public final void sendToBack() {
+    public final GObject sendToBack() {
         if (gcanvas == null) {
             throw new IllegalStateException("Cannot sendToBack if not added to a gcanvas");
         }
         gcanvas.sendToBack(this);
         repaint();
+        return this;
     }
 
     /**
      * Moves this object to the front of the display in the z dimension.
      */
-    public final void sendToFront() {
+    public final GObject sendToFront() {
         if (gcanvas == null) {
             throw new IllegalStateException("Cannot sendToBack if not added to a gcanvas");
         }
         gcanvas.sendToFront(this);
         repaint();
+        return this;
     }
 
     /**
      * Sets the canvas this object is in.
      * If null is passed, this object will not be associated with any canvas.
      */
-    public final void setCanvas(Canvas canvas) {
+    public final GObject setCanvas(Canvas canvas) {
         this.canvas = canvas;
         repaint();
+        return this;
     }
 
     /**
      * Sets the color used to display this object.
      * @throws NullPointerException if paint is null.
      */
-    public final void setColor(Paint paint) {
+    public final GObject setColor(Paint paint) {
         if (paint == null) {
             throw new NullPointerException();
         }
         GColor.matchColor(paint, this.paint);
         repaint();
+        return this;
     }
 
     /**
      * Sets the color used to display this object.
      * @throws NullPointerException if paint is null.
      */
-    public final void setPaint(Paint paint) {
+    public final GObject setPaint(Paint paint) {
         if (paint == null) {
             throw new NullPointerException();
         }
         this.paint = paint;
         repaint();
+        return this;
     }
 
     /**
      * Sets the location of this object to the point (x, y).
      */
-    public void setLocation(float x, float y) {
+    public GObject setLocation(float x, float y) {
         this.x = x;
         this.y = y;
         repaint();
+        return this;
     }
 
     /**
      * Moves this GObject to have the same location as the given other GObject.
      * @throws NullPointerException if gobj is null.
      */
-    public final void setLocation(GObject gobj) {
+    public final GObject setLocation(GObject gobj) {
         setLocation(gobj.getX(), gobj.getY());
+        return this;
     }
 
     /**
      * Sets the x-location of this object.
      * The y-location is unchanged.
      */
-    public final void setX(float x) {
+    public final GObject setX(float x) {
         setLocation(x, getY());
+        return this;
     }
 
     /**
      * Sets the y-location of this object.
      * The x-location is unchanged.
      */
-    public final void setY(float y) {
+    public final GObject setY(float y) {
         setLocation(getX(), y);
+        return this;
     }
 
     /**
@@ -396,8 +426,9 @@ public abstract class GObject {
      * This does not resize the object but moves it as though you had
      * set its leftmost x-coordinate to rightX - getWidth().
      */
-    public final void setRightX(float rightX) {
+    public final GObject setRightX(float rightX) {
         setX(rightX - getWidth());
+        return this;
     }
 
     /**
@@ -405,8 +436,9 @@ public abstract class GObject {
      * This does not resize the object but moves it as though you had
      * set its top y-coordinate to bottomY - getHeight().
      */
-    public final void setBottomY(float bottomY) {
+    public final GObject setBottomY(float bottomY) {
         setY(bottomY - getHeight());
+        return this;
     }
 
     /**
@@ -419,9 +451,10 @@ public abstract class GObject {
      * @param height The new height of the object
      * @throws IllegalArgumentException if width or height is negative
      */
-    public final void setBounds(float x, float y, float width, float height) {
+    public final GObject setBounds(float x, float y, float width, float height) {
         setSize(width, height);
         setLocation(x, y);
+        return this;
     }
 
     /**
@@ -432,8 +465,9 @@ public abstract class GObject {
      * @param bounds A <code>GRectangle</code> specifying the new bounds
      * @throws IllegalArgumentException if rect's width or height is negative
      */
-    public final void setBounds(GRectangle bounds) {
+    public final GObject setBounds(GRectangle bounds) {
         setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+        return this;
     }
 
     /**
@@ -442,8 +476,9 @@ public abstract class GObject {
      * @usage gobj.setFilled(fill);
      * @param fill <code>true</code> if the object should be filled, <code>false</code> for an outline
      */
-    public final void setFilled(boolean fill) {
+    public final GObject setFilled(boolean fill) {
         isFilled = fill;
+        return this;
     }
 
     /**
@@ -453,13 +488,14 @@ public abstract class GObject {
      * @param color The color used to display the filled region of this object
      * @throws NullPointerException if color is null
      */
-    public final void setFillColor(Paint color) {
+    public final GObject setFillColor(Paint color) {
         if (color == null) {
             throw new NullPointerException();
         }
         fillColor = new Paint(color);
         fillColor.setStyle(Paint.Style.FILL);
         isFilled = true;
+        return this;
     }
 
     /**
@@ -468,13 +504,14 @@ public abstract class GObject {
      * the canvas instead.
      * If gcanvas is null, this object will not be associated with any canvas.
      */
-    public final void setGCanvas(GCanvas gcanvas) {
+    public final GObject setGCanvas(GCanvas gcanvas) {
         this.gcanvas = gcanvas;
         if (gcanvas == null) {
             this.canvas = null;
         } else {
             this.canvas = gcanvas.getCanvas();
         }
+        return this;
     }
 
     /**
@@ -493,8 +530,9 @@ public abstract class GObject {
      * @noshow
      * @throws NullPointerException if size is null
      */
-    public final void setSize(GDimension size) {
+    public final GObject setSize(GDimension size) {
         setSize(size.getWidth(), size.getHeight());
+        return this;
     }
 
 
@@ -506,20 +544,22 @@ public abstract class GObject {
      * @param height The new height of the object
      * @throws IllegalArgumentException if width or height is negative
      */
-    public void setSize(float width, float height) {
+    public GObject setSize(float width, float height) {
         if (width < 0 || height < 0) {
             throw new IllegalArgumentException("illegal size: " + width + "x" + height);
         }
         this.width = width;
         this.height = height;
+        return this;
     }
 
     /**
      * Sets whether this object is visible.
      */
-    public final void setVisible(boolean visible) {
+    public final GObject setVisible(boolean visible) {
         this.visible = visible;
         repaint();
+        return this;
     }
 
     /**

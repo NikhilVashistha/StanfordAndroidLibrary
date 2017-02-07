@@ -166,6 +166,25 @@ public class GSprite extends GObject {
     }
 
     /**
+     * Adds this sprite to the given graphical canvas.
+     * A convenience method that just calls the canvas's add(GObject) method.
+     */
+    @Override
+    public GSprite addTo(GCanvas canvas) {
+        canvas.add(this);
+        return this;
+    }
+
+    /**
+     * Adds this sprite to the given graphical canvas.
+     * A convenience method that just calls the canvas's add(GObject) method.
+     */
+    public GSprite addTo(GCanvas canvas, float x, float y) {
+        canvas.add(this, x, y);
+        return this;
+    }
+
+    /**
      * Returns true if this sprite collides with the given other sprite.
      * Collision is determined by the collision rectangles of the two sprites.
      * By default this is just the bounding boxes of their bitmaps or GObjects.
@@ -230,30 +249,30 @@ public class GSprite extends GObject {
     /**
      * Inverts the sign of the sprite's velocity in the x direction.
      */
-    public void flipVelocityX() {
-        setVelocityX(-getVelocityX());
+    public GSprite flipVelocityX() {
+        return setVelocityX(-getVelocityX());
     }
 
     /**
      * Inverts the sign of the sprite's velocity in the y direction.
      */
-    public void flipVelocityY() {
-        setVelocityY(-getVelocityY());
+    public GSprite flipVelocityY() {
+        return setVelocityY(-getVelocityY());
     }
 
     /**
      * Inverts the sign of the sprite's velocity in both directions.
      */
-    public void flipVelocity() {
+    public GSprite flipVelocity() {
         flipVelocityX();
-        flipVelocityY();
+        return flipVelocityY();
     }
 
     /**
      * Rotates this sprite's velocity in x and y dimension by the given angle in degrees, clockwise.
      * For example, passing 90 is a 'right' turn, -90 is a 'left' turn, and 180 is an about-face.
      */
-    public void rotateVelocity(float degrees) {
+    public GSprite rotateVelocity(float degrees) {
         // convert current velocity to polar
         float radians = (float) Math.toRadians(degrees);
 
@@ -262,6 +281,7 @@ public class GSprite extends GObject {
         float newDy = (float) (Math.round((dx * Math.sin(radians) + dy * Math.cos(radians)) * 1e4) / 1e4);
         dx = newDx;
         dy = newDy;
+        return this;
     }
 
     /**
@@ -405,7 +425,7 @@ public class GSprite extends GObject {
     /**
      * Sets the list of bitmaps for this sprite.
      */
-    public void setBitmaps(ArrayList<Bitmap> bitmaps) {
+    public GSprite setBitmaps(ArrayList<Bitmap> bitmaps) {
         synchronized (this) {
             this.bitmaps = bitmaps;
             this.currentBitmap = 0;
@@ -413,12 +433,13 @@ public class GSprite extends GObject {
                 setSizeFromBitmap(bitmaps.get(0));
             }
         }
+        return this;
     }
 
     /**
      * Sets the list of bitmaps for this sprite.
      */
-    public void setBitmaps(Bitmap... bitmaps) {
+    public GSprite setBitmaps(Bitmap... bitmaps) {
         ArrayList<Bitmap> newBitmaps = new ArrayList<>();
         Collections.addAll(newBitmaps, bitmaps);
         synchronized (this) {
@@ -428,6 +449,7 @@ public class GSprite extends GObject {
                 setSizeFromBitmap(bitmaps[0]);
             }
         }
+        return this;
     }
 
     /**
@@ -442,11 +464,12 @@ public class GSprite extends GObject {
      * Sets the index of the bitmap currently being displayed
      * in this sprite's list of bitmaps.
      */
-    public void setCurrentBitmapIndex(int index) {
+    public GSprite setCurrentBitmapIndex(int index) {
         if (index < 0 || index >= this.bitmaps.size()) {
             throw new IndexOutOfBoundsException(String.valueOf(index));
         }
         this.currentBitmap = index;
+        return this;
     }
 
     /**
@@ -463,11 +486,12 @@ public class GSprite extends GObject {
      * in the list should be displayed before automatically cycling
      * to the next frame bitmap.
      */
-    public void setFramesPerBitmap(int framesPerBitmap) {
+    public GSprite setFramesPerBitmap(int framesPerBitmap) {
         if (framesPerBitmap <= 0) {
             throw new IllegalArgumentException("must be > 0: " + framesPerBitmap);
         }
         this.framesPerBitmap = framesPerBitmap;
+        return this;
     }
 
     /**
@@ -580,8 +604,8 @@ public class GSprite extends GObject {
      * favoring the top/left edges if needed.
      * This will use the canvas last passed to paint() if any.
      */
-    public void bound() {
-        bound(getCanvasFromGCanvas());
+    public GSprite bound() {
+        return bound(getCanvasFromGCanvas());
     }
 
     /**
@@ -589,10 +613,11 @@ public class GSprite extends GObject {
      * If it is outside the bounds on a given edge, it will be moved to that edge,
      * favoring the top/left edges if needed.
      */
-    public void bound(Canvas canvas) {
+    public GSprite bound(Canvas canvas) {
         if (canvas != null) {
             bound(0, 0, canvas.getWidth(), canvas.getHeight());
         }
+        return this;
     }
 
     /**
@@ -600,10 +625,11 @@ public class GSprite extends GObject {
      * If it is outside the bounds on a given edge, it will be moved to that edge,
      * favoring the top/left edges if needed.
      */
-    public void bound(RectF rect) {
+    public GSprite bound(RectF rect) {
         if (rect != null) {
             bound(rect.left, rect.top, rect.right, rect.bottom);
         }
+        return this;
     }
 
     /**
@@ -611,9 +637,9 @@ public class GSprite extends GObject {
      * If it is outside the bounds on a given edge, it will be moved to that edge,
      * favoring the top/left edges if needed.
      */
-    public void bound(float leftX, float topY, float rightX, float bottomY) {
+    public GSprite bound(float leftX, float topY, float rightX, float bottomY) {
         boundHorizontal(leftX, rightX);
-        boundVertical(topY, bottomY);
+        return boundVertical(topY, bottomY);
     }
 
     /**
@@ -621,8 +647,8 @@ public class GSprite extends GObject {
      * If it is outside the bounds on a given edge, it will be moved to that edge,
      * favoring the left edge if needed.
      */
-    public void boundHorizontal() {
-        boundHorizontal(getCanvasFromGCanvas());
+    public GSprite boundHorizontal() {
+        return boundHorizontal(getCanvasFromGCanvas());
     }
 
     /**
@@ -630,10 +656,11 @@ public class GSprite extends GObject {
      * If it is outside the bounds on a given edge, it will be moved to that edge,
      * favoring the left edge if needed.
      */
-    public void boundHorizontal(Canvas canvas) {
+    public GSprite boundHorizontal(Canvas canvas) {
         if (canvas != null) {
             boundHorizontal(0, canvas.getWidth());
         }
+        return this;
     }
 
     /**
@@ -641,10 +668,11 @@ public class GSprite extends GObject {
      * If it is outside the bounds on a given edge, it will be moved to that edge,
      * favoring the left edge if needed.
      */
-    public void boundHorizontal(RectF rect) {
+    public GSprite boundHorizontal(RectF rect) {
         if (rect != null) {
             boundHorizontal(rect.left, rect.right);
         }
+        return this;
     }
 
     /**
@@ -652,13 +680,14 @@ public class GSprite extends GObject {
      * If it is outside the bounds on a given edge, it will be moved to that edge,
      * favoring the left edge if needed.
      */
-    public void boundHorizontal(float leftX, float rightX) {
+    public GSprite boundHorizontal(float leftX, float rightX) {
         if (rect.right >= rightX) {
             setRightX(rightX - Math.ulp(rightX));
         }
         if (rect.left < leftX) {
             setX(leftX);
         }
+        return this;
     }
 
     /**
@@ -666,8 +695,8 @@ public class GSprite extends GObject {
      * If it is outside the bounds on a given edge, it will be moved to that edge,
      * favoring the top edge if needed.
      */
-    public void boundVertical() {
-        boundVertical(getCanvasFromGCanvas());
+    public GSprite boundVertical() {
+        return boundVertical(getCanvasFromGCanvas());
     }
 
     /**
@@ -675,10 +704,11 @@ public class GSprite extends GObject {
      * If it is outside the bounds on a given edge, it will be moved to that edge,
      * favoring the top edge if needed.
      */
-    public void boundVertical(Canvas canvas) {
+    public GSprite boundVertical(Canvas canvas) {
         if (canvas != null) {
             boundVertical(0, canvas.getHeight());
         }
+        return this;
     }
 
     /**
@@ -686,10 +716,11 @@ public class GSprite extends GObject {
      * If it is outside the bounds on a given edge, it will be moved to that edge,
      * favoring the top edge if needed.
      */
-    public void boundVertical(RectF rect) {
+    public GSprite boundVertical(RectF rect) {
         if (rect != null) {
             boundVertical(rect.top, rect.bottom);
         }
+        return this;
     }
 
     /**
@@ -697,13 +728,14 @@ public class GSprite extends GObject {
      * If it is outside the bounds on a given edge, it will be moved to that edge,
      * favoring the top edge if needed.
      */
-    public void boundVertical(float topY, float bottomY) {
+    public GSprite boundVertical(float topY, float bottomY) {
         if (rect.bottom >= bottomY) {
             setBottomY(bottomY - Math.ulp(bottomY));
         }
         if (rect.top < topY) {
             setY(topY);
         }
+        return this;
     }
 
     /**
@@ -711,8 +743,9 @@ public class GSprite extends GObject {
      * Acceleration will be applied on each tick of animation, increasing or decreasing
      * the sprite's velocity.
      */
-    public void setAccelerationX(float accelerationX) {
+    public GSprite setAccelerationX(float accelerationX) {
         this.accelerationX = accelerationX;
+        return this;
     }
 
     /**
@@ -720,8 +753,9 @@ public class GSprite extends GObject {
      * Acceleration will be applied on each tick of animation, increasing or decreasing
      * the sprite's velocity.
      */
-    public void setAccelerationY(float accelerationY) {
+    public GSprite setAccelerationY(float accelerationY) {
         this.accelerationY = accelerationY;
+        return this;
     }
 
     /**
@@ -729,9 +763,10 @@ public class GSprite extends GObject {
      * Acceleration will be applied on each tick of animation, increasing or decreasing
      * the sprite's velocity.
      */
-    public void setAcceleration(float accelerationX, float accelerationY) {
+    public GSprite setAcceleration(float accelerationX, float accelerationY) {
         this.accelerationX = accelerationX;
         this.accelerationY = accelerationY;
+        return this;
     }
 
     /**
@@ -742,8 +777,8 @@ public class GSprite extends GObject {
      * For example, on a 20x20 pixel sprite, setting a collision margin of 5px
      * would mean that only the innermost 10x10 pixels would count as a collision.
      */
-    public void setCollisionMargin(float px) {
-        setCollisionMargin(
+    public GSprite setCollisionMargin(float px) {
+        return setCollisionMargin(
                 /* left */   px,
                 /* top */    px,
                 /* right */  px,
@@ -758,8 +793,8 @@ public class GSprite extends GObject {
      * For example, on a 20x20 pixel sprite, setting a collision margin of 4px and 6px
      * would mean that only the innermost 12x8 pixels would count as a collision.
      */
-    public void setCollisionMargin(float pxX, float pxY) {
-        setCollisionMargin(
+    public GSprite setCollisionMargin(float pxX, float pxY) {
+        return setCollisionMargin(
                 /* left */   pxX,
                 /* top */    pxY,
                 /* right */  pxX,
@@ -774,7 +809,7 @@ public class GSprite extends GObject {
      * For example, on a 20x20 pixel sprite, setting a collision margin of 4px and 6px
      * would mean that only the innermost 12x8 pixels would count as a collision.
      */
-    public void setCollisionMargin(float pxLeft, float pxTop, float pxRight, float pxBottom) {
+    public GSprite setCollisionMargin(float pxLeft, float pxTop, float pxRight, float pxBottom) {
         collisionRect.left = rect.left + pxLeft;
         collisionRect.top = rect.top + pxTop;
         collisionRect.right = rect.right - pxRight;
@@ -784,13 +819,14 @@ public class GSprite extends GObject {
                     + " (left=" + pxLeft + " top=" + pxTop + " right=" + pxRight + " bottom=" + pxBottom + ")"
                     + "; exceeds sprite size");
         }
+        return this;
     }
 
     /**
      * Sets a collision margin for this sprite on the left and right sides.
      */
-    public void setCollisionMarginX(float pxX) {
-        setCollisionMargin(
+    public GSprite setCollisionMarginX(float pxX) {
+        return setCollisionMargin(
                 /* left */   pxX,
                 /* top */    getCollisionMarginTop(),
                 /* right */  pxX,
@@ -800,15 +836,15 @@ public class GSprite extends GObject {
     /**
      * Sets a collision margin for this sprite on the left side only.
      */
-    public void setCollisionMarginLeft(float pxLeft) {
-        setCollisionMarginX(pxLeft);
+    public GSprite setCollisionMarginLeft(float pxLeft) {
+        return setCollisionMarginX(pxLeft);
     }
 
     /**
      * Sets a collision margin for this sprite on the right side only.
      */
-    public void setCollisionMarginRight(float pxRight) {
-        setCollisionMargin(
+    public GSprite setCollisionMarginRight(float pxRight) {
+        return setCollisionMargin(
                 /* left */   getCollisionMarginLeft(),
                 /* top */    getCollisionMarginTop(),
                 /* right */  pxRight,
@@ -818,8 +854,8 @@ public class GSprite extends GObject {
     /**
      * Sets a collision margin for this sprite on the left and right sides.
      */
-    public void setCollisionMarginX(float pxLeft, float pxRight) {
-        setCollisionMargin(
+    public GSprite setCollisionMarginX(float pxLeft, float pxRight) {
+        return setCollisionMargin(
                 /* left */   pxLeft,
                 /* top */    getCollisionMarginTop(),
                 /* right */  pxRight,
@@ -829,15 +865,15 @@ public class GSprite extends GObject {
     /**
      * Sets a collision margin for this sprite on the top and bottom sides.
      */
-    public void setCollisionMarginY(float pxY) {
-        setCollisionMarginY(pxY, pxY);
+    public GSprite setCollisionMarginY(float pxY) {
+        return setCollisionMarginY(pxY, pxY);
     }
 
     /**
      * Sets a collision margin for this sprite on the top and bottom sides.
      */
-    public void setCollisionMarginY(float pxTop, float pxBottom) {
-        setCollisionMargin(
+    public GSprite setCollisionMarginY(float pxTop, float pxBottom) {
+        return setCollisionMargin(
                 /* left */   getCollisionMarginLeft(),
                 /* top */    pxTop,
                 /* right */  getCollisionMarginRight(),
@@ -847,15 +883,15 @@ public class GSprite extends GObject {
     /**
      * Sets a collision margin for this sprite on the top side.
      */
-    public void setCollisionMarginTop(float pxTop) {
-        setCollisionMarginY(pxTop);
+    public GSprite setCollisionMarginTop(float pxTop) {
+        return setCollisionMarginY(pxTop);
     }
 
     /**
      * Sets a collision margin for this sprite on the bottom side.
      */
-    public void setCollisionMarginBottom(float pxBottom) {
-        setCollisionMargin(
+    public GSprite setCollisionMarginBottom(float pxBottom) {
+        return setCollisionMargin(
                 /* left */   getCollisionMarginLeft(),
                 /* top */    getCollisionMarginTop(),
                 /* right */  getCollisionMarginRight(),
@@ -868,7 +904,7 @@ public class GSprite extends GObject {
      * and will be drawn.
      * If the sprite uses a cycle of multiple bitmaps, use setBitmaps instead.
      */
-    public void setBitmap(Bitmap bitmap) {
+    public GSprite setBitmap(Bitmap bitmap) {
         if (bitmap == null) {
             throw new NullPointerException();
         }
@@ -879,21 +915,23 @@ public class GSprite extends GObject {
             bitmaps = newBitmaps;
             setSizeFromBitmap(bitmap);
         }
+        return this;
     }
 
     /**
      * Sets whether it is possible to collide with this sprite.
      * If false, collidesWith will always return false.
      */
-    public void setCollidable(boolean collidable) {
+    public GSprite setCollidable(boolean collidable) {
         this.collidable = collidable;
+        return this;
     }
 
     /**
      * Moves this sprite to the given x/y location.
      */
     @Override
-    public void setLocation(float x, float y) {
+    public GSprite setLocation(float x, float y) {
         super.setLocation(x, y);
         float mX = getCollisionMarginX();
         float mY = getCollisionMarginY();
@@ -902,20 +940,21 @@ public class GSprite extends GObject {
         if (shape != null) {
             shape.setLocation(x, y);
         }
+        return this;
     }
 
     /**
      * Sets this sprite to use the given size.
      */
     @Override
-    public void setSize(float width, float height) {
+    public GSprite setSize(float width, float height) {
         super.setSize(width, height);
         float marginLeft = getCollisionMarginLeft();
         float marginTop = getCollisionMarginTop();
         float marginRight = getCollisionMarginRight();
         float marginBottom = getCollisionMarginBottom();
         rect.set(rect.left, rect.top, rect.left + width, rect.top + height);
-        setCollisionMargin(marginLeft, marginTop, marginRight, marginBottom);
+        return setCollisionMargin(marginLeft, marginTop, marginRight, marginBottom);
     }
 
     /**
@@ -923,9 +962,10 @@ public class GSprite extends GObject {
      * Every time update() is called, its x/y position will change by
      * the given dx and dy amounts.
      */
-    public void setVelocity(float dx, float dy) {
+    public GSprite setVelocity(float dx, float dy) {
         this.dx = dx;
         this.dy = dy;
+        return this;
     }
 
     /**
@@ -934,8 +974,9 @@ public class GSprite extends GObject {
      * the given dx amount.
      * dy is unchanged by this call.
      */
-    public void setVelocityX(float dx) {
+    public GSprite setVelocityX(float dx) {
         this.dx = dx;
+        return this;
     }
 
     /**
@@ -944,8 +985,9 @@ public class GSprite extends GObject {
      * the given dy amount.
      * dx is unchanged by this call.
      */
-    public void setVelocityY(float dy) {
+    public GSprite setVelocityY(float dy) {
         this.dy = dy;
+        return this;
     }
 
     /**
@@ -997,15 +1039,17 @@ public class GSprite extends GObject {
      * to allow you to stuff arbitrary data inside a sprite that is useful
      * for your particular game.
      */
-    public void removeExtra(String name) {
+    public GSprite removeExtra(String name) {
         extraProperties.remove(name);
+        return this;
     }
 
     /**
      * Removes all extra properties inside this sprite.
      */
-    public void clearExtras() {
+    public GSprite clearExtras() {
         extraProperties.clear();
+        return this;
     }
 
     /**
@@ -1014,16 +1058,18 @@ public class GSprite extends GObject {
      * to allow you to stuff arbitrary data inside a sprite that is useful
      * for your particular game.
      */
-    public void setExtra(String name, Object value) {
+    public GSprite setExtra(String name, Object value) {
         extraProperties.put(name, value);
+        return this;
     }
 
     /**
      * Halts the object, setting its velocity and acceleration to 0.
      */
-    public void stop() {
+    public GSprite stop() {
         setAcceleration(0, 0);
         setVelocity(0, 0);
+        return this;
     }
 
     /**
@@ -1067,8 +1113,9 @@ public class GSprite extends GObject {
      * should loop back to the first one after it ends.
      * Default true.
      */
-    public void setLoopBitmaps(boolean loop) {
+    public GSprite setLoopBitmaps(boolean loop) {
         this.loopBitmaps = loop;
+        return this;
     }
 
     /**

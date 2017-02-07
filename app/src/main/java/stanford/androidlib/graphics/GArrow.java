@@ -50,12 +50,14 @@ public class GArrow extends GLine {
         return arrowheadStart;
     }
 
-    public void setArrowheadStart(boolean value) {
+    public GArrow setArrowheadStart(boolean value) {
         arrowheadStart = value;
+        return this;
     }
 
-    public void setArrowheadEnd(boolean value) {
+    public GArrow setArrowheadEnd(boolean value) {
         arrowheadEnd = value;
+        return this;
     }
 
     @Override
@@ -114,16 +116,18 @@ public class GArrow extends GLine {
         return arrowSize;
     }
 
-    public void setArrowSize(float arrowSize) {
+    public GArrow setArrowSize(float arrowSize) {
         this.arrowSize = arrowSize;
+        return this;
     }
 
     public boolean isClosed() {
         return closed;
     }
 
-    public void setClosed(boolean closed) {
+    public GArrow setClosed(boolean closed) {
         this.closed = closed;
+        return this;
     }
 
     private float polarMoveX(float x, float r, float theta) {

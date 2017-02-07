@@ -7,8 +7,54 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d4a21a40-af7d-486b-a4d3-587e23510573" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/cache.properties.lock" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/cache.properties.lock" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/fileHashes.bin" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/fileHashes.bin" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/stanford-android-lib.jar" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/stanford-android-lib.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stanford-android-lib.jar" afterPath="$PROJECT_DIR$/stanford-android-lib.jar" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.idea/workspace.xml" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleActivity.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleActivity.java" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/Version.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/Version.java" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GArrow.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GArrow.java" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCompound.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCompound.java" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GFillable.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GFillable.java" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GImage.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GImage.java" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLabel.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLabel.java" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLine.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLine.java" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GObject.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GObject.java" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GPoint.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GPoint.java" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GPolygon.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GPolygon.java" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GRectangle.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GRectangle.java" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GResizable.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GResizable.java" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GScalable.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GScalable.java" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GSprite.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GSprite.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/Version.java" afterPath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/Version.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GArrow.java" afterPath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GArrow.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GCompound.java" afterPath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GCompound.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GFillable.java" afterPath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GFillable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GImage.java" afterPath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GImage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GLabel.java" afterPath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GLabel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GLine.java" afterPath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GLine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GObject.java" afterPath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GObject.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GPoint.java" afterPath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GPoint.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GPolygon.java" afterPath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GPolygon.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GRectangle.java" afterPath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GRectangle.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GResizable.java" afterPath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GResizable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GScalable.java" afterPath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GScalable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GSprite.java" afterPath="$PROJECT_DIR$/app/src/main/java/stanford/androidlib/graphics/GSprite.java" />
     </list>
     <ignored path="StanfordAndroidLibrary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,51 +87,61 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SimpleFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="690">
-              <caret line="41" column="42" selection-start-line="41" selection-start-column="42" selection-end-line="41" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SimplePreferences.java" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimplePreferences.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SimpleActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="664">
-              <caret line="1383" column="5" selection-start-line="1383" selection-start-column="5" selection-end-line="1383" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SimpleEvents.java" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleEvents.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="672">
-              <caret line="316" column="67" selection-start-line="316" selection-start-column="67" selection-end-line="316" selection-end-column="67" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Version.java" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/Version.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="270">
-              <caret line="9" column="67" selection-start-line="9" selection-start-column="67" selection-end-line="9" selection-end-column="67" />
+              <caret line="9" column="68" selection-start-line="9" selection-start-column="68" selection-end-line="9" selection-end-column="68" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GRectangle.java" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GRectangle.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="235">
+              <caret line="379" column="25" selection-start-line="379" selection-start-column="25" selection-end-line="379" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GLine.java" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="265">
+              <caret line="104" column="20" selection-start-line="104" selection-start-column="20" selection-end-line="104" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GSprite.java" pinned="false" current-in-tab="true">
+        <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GSprite.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="602">
+              <caret line="181" column="4" selection-start-line="181" selection-start-column="4" selection-end-line="181" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GCanvas.java" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCanvas.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="321">
+              <caret line="75" column="20" selection-start-line="75" selection-start-column="16" selection-end-line="75" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GObject.java" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GObject.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="780">
+              <caret line="53" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1766,9 +1822,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/Row.java" />
-        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleCursor.java" />
-        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleRow.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/data/SimpleRow.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/util/CollectionUtils.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleService.java" />
@@ -1782,11 +1835,6 @@
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/xml/XML.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/xml/XMLTokener.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GOval.java" />
-        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GPoint.java" />
-        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GPolygon.java" />
-        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GRectangle.java" />
-        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GResizable.java" />
-        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLine.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GRect.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/data/SimpleDatabase.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleLocalization.java" />
@@ -1800,14 +1848,9 @@
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleBitmap.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleCanvas.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleList.java" />
-        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GObject.java" />
-        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GSprite.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCanvas.java" />
-        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCompound.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GDimension.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GColor.java" />
-        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GImage.java" />
-        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLabel.java" />
         <option value="$PROJECT_DIR$/gradle.properties" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/build.gradle" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/build.gradle" />
@@ -1815,8 +1858,21 @@
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleFragment.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimplePreferences.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleEvents.java" />
-        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/Version.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleActivity.java" />
+        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GArrow.java" />
+        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCompound.java" />
+        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GFillable.java" />
+        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GImage.java" />
+        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLabel.java" />
+        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GPoint.java" />
+        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GPolygon.java" />
+        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GResizable.java" />
+        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GScalable.java" />
+        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/Version.java" />
+        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GRectangle.java" />
+        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLine.java" />
+        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GObject.java" />
+        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GSprite.java" />
       </list>
     </option>
   </component>
@@ -1830,8 +1886,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="49" />
     <option name="y" value="24" />
-    <option name="width" value="2511" />
-    <option name="height" value="1576" />
+    <option name="width" value="1871" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -1972,6 +2028,28 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="androidlib" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="graphics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="StanfordAndroidLibrary" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="stanfordandroidlibrary" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1989,7 +2067,7 @@
     <property name="recentsLimit" value="5" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/AndroidStudioProjects/DictionaryAwesome" />
+    <property name="last_opened_file_path" value="$USER_HOME$/AndroidStudioProjects/LunarLander16sp" />
     <property name="last_directory_selection" value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib" />
   </component>
   <component name="RecentsManager">
@@ -2373,7 +2451,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="49" y="24" width="2511" height="1576" extended-state="6" />
+    <frame x="49" y="24" width="1871" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -2393,7 +2471,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11034483" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1819178" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2428,62 +2506,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GRect.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="183" column="5" selection-start-line="183" selection-start-column="5" selection-end-line="183" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Android/Sdk/sources/android-23/android/content/ContextWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="282" column="20" selection-start-line="282" selection-start-column="20" selection-end-line="282" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/data/SimpleCursor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Android/Sdk/sources/android-23/android/view/View.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="9789" column="25" selection-start-line="9789" selection-start-column="25" selection-end-line="9789" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/data/SimpleDatabase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Android/Sdk/sources/android-23/android/view/ContextThemeWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="75" column="21" selection-start-line="75" selection-start-column="21" selection-end-line="75" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleMedia.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="46" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleLocalization.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -2575,49 +2597,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GSprite.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GArrow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="722">
-          <caret line="140" column="0" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCanvas.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="2" column="34" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="3" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCompound.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="388" column="0" selection-start-line="388" selection-start-column="0" selection-end-line="388" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GDimension.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GFillable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -2628,20 +2608,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="512">
           <caret line="143" column="13" selection-start-line="143" selection-start-column="13" selection-end-line="143" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GImage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="2" column="54" selection-start-line="2" selection-start-column="54" selection-end-line="2" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLabel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="750">
-          <caret line="338" column="0" selection-start-line="338" selection-start-column="0" selection-end-line="338" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -2745,14 +2711,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="41" column="42" selection-start-line="41" selection-start-column="42" selection-end-line="41" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Android/Sdk/sources/android-25/android/app/Fragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="10830">
@@ -2769,10 +2727,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="1367" column="5" selection-start-line="1367" selection-start-column="5" selection-end-line="1367" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimplePreferences.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="41" column="42" selection-start-line="41" selection-start-column="42" selection-end-line="41" selection-end-column="42" />
           <folding />
         </state>
       </provider>
@@ -2785,18 +2759,138 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/Version.java">
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GArrow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="9" column="67" selection-start-line="9" selection-start-column="67" selection-end-line="9" selection-end-column="67" />
+        <state relative-caret-position="842">
+          <caret line="144" column="0" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/SimpleActivity.java">
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GFillable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="664">
-          <caret line="1383" column="5" selection-start-line="1383" selection-start-column="5" selection-end-line="1383" selection-end-column="5" />
+        <state relative-caret-position="556">
+          <caret line="47" column="18" selection-start-line="47" selection-start-column="18" selection-end-line="47" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GImage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="512">
+          <caret line="294" column="0" selection-start-line="294" selection-start-column="0" selection-end-line="294" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLabel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="345" column="0" selection-start-line="345" selection-start-column="0" selection-end-line="345" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GOval.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="586">
+          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GPoint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="163" column="0" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GPolygon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="501" column="0" selection-start-line="501" selection-start-column="0" selection-end-line="501" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GRect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GResizable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="586">
+          <caret line="43" column="18" selection-start-line="43" selection-start-column="18" selection-end-line="43" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GScalable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="556">
+          <caret line="27" column="18" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCompound.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="254" column="19" selection-start-line="254" selection-start-column="19" selection-end-line="254" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/Version.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="9" column="68" selection-start-line="9" selection-start-column="68" selection-end-line="9" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GRectangle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="379" column="25" selection-start-line="379" selection-start-column="25" selection-end-line="379" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="104" column="20" selection-start-line="104" selection-start-column="20" selection-end-line="104" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCanvas.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="75" column="20" selection-start-line="75" selection-start-column="16" selection-end-line="75" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="780">
+          <caret line="53" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GSprite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="602">
+          <caret line="181" column="4" selection-start-line="181" selection-start-column="4" selection-end-line="181" selection-end-column="4" />
           <folding />
         </state>
       </provider>

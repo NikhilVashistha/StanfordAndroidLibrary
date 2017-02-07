@@ -73,12 +73,13 @@ public class GPolygon extends GObject implements GFillable, GScalable {
      * @param x The x-coordinate of the vertex relative to the polygon origin
      * @param y The y-coordinate of the vertex relative to the polygon origin
      */
-    public void addVertex(float x, float y) {
+    public GPolygon addVertex(float x, float y) {
         if (complete) {
             throw new IllegalStateException("You can't add vertices to a GPolygon that has been "
                     + "marked as complete.");
         }
         vertices.addVertex(x, y);
+        return this;
     }
 
     /**
@@ -89,12 +90,13 @@ public class GPolygon extends GObject implements GFillable, GScalable {
      * @param dx The x displacement through which the edge moves
      * @param dy The y displacement through which the edge moves
      */
-    public void addEdge(float dx, float dy) {
+    public GPolygon addEdge(float dx, float dy) {
         if (complete) {
             throw new IllegalStateException("You can't add edges to a GPolygon that has been "
                     + "marked as complete.");
         }
         vertices.addEdge(dx, dy);
+        return this;
     }
 
     /**
@@ -106,12 +108,13 @@ public class GPolygon extends GObject implements GFillable, GScalable {
      * @param r The length of the edge
      * @param theta The angle at which the edge extends measured in degrees
      */
-    public final void addPolarEdge(float r, float theta) {
+    public final GPolygon addPolarEdge(float r, float theta) {
         if (complete) {
             throw new IllegalStateException("You can't add edges to a GPolygon that has been "
                     + "marked as complete.");
         }
         vertices.addEdge(r * GMath.cosDegrees(theta), -r * GMath.sinDegrees(theta));
+        return this;
     }
 
     /**
@@ -126,12 +129,13 @@ public class GPolygon extends GObject implements GFillable, GScalable {
      * @param start The angle at which the arc begins
      * @param sweep The extent of the arc
      */
-    public void addArc(float arcWidth, float arcHeight, float start, float sweep) {
+    public GPolygon addArc(float arcWidth, float arcHeight, float start, float sweep) {
         if (complete) {
             throw new IllegalStateException("You can't add edges to a GPolygon that has been "
                     + "marked as complete.");
         }
         vertices.addArc(arcWidth, arcHeight, start, sweep);
+        return this;
     }
 
     /**
@@ -152,9 +156,11 @@ public class GPolygon extends GObject implements GFillable, GScalable {
      * @param sx The factor used to scale all coordinates in the x direction
      * @param sy The factor used to scale all coordinates in the y direction
      */
-    public void scale(float sx, float sy) {
+    @Override
+    public GObject scale(float sx, float sy) {
         xScale *= sx;
         yScale *= sy;
+        return this;
     }
 
     /**
@@ -163,8 +169,9 @@ public class GPolygon extends GObject implements GFillable, GScalable {
      * @usage gpoly.rotate(theta);
      * @param theta The angle of rotation in degrees counterclockwise
      */
-    public void rotate(float theta) {
+    public GPolygon rotate(float theta) {
         rotation += theta;
+        return this;
     }
 
     /**
@@ -228,9 +235,10 @@ public class GPolygon extends GObject implements GFillable, GScalable {
      *
      * @usage gpoly.recenter();
      */
-    public void recenter() {
+    public GPolygon recenter() {
         vertices.recenter();
         cacheValid = false;
+        return this;
     }
 
     /**
@@ -264,8 +272,9 @@ public class GPolygon extends GObject implements GFillable, GScalable {
      * polygon.  Subclasses can invoke this method to protect the integrity of
      * the structure from changes by the client.
      */
-    protected void markAsComplete() {
+    protected GPolygon markAsComplete() {
         complete = true;
+        return this;
     }
 
 /* Protected method: clear() */
@@ -274,7 +283,7 @@ public class GPolygon extends GObject implements GFillable, GScalable {
      * scale and rotation factors to the their default values.  Subclasses can
      * use this method to reconstruct a polygon.
      */
-    protected void clear() {
+    protected GPolygon clear() {
         if (complete) {
             throw new IllegalStateException("You can't clear a GPolygon that has been "
                     + "marked as complete.");
@@ -284,6 +293,7 @@ public class GPolygon extends GObject implements GFillable, GScalable {
         xScale = 1.0f;
         yScale = 1.0f;
         cacheValid = false;
+        return this;
     }
 
     /**

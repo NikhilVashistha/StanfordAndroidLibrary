@@ -98,10 +98,11 @@ public class GLine extends GObject implements GScalable {
      * @param x The new x-coordinate of the origin
      * @param y The new y-coordinate of the origin
      */
-    public void setStartPoint(float x, float y) {
+    public GLine setStartPoint(float x, float y) {
         dx += getX() - x;
         dy += getY() - y;
         setLocation(x, y);
+        return this;
     }
 
     /**
@@ -154,9 +155,10 @@ public class GLine extends GObject implements GScalable {
      * @param x The new x-coordinate of the end point
      * @param y The new y-coordinate of the end point
      */
-    public void setEndPoint(float x, float y) {
+    public GLine setEndPoint(float x, float y) {
         dx = x - getX();
         dy = y - getY();
+        return this;
     }
 
     /**
@@ -178,9 +180,10 @@ public class GLine extends GObject implements GScalable {
      * @param sy The factor used to scale all coordinates in the y direction
      */
     @Override
-    public void scale(float sx, float sy) {
+    public GObject scale(float sx, float sy) {
         dx *= sx;
         dy *= sy;
+        return this;
     }
 
     /**

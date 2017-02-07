@@ -16,7 +16,7 @@ public interface GFillable {
      * @usage gobj.setFilled(fill);
      * @param fill <code>true</code> if the object should be filled, <code>false</code> for an outline
      */
-    public void setFilled(boolean fill);
+    public GObject setFilled(boolean fill);
 
 /* Method: isFilled() */
     /**
@@ -34,7 +34,7 @@ public interface GFillable {
      * @usage gobj.setFillColor(color);
      * @param color The color used to display the filled region of this object
      */
-    public void setFillColor(Paint color);
+    public GObject setFillColor(Paint color);
 
 /* Method: getFillColor() */
     /**

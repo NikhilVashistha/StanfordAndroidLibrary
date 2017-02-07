@@ -96,13 +96,14 @@ public class GImage extends GObject implements GResizable {
      * @param image The image to use as the contents of this <code>GImage</code>
      * @throws NullPointerException if image is null
      */
-    public void setImage(Bitmap image) {
+    public GImage setImage(Bitmap image) {
         if (image == null) {
             throw new NullPointerException();
         }
         myImage = image;
         sizeDetermined = false;
         determineSize();
+        return this;
     }
 
     /**
@@ -113,11 +114,11 @@ public class GImage extends GObject implements GResizable {
      *
      * @usage gimage.setImage(name);
      */
-    public void setImage(@DrawableRes int imageID) {
+    public GImage setImage(@DrawableRes int imageID) {
         if (context == null) {
             throw new IllegalStateException("You must construct GImage with a Context in order to use setImage(int).");
         }
-        setImage(BitmapFactory.decodeResource(context.getResources(), imageID));
+        return setImage(BitmapFactory.decodeResource(context.getResources(), imageID));
     }
 
     /**
@@ -169,8 +170,9 @@ public class GImage extends GObject implements GResizable {
      * Can be null.
      * @param context the context to use
      */
-    public void setContext(Context context) {
+    public GImage setContext(Context context) {
         this.context = context;
+        return this;
     }
 
     /**
