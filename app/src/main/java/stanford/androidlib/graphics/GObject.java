@@ -10,6 +10,10 @@ package stanford.androidlib.graphics;
 import android.graphics.*;
 import android.support.annotation.CallSuper;
 
+/**
+ * GObject is the superclass for all of the various kinds of graphical objects
+ * such as lines, ovals, rectangles, ellipses, and other polygons.
+ */
 public abstract class GObject {
     // fields (instance variables)
     GCanvas gcanvas;
