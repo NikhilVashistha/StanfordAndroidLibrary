@@ -1,4 +1,6 @@
 /**
+ * @version 2017/02/10
+ * - added log() that takes a string tag
  * @version 2017/02/06
  * - added more getXxxExtra methods
  * - added getRequestCodeFor(Class) and startActivityForResult overload w/o req code
@@ -3402,9 +3404,28 @@ public abstract class SimpleActivity extends AppCompatActivity implements
 
     // e.g. MySimpleCoolActivity => "R.layout.activity_my_simple_cool"
     private String getDefaultLayoutIdName() {
-        String className = this.getClass().getSimpleName();
+        return getDefaultLayoutIdName(this.getClass());
+    }
+
+    /**
+     * Returns a default layout ID string for the given object's class,
+     * e.g. MySimpleCoolActivity => "R.layout.activity_my_simple_cool".
+     */
+    public static String getDefaultLayoutIdName(Object o) {
+        return getDefaultLayoutIdName(o.getClass());
+    }
+
+    /**
+     * Returns a default layout ID string for the given class,
+     * e.g. MySimpleCoolActivity => "R.layout.activity_my_simple_cool".
+     */
+    public static String getDefaultLayoutIdName(Class<?> clazz) {
+        String className = clazz.getSimpleName();
         className = className.replaceAll("Activity$", "");   // "MySimpleCool"
-        String layoutName = "R.layout.activity_";
+        className = className.replaceAll("Fragment$", "");
+        String layoutName = "R.layout."
+                + (Activity.class.isAssignableFrom(clazz) ? "activity" : "fragment")
+                + "_";
         for (int i = 0; i < className.length(); i++) {
             char ch = className.charAt(i);
             if (i == 0) {
@@ -3888,6 +3909,20 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      */
     public void log(String message) {
         Log.d("SimpleActivity log", message);
+    }
+
+    /**
+     * Prints a debug (.d) log message containing the given text.
+     */
+    public void log(String tag, Object message) {
+        Log.d(tag, String.valueOf(message));
+    }
+
+    /**
+     * Prints a debug (.d) log message containing the given text.
+     */
+    public void log(String tag, String message) {
+        Log.d(tag, message);
     }
 
     /**
