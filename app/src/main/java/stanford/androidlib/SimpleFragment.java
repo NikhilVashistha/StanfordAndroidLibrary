@@ -1,4 +1,7 @@
 /**
+ * @version 2017/02/12
+ * - made it so that if you don't write onCreateView, I try to auto-inflate your fragment for you
+ *   by auto-inferring its layout ID (e.g. FooFragment => R.layout.fragment_foo)
  * @version 2017/02/06
  * - added more getXxxExtra methods
  * - added $A() to get simple activity
@@ -25,9 +28,9 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
-
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.lang.reflect.*;
+import java.util.*;
 
 /**
  * A SimpleFragment is meant as a drop-in replacement for Android's Fragment
@@ -378,7 +381,6 @@ public class SimpleFragment extends DialogFragment implements
      * Activity lifecycle method.
      */
     @Override
-
     // commenting out CallSuper because auto-generated onCreateView doesn't do it,
     // so I don't want the default generated class to already contain a compiler error
     // @CallSuper
@@ -386,9 +388,30 @@ public class SimpleFragment extends DialogFragment implements
         traceLifecycleLog("onCreateView", "bundle=" + savedInstanceState);
         if (layoutID >= 0) {
             return inflater.inflate(layoutID, container, /* attachToRoot */ false);
-        } else {
-            return super.onCreateView(inflater, container, savedInstanceState);
         }
+
+        // see if this class has an onCreateView method
+        Method method = null;
+        try {
+            method = getClass().getDeclaredMethod("onCreateView");
+        } catch (NoSuchMethodException nsme) {
+            // empty
+        }
+
+        if (method == null) {
+            // subclass has no onCreateView method; stub one in
+
+            // get layout ID, e.g. R.layout.fragment_foo
+            String layoutIdName = SimpleActivity.getDefaultLayoutIdName(this);
+            layoutIdName = layoutIdName.replace("R.layout.", "");   // "fragment_foo"
+            Activity act = getActivity();
+            int layoutID = act.getResources().getIdentifier(
+                    layoutIdName, "layout", act.getPackageName());  // R.layout.fragment_foo
+            if (layoutID > 0) {
+                return inflater.inflate(layoutID, container, /* attachToRoot */ false);
+            }
+        }
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     /**
@@ -841,6 +864,20 @@ public class SimpleFragment extends DialogFragment implements
      */
     public void log(String message) {
         Log.d("SimpleFragment log", message);
+    }
+
+    /**
+     * Prints a debug (.d) log message containing the given text.
+     */
+    public void log(String tag, Object message) {
+        Log.d(tag, String.valueOf(message));
+    }
+
+    /**
+     * Prints a debug (.d) log message containing the given text.
+     */
+    public void log(String tag, String message) {
+        Log.d(tag, message);
     }
 
     /**
