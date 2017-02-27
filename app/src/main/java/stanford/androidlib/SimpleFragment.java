@@ -1,4 +1,6 @@
 /**
+ * @version 2017/02/17
+ * - added SimpleTask.TaskExecutor implementation
  * @version 2017/02/12
  * - made it so that if you don't write onCreateView, I try to auto-inflate your fragment for you
  *   by auto-inferring its layout ID (e.g. FooFragment => R.layout.fragment_foo)
@@ -61,6 +63,7 @@ public class SimpleFragment extends DialogFragment implements
         ScaleGestureDetector.OnScaleGestureListener,
         CompoundButton.OnCheckedChangeListener,
         RadioGroup.OnCheckedChangeListener,
+        SimpleTask.TaskExecutor,
         TextToSpeech.OnInitListener,
         OnSwipeListener.OnSwipeListenerImpl,
         OnSwipeListener.OnScaleListenerImpl {
@@ -845,6 +848,38 @@ public class SimpleFragment extends DialogFragment implements
      */
     @Override
     public void onInit(int status) {
+        // empty; override me
+    }
+
+    /**
+     * Required method of SimpleTask.TaskExecutor interface.
+     * This implementation is empty; override it if you want to be notified before your SimpleTask executes.
+     */
+    public void onPreExecute() {
+        // empty; override me
+    }
+
+    /**
+     * Required method of SimpleTask.TaskExecutor interface.
+     * This implementation is empty; override it to supply code for your SimpleTask.
+     */
+    public void doInBackground(String... items) {
+        // empty; override me
+    }
+
+    /**
+     * Required method of SimpleTask.TaskExecutor interface.
+     * This implementation is empty; override it if you want to be notified of progress of your SimpleTask.
+     */
+    public void onProgressUpdate(int progress) {
+        // empty; override me
+    }
+
+    /**
+     * Required method of SimpleTask.TaskExecutor interface.
+     * This implementation is empty; override it if you want to be notified after your SimpleTask executes.
+     */
+    public void onPostExecute() {
         // empty; override me
     }
 

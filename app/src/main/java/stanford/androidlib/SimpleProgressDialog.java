@@ -62,9 +62,17 @@ public class SimpleProgressDialog extends ProgressDialog {
      */
     @Override
     public void setProgress(int value) {
+        setProgress(value, /* closeIfFinished */ true);
+    }
+
+    /**
+     * Sets progress to the given value.
+     * If closeIfFinished is true and it reaches its max amount, the dialog closes.
+     */
+    public void setProgress(int value, boolean closeIfFinished) {
         boolean wasFinished = isFinished();
         super.setProgress(value);
-        if (!wasFinished && isFinished() && isShowing()) {
+        if (closeIfFinished && !wasFinished && isFinished() && isShowing()) {
             dismiss();
         }
     }

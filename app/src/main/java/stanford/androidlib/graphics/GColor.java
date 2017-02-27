@@ -13,7 +13,7 @@ import android.graphics.Paint;
  * of constant colors.  For other colors, use makeColor or just construct
  * your own Paint object.
  */
-public class GColor {
+public final class GColor {
     GColor() {
         // empty
     }
@@ -102,17 +102,26 @@ public class GColor {
     }
 
     /**
-     * Returns a new paint with the given RGB components from 0-255.
-     * @throws IllegalArgumentException if any of r/g/b is not between 0-255
+     * Returns a new paint with the given ARGB components from 0-255.
+     * @throws IllegalArgumentException if any of a/r/g/b is not between 0-255
      */
-    public static Paint makeColor(int r, int g, int b) {
+    public static Paint makeColor(int a, int r, int g, int b) {
+        ensureLegalColorComponent(a);
         ensureLegalColorComponent(r);
         ensureLegalColorComponent(g);
         ensureLegalColorComponent(b);
         Paint paint = new Paint();
-        paint.setARGB(/* alpha */ 255, r, g, b);
+        paint.setARGB(a, r, g, b);
         paint.setAntiAlias(true);
         return paint;
+    }
+
+    /**
+     * Returns a new paint with the given RGB components from 0-255.
+     * @throws IllegalArgumentException if any of r/g/b is not between 0-255
+     */
+    public static Paint makeColor(int r, int g, int b) {
+        return makeColor(/* alpha */ 255, r, g, b);
     }
 
     /**

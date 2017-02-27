@@ -366,7 +366,7 @@ public abstract class GObject {
      * Sets the color used to display this object.
      * @throws NullPointerException if paint is null.
      */
-    public final GObject setColor(Paint paint) {
+    public GObject setColor(Paint paint) {
         if (paint == null) {
             throw new NullPointerException();
         }
@@ -379,7 +379,7 @@ public abstract class GObject {
      * Sets the color used to display this object.
      * @throws NullPointerException if paint is null.
      */
-    public final GObject setPaint(Paint paint) {
+    public GObject setPaint(Paint paint) {
         if (paint == null) {
             throw new NullPointerException();
         }
@@ -480,7 +480,7 @@ public abstract class GObject {
      * @usage gobj.setFilled(fill);
      * @param fill <code>true</code> if the object should be filled, <code>false</code> for an outline
      */
-    public final GObject setFilled(boolean fill) {
+    public GObject setFilled(boolean fill) {
         isFilled = fill;
         return this;
     }
@@ -492,7 +492,7 @@ public abstract class GObject {
      * @param color The color used to display the filled region of this object
      * @throws NullPointerException if color is null
      */
-    public final GObject setFillColor(Paint color) {
+    public GObject setFillColor(Paint color) {
         if (color == null) {
             throw new NullPointerException();
         }
@@ -560,7 +560,7 @@ public abstract class GObject {
     /**
      * Sets whether this object is visible.
      */
-    public final GObject setVisible(boolean visible) {
+    public GObject setVisible(boolean visible) {
         this.visible = visible;
         repaint();
         return this;

@@ -1,4 +1,6 @@
 /*
+ * @version 2017/02/23
+ * - forwarded some more setXxx calls to inner shape GObject
  * @version 2016/12/22
  * - added illegal arg / nullness checking to some methods e.g. setSize
  * @version 2016/05/21
@@ -928,18 +930,71 @@ public class GSprite extends GObject {
     }
 
     /**
+     * Sets the color used to display this sprite.
+     * @throws NullPointerException if paint is null.
+     */
+    public GSprite setColor(Paint paint) {
+        if (this.shape != null) {
+            this.shape.setColor(paint);
+        }
+        super.setColor(paint);
+        return this;
+    }
+
+    /**
+     * Sets the color used to display this object.
+     * @throws NullPointerException if paint is null.
+     */
+    public GSprite setPaint(Paint paint) {
+        if (this.shape != null) {
+            this.shape.setPaint(paint);
+        }
+        super.setPaint(paint);
+        return this;
+    }
+
+    /**
+     * Sets whether this object is filled.
+     *
+     * @usage gobj.setFilled(fill);
+     * @param fill <code>true</code> if the object should be filled, <code>false</code> for an outline
+     */
+    public GSprite setFilled(boolean fill) {
+        if (this.shape != null) {
+            this.shape.setFilled(fill);
+        }
+        super.setFilled(fill);
+        return this;
+    }
+
+    /**
+     * Sets the color used to display the filled region of this object.
+     *
+     * @usage gobj.setFillColor(color);
+     * @param color The color used to display the filled region of this object
+     * @throws NullPointerException if color is null
+     */
+    public GSprite setFillColor(Paint color) {
+        if (this.shape != null) {
+            this.shape.setFillColor(color);
+        }
+        super.setFillColor(color);
+        return this;
+    }
+
+    /**
      * Moves this sprite to the given x/y location.
      */
     @Override
     public GSprite setLocation(float x, float y) {
         super.setLocation(x, y);
+        if (shape != null) {
+            shape.setLocation(x, y);
+        }
         float mX = getCollisionMarginX();
         float mY = getCollisionMarginY();
         rect.offsetTo(x, y);
         collisionRect.offsetTo(x + mX, y + mY);
-        if (shape != null) {
-            shape.setLocation(x, y);
-        }
         return this;
     }
 
@@ -949,6 +1004,9 @@ public class GSprite extends GObject {
     @Override
     public GSprite setSize(float width, float height) {
         super.setSize(width, height);
+        if (shape != null) {
+            shape.setSize(width, height);
+        }
         float marginLeft = getCollisionMarginLeft();
         float marginTop = getCollisionMarginTop();
         float marginRight = getCollisionMarginRight();
@@ -987,6 +1045,17 @@ public class GSprite extends GObject {
      */
     public GSprite setVelocityY(float dy) {
         this.dy = dy;
+        return this;
+    }
+
+    /**
+     * Sets whether this object is visible.
+     */
+    public GSprite setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (this.shape != null) {
+            this.shape.setVisible(visible);
+        }
         return this;
     }
 

@@ -1,4 +1,6 @@
 /**
+ * @version 2017/02/17
+ * - added SimpleTask.TaskExecutor implementation
  * @version 2017/02/10
  * - added log() that takes a string tag
  * @version 2017/02/06
@@ -100,6 +102,7 @@ import java.net.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import stanford.androidlib.data.SimpleDatabase;
 import stanford.androidlib.util.IntentUtils;
 
 /**
@@ -132,8 +135,10 @@ public abstract class SimpleActivity extends AppCompatActivity implements
         RadioGroup.OnCheckedChangeListener,
         OnSwipeListener.OnSwipeListenerImpl,
         OnSwipeListener.OnScaleListenerImpl,
+        SimpleDatabase.QueryProgressListener,
         SimpleDialog.DialogListener,
-        SimpleEvents.EnterKeyPressListener {
+        SimpleEvents.EnterKeyPressListener,
+        SimpleTask.TaskExecutor {
 
     /// begin class constants
 
@@ -2219,6 +2224,46 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     }
 
     /**
+     * Required method of SimpleTask.TaskExecutor interface.
+     * This implementation is empty; override it if you want to be notified before your SimpleTask executes.
+     */
+    public void onPreExecute() {
+        // empty; override me
+    }
+
+    /**
+     * Required method of SimpleTask.TaskExecutor interface.
+     * This implementation is empty; override it to supply code for your SimpleTask.
+     */
+    public void doInBackground(String... items) {
+        // empty; override me
+    }
+
+    /**
+     * Required method of SimpleTask.TaskExecutor interface.
+     * This implementation is empty; override it if you want to be notified of progress of your SimpleTask.
+     */
+    public void onProgressUpdate(int progress) {
+        // empty; override me
+    }
+
+    /**
+     * Required method of SimpleTask.TaskExecutor interface.
+     * This implementation is empty; override it if you want to be notified after your SimpleTask executes.
+     */
+    public void onPostExecute() {
+        // empty; override me
+    }
+
+    /**
+     * Required method of SimpleDatabase.QueryProgressListener interface.
+     * This implementation is empty; override it if you want to be notified of progress of long SimpleDatabase queries.
+     */
+    public void queryUpdated(String query, double completed) {
+        // empty; override me
+    }
+
+    /**
      * Attaches an event listener for the appropriate event that will call a method whose name is
      * the same as the given event name,
      * passing it the given parameters as appropriate.
@@ -3402,14 +3447,14 @@ public abstract class SimpleActivity extends AppCompatActivity implements
         // empty; override me
     }
 
-    // e.g. MySimpleCoolActivity => "R.layout.activity_my_simple_cool"
+    // e.g. MySimpleCoolActivity =&gt; "R.layout.activity_my_simple_cool"
     private String getDefaultLayoutIdName() {
         return getDefaultLayoutIdName(this.getClass());
     }
 
     /**
      * Returns a default layout ID string for the given object's class,
-     * e.g. MySimpleCoolActivity => "R.layout.activity_my_simple_cool".
+     * e.g. MySimpleCoolActivity =&gt; "R.layout.activity_my_simple_cool".
      */
     public static String getDefaultLayoutIdName(Object o) {
         return getDefaultLayoutIdName(o.getClass());
@@ -3417,7 +3462,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
 
     /**
      * Returns a default layout ID string for the given class,
-     * e.g. MySimpleCoolActivity => "R.layout.activity_my_simple_cool".
+     * e.g. MySimpleCoolActivity =&gt; "R.layout.activity_my_simple_cool".
      */
     public static String getDefaultLayoutIdName(Class<?> clazz) {
         String className = clazz.getSimpleName();

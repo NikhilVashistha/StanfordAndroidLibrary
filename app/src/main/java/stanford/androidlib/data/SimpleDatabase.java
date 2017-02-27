@@ -1,4 +1,9 @@
 /*
+ * @version 2017/02/19
+ * - put executeSqlFile into a transaction for speed
+ * @version 2017/02/15
+ * - added QueryProgressListener, overloads to executeSqlFile
+ * - added executeSqlFile that also takes String dbName
  * @version 2016/05/17
  * - made methods non-static to decrease confusion
  * - added delete, exists, list, open, query() methods
@@ -22,6 +27,17 @@ import stanford.androidlib.SimpleActivity;
  * must call {@code SimpleDatabase.with(yourActivity)} first.
  */
 public class SimpleDatabase {
+    /**
+     * An interface for listening to progress on a long query.
+     */
+    public interface QueryProgressListener {
+        /**
+         * Called when part of a long-running query finishes.
+         * @param amountComplete between 0.0-1.0
+         */
+        public void queryUpdated(String query, double amountComplete);
+    }
+
     private static SimpleActivity context;
     private static SimpleDatabase INSTANCE = new SimpleDatabase();
     private static final Set<String> PRIVATE_TABLE_NAMES = new HashSet<>(Arrays.asList(
@@ -64,14 +80,34 @@ public class SimpleDatabase {
      * For example, if you pass "foo", reads/executes file resource R.raw.foo and
      * uses it to create/populate a database named foo.
      */
-    public SimpleDatabase executeSqlFile(String name) {
+    public SimpleDatabase executeSqlFile(String filename) {
+        return executeSqlFile(/* dbName */ filename, filename, /* listener */ null);
+    }
+
+    /**
+     * Reads the .sql file with the given name and executes all SQL statements inside it,
+     * placing them into a database with the same name as the file.
+     * For example, if you pass "foo", reads/executes file resource R.raw.foo and
+     * uses it to create/populate a database named foo.
+     */
+    public SimpleDatabase executeSqlFile(String filename, QueryProgressListener listener) {
+        return executeSqlFile(/* dbName */ filename, filename, listener);
+    }
+
+    /**
+     * Reads the .sql file with the given name and executes all SQL statements inside it,
+     * placing them into the database with the given name.
+     * For example, if you pass "foo" and "bar", reads/executes file resource R.raw.bar and
+     * uses it to create/populate a database named foo.
+     */
+    public SimpleDatabase executeSqlFile(String dbName, String filename, QueryProgressListener listener) {
         // possibly trim .sql extension
-        if (name.toLowerCase().endsWith(".sql")) {
-            name = name.substring(0, name.length() - 4);
+        if (filename.toLowerCase().endsWith(".sql")) {
+            filename = filename.substring(0, filename.length() - 4);
         }
-        SQLiteDatabase db = context.openOrCreateDatabase(name);
-        int id = context.getResourceId(name, "raw");
-        return executeSqlFile(db, id);
+        SQLiteDatabase db = context.openOrCreateDatabase(dbName);
+        int id = context.getResourceId(filename, "raw");
+        return executeSqlFile(db, id, listener);
     }
 
     /**
@@ -79,27 +115,51 @@ public class SimpleDatabase {
      * using the given database.
      */
     public SimpleDatabase executeSqlFile(SQLiteDatabase db, @RawRes int id) {
+        return executeSqlFile(db, id, /* listener */ null);
+    }
+
+    /**
+     * Reads the .sql file with the given resource ID and executes all SQL statements inside it
+     * using the given database.
+     */
+    public SimpleDatabase executeSqlFile(SQLiteDatabase db, @RawRes int id, QueryProgressListener listener) {
         Scanner scan = context.openInternalFileScanner(id);
-        String query = "";
         if (logging) Log.d("SimpleDB", "start reading file");
-        int queryCount = 0;
+
+        // read file into list of queries to run
+        List<String> queries = new ArrayList<>();
+        StringBuilder currentQuery = new StringBuilder();
         while (scan.hasNextLine()) {
             String line = scan.nextLine().trim();
             if (line.startsWith("--") || line.isEmpty()) {
                 continue;
             } else {
-                query += line + "\n";
+                currentQuery.append(line);
+                currentQuery.append('\n');
             }
 
-            if (query.endsWith(";\n")) {
-                if (logging) Log.d("SimpleDB", "query: \"" + query + "\"");
-                db.execSQL(query);
-                query = "";
-                queryCount++;
+            if (currentQuery.toString().endsWith(";\n")) {
+                queries.add(currentQuery.toString());
+                currentQuery.delete(0, currentQuery.length());
             }
         }
+
+        // execute the queries (in a transaction, to speed up)
+        db.beginTransaction();
+        int queriesExecuted = 0;
+        for (String query : queries) {
+            if (logging) Log.d("SimpleDB", "query: \"" + query + "\"");
+            db.execSQL(query);
+            queriesExecuted++;
+            if (listener != null) {
+                listener.queryUpdated(query, /* percentComplete */ 1.0 * queriesExecuted / queries.size());
+            }
+        }
+        db.setTransactionSuccessful();
+        db.endTransaction();
+
         if (logging) Log.d("SimpleDB", "done reading file");
-        if (logging) Log.d("SimpleDB", "performed " + queryCount + " queries.");
+        if (logging) Log.d("SimpleDB", "performed " + queries.size() + " queries.");
         return this;
     }
 
@@ -183,11 +243,84 @@ public class SimpleDatabase {
     }
 
     /**
+     * Performs all of the given database queries on the given database
+     * as a transaction to speed them up as well as making sure that all of them
+     * are completed successfully.
+     * Intended usage:
+     *
+     * <pre>
+     * SimpleDatabase.with(this).queryTransaction(db, query1, query2, query3));
+     * </pre>
+     */
+    public void queryTransaction(SQLiteDatabase db, String... queries) {
+        queryTransaction(db, /* listener */ null, queries);
+    }
+
+    /**
+     * Performs all of the given database queries on the given database
+     * as a transaction to speed them up as well as making sure that all of them
+     * are completed successfully.
+     * Intended usage:
+     *
+     * <pre>
+     * SimpleDatabase.with(this).queryTransaction(db, query1, query2, query3));
+     * </pre>
+     */
+    public void queryTransaction(String databaseName, String... queries) {
+        queryTransaction(databaseName, /* listener */ null, queries);
+    }
+
+    /**
+     * Performs all of the given database queries on the given database
+     * as a transaction to speed them up as well as making sure that all of them
+     * are completed successfully.
+     * Contacts the given listener after each individual query to notify it of the
+     * overall progress. (If the listener is null, it is ignored.)
+     *
+     * Intended usage:
+     *
+     * <pre>
+     * SimpleDatabase.with(this).queryTransaction(db, listener, query1, query2, query3));
+     * </pre>
+     */
+    public void queryTransaction(SQLiteDatabase db, QueryProgressListener listener, String... queries) {
+        db.beginTransaction();
+        int complete = 0;
+        for (String query : queries) {
+            db.rawQuery(query, null);
+            complete++;
+            if (listener != null) {
+                listener.queryUpdated(query, (double) complete / queries.length);
+            }
+        }
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    /**
+     * Performs all of the given database queries on the given database
+     * as a transaction to speed them up as well as making sure that all of them
+     * are completed successfully.
+     * Contacts the given listener after each individual query to notify it of the
+     * overall progress. (If the listener is null, it is ignored.)
+     *
+     * Intended usage:
+     *
+     * <pre>
+     * SimpleDatabase.with(this).queryTransaction(db, listener, query1, query2, query3));
+     * </pre>
+     */
+    public void queryTransaction(String databaseName, QueryProgressListener listener, String... queries) {
+        SQLiteDatabase db = context.openOrCreateDatabase(databaseName);
+        queryTransaction(db, listener, queries);
+    }
+
+    /**
      * Returns an object that can be used to iterate over the rows of a given
      * query cursor.
      *
      * <pre>
-     *     for (SimpleRow row : SimpleDatabase.rows(myCursor)) { ... }
+     * for (SimpleRow row : SimpleDatabase.rows(myCursor)) { ... }
      * </pre>
      */
     public static SimpleCursor rows(Cursor cursor) {
