@@ -56,6 +56,43 @@ public class GOval extends GObject
     }
 
     /**
+     * Constructs a new 0x0 oval, positioned at the origin.
+     *
+     * @usage GOval goval = new GOval();
+     */
+    public GOval(GCanvas canvas) {
+        this();
+        canvas.add(this);
+    }
+
+    /**
+     * Constructs a new oval with the specified width and height,
+     * positioned at the origin.
+     *
+     * @usage GOval goval = new GOval(width, height);
+     * @param width The width of the oval in pixels
+     * @param height The height of the oval in pixels
+     */
+    public GOval(GCanvas canvas, float width, float height) {
+        this(width, height);
+        canvas.add(this);
+    }
+
+    /**
+     * Constructs a new oval with the specified bounds.
+     *
+     * @usage GOval goval = new GOval(x, y, width, height);
+     * @param x The x-coordinate of the upper left corner
+     * @param y The y-coordinate of the upper left corner
+     * @param width The width of the oval in pixels
+     * @param height The height of the oval in pixels
+     */
+    public GOval(GCanvas canvas, float x, float y, float width, float height) {
+        this(x, y, width, height);
+        canvas.add(this);
+    }
+
+    /**
      * Checks to see whether a point is inside the object.
      *
      * @usage if (goval.contains(x, y)) . . .

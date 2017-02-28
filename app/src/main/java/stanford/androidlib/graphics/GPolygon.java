@@ -67,6 +67,40 @@ public class GPolygon extends GObject implements GFillable, GScalable {
     }
 
     /**
+     * Constructs a new empty polygon at the origin.
+     *
+     * @usage GPolygon gpoly = new GPolygon();
+     */
+    public GPolygon(GCanvas canvas) {
+        this();
+        canvas.add(this);
+    }
+
+    /**
+     * Constructs a new empty polygon at (<code>x</code>, <code>y</code>).
+     *
+     * @usage GPolygon gpoly = new GPolygon(x, y);
+     * @param x The x-coordinate of the origin of the polygon
+     * @param y The y-coordinate of the origin of the polygon
+     */
+    public GPolygon(GCanvas canvas, float x, float y) {
+        this(x, y);
+        canvas.add(this);
+    }
+
+    /**
+     * Constructs a new polygon from the specified array of <code>GPoint</code>
+     * objects.  The polygon is automatically marked as complete.
+     *
+     * @usage GPolygon gpoly = new GPolygon(points);
+     * @param points An array of <code>GPoint</code> objects specifying the vertices
+     */
+    public GPolygon(GCanvas canvas, GPoint[] points) {
+        this(points);
+        canvas.add(this);
+    }
+
+    /**
      * Adds a vertex at (<code>x</code>, <code>y</code>) relative to the polygon origin.
      *
      * @usage gpoly.addVertex(x, y);

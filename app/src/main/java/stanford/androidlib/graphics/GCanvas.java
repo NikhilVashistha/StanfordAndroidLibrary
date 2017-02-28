@@ -233,6 +233,7 @@ public abstract class GCanvas extends SimpleCanvas implements Iterable<GObject> 
             throw new NullPointerException();
         }
         gobjects.remove(obj);
+        obj.setGCanvas(null);
     }
 
     /**

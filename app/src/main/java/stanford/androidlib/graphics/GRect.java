@@ -51,6 +51,43 @@ public class GRect extends GObject
     }
 
     /**
+     * Constructs a new 0x0 rectangle, positioned at the origin.
+     *
+     * @usage GRect grect = new GRect();
+     */
+    public GRect(GCanvas canvas) {
+        this();
+        canvas.add(this);
+    }
+
+    /**
+     * Constructs a new rectangle with the specified width and height,
+     * positioned at the origin.
+     *
+     * @usage GRect grect = new GRect(width, height);
+     * @param width The width of the rectangle in pixels
+     * @param height The height of the rectangle in pixels
+     */
+    public GRect(GCanvas canvas, float width, float height) {
+        this(width, height);
+        canvas.add(this);
+    }
+
+    /**
+     * Constructs a new rectangle with the specified bounds.
+     *
+     * @usage GRect grect = new GRect(x, y, width, height);
+     * @param x The x-coordinate of the upper left corner
+     * @param y The y-coordinate of the upper left corner
+     * @param width The width of the rectangle in pixels
+     * @param height The height of the rectangle in pixels
+     */
+    public GRect(GCanvas canvas, float x, float y, float width, float height) {
+        this(x, y, width, height);
+        canvas.add(this);
+    }
+
+    /**
      * Implements the <code>paint</code> operation for this graphical object.  This method
      * is not called directly by clients.
      * @noshow

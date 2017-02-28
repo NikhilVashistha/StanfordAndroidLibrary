@@ -14,18 +14,18 @@ import java.util.*;
  * can be manipulated as a unit.
  */
 public class GCompound extends GObject implements GScalable, Iterable<GObject> {
-    // private fields
-    private boolean complete;
-    private List<GObject> contents;
-    private GObject lastObject;
-    private GObject dragObject;
-
     /**
      * The serialization code for this class.  This value should be incremented
      * whenever you change the structure of this class in an incompatible way,
      * typically by adding a new instance variable.
      */
     static final long serialVersionUID = 1L;
+
+    // private fields
+    private boolean complete;
+    private List<GObject> contents;
+    private GObject lastObject;
+    private GObject dragObject;
 
     /**
      * Creates a new <code>GCompound</code> object with no internal components.
@@ -35,6 +35,16 @@ public class GCompound extends GObject implements GScalable, Iterable<GObject> {
     public GCompound() {
         contents = new ArrayList<>();
         complete = false;
+    }
+
+    /**
+     * Creates a new <code>GCompound</code> object with no internal components.
+     *
+     * @usage GCompound gcomp = new GCompound();
+     */
+    public GCompound(GCanvas canvas) {
+        this();
+        canvas.add(this);
     }
 
     /**

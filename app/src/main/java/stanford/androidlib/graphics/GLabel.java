@@ -101,6 +101,68 @@ public class GLabel extends GObject {
     }
 
     /**
+     * Creates a new empty <code>GLabel</code> object with its top-left corner at (0, 0).
+     *
+     * @usage GLabel glabel = new GLabel();
+     */
+    public GLabel(GCanvas canvas) {
+        this();
+        canvas.add(this);
+    }
+
+    /**
+     * Creates a new <code>GLabel</code> object at with its top-left corner (0, 0),
+     * initialized to contain the specified string.
+     *
+     * @usage GLabel glabel = new GLabel(str);
+     * @param str The initial contents of the <code>GLabel</code>
+     */
+    public GLabel(GCanvas canvas, String str) {
+        this(str);
+        canvas.add(this);
+    }
+
+    /**
+     * Creates a new <code>GLabel</code> object with its top-left corner at the specified position.
+     *
+     * @usage GLabel glabel = new GLabel(str, x, y);
+     * @param str The initial contents of the <code>GLabel</code>
+     * @param x The x-coordinate of the label origin
+     * @param y The y-coordinate of the baseline for the label
+     * @throws NullPointerException if str is null
+     */
+    public GLabel(GCanvas canvas, String str, float x, float y) {
+        this(str, x, y);
+        canvas.add(this);
+    }
+
+    /**
+     * Creates a new <code>GLabel</code> object at with its top-left corner (0, 0),
+     * initialized to contain the string with the specified resource ID.
+     *
+     * @usage GLabel glabel = new GLabel(id);
+     * @param id The resource ID of the initial contents of the <code>GLabel</code>
+     */
+    public GLabel(GCanvas canvas, @StringRes int id) {
+        this(id);
+        canvas.add(this);
+    }
+
+    /**
+     * Creates a new <code>GLabel</code> object with its top-left corner at the specified position.
+     *
+     * @usage GLabel glabel = new GLabel(str, x, y);
+     * @param id The ID of the resource string for the initial contents of the <code>GLabel</code>
+     * @param x The x-coordinate of the label origin
+     * @param y The y-coordinate of the baseline for the label
+     * @throws NullPointerException if no string found for given resource ID
+     */
+    public GLabel(GCanvas canvas, @StringRes int id, float x, float y) {
+        this(id, x, y);
+        canvas.add(this);
+    }
+
+    /**
      * Returns the font in which the <code>GLabel</code> is displayed.
      *
      * @usage Font font = glabel.getFont();

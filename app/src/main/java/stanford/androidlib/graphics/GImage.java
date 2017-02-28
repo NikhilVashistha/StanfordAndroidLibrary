@@ -20,6 +20,18 @@ import android.view.View;
  */
 public class GImage extends GObject implements GResizable {
     /**
+     * The serialization code for this class.  This value should be incremented
+     * whenever you change the structure of this class in an incompatible way,
+     * typically by adding a new instance variable.
+     */
+    static final long serialVersionUID = 1L;
+
+    /* Private instance variables */
+    private Context context;
+    private Bitmap myImage;
+    private boolean sizeDetermined;
+
+    /**
      * Creates a new GImage object at the origin.
      * @throws NullPointerException if image is null
      */
@@ -85,6 +97,78 @@ public class GImage extends GObject implements GResizable {
     public GImage(Context context, @DrawableRes int imageID, float x, float y) {
         this(BitmapFactory.decodeResource(context.getResources(), imageID), x, y);
         this.context = context;
+    }
+
+    /**
+     * Creates a new GImage object at the origin.
+     * @throws NullPointerException if image is null
+     */
+    public GImage(GCanvas canvas, Bitmap image) {
+        this(image);
+        canvas.add(this);
+    }
+
+    /**
+     * Creates a new GImage object at the specified coordinates.
+     * @throws NullPointerException if image is null
+     */
+    public GImage(GCanvas canvas, Bitmap image, float x, float y) {
+        this(image, x, y);
+        canvas.add(this);
+    }
+
+    /**
+     * Creates a new GImage object at the origin inside the given view.
+     * @throws NullPointerException if view or image is null
+     */
+    public GImage(GCanvas canvas, View view, Bitmap image) {
+        this(view, image);
+        canvas.add(this);
+    }
+
+    /**
+     * Creates a new GImage object at the given x/y location inside the given view.
+     * @throws NullPointerException if view or image is null
+     */
+    public GImage(GCanvas canvas, View view, Bitmap image, float x, float y) {
+        this(view, image, x, y);
+        canvas.add(this);
+    }
+
+    /**
+     * Creates a new GImage object at the origin inside the given context.
+     * @throws NullPointerException if context is null
+     */
+    public GImage(GCanvas canvas, Context context, @DrawableRes int imageID) {
+        this(context, imageID);
+        canvas.add(this);
+    }
+
+    /**
+     * Creates a new GImage object at the origin inside the given view.
+     * @throws NullPointerException if view is null
+     */
+    public GImage(GCanvas canvas, View view, @DrawableRes int imageID) {
+        this(view, imageID);
+        canvas.add(this);
+    }
+
+    /**
+     * Creates a new GImage object at the given x/y location inside the given view.
+     * @throws NullPointerException if view is null
+     */
+    public GImage(GCanvas canvas, View view, @DrawableRes int imageID, float x, float y) {
+        this(view, imageID, x, y);
+        canvas.add(this);
+    }
+
+    /**
+     * Creates a new GImage object at the given x/y location inside the given context.
+     * @throws NullPointerException if context is null
+     */
+    public GImage(GCanvas canvas, Context context, @DrawableRes int imageID, float x, float y) {
+        this(context, imageID, x, y);
+        canvas.add(this);
     }
 
     /**
@@ -279,16 +363,4 @@ public class GImage extends GObject implements GResizable {
         height = myImage.getHeight();
         sizeDetermined = true;
     }
-
-    /* Private instance variables */
-    private Context context;
-    private Bitmap myImage;
-    private boolean sizeDetermined;
-
-    /**
-     * The serialization code for this class.  This value should be incremented
-     * whenever you change the structure of this class in an incompatible way,
-     * typically by adding a new instance variable.
-     */
-    static final long serialVersionUID = 1L;
 }

@@ -42,6 +42,30 @@ public class GArrow extends GLine {
         super(x0, y0, x1, y1);
     }
 
+    /**
+     * Constructs an arrow at (0, 0) of length 0.
+     */
+    public GArrow(GCanvas canvas) {
+        this();
+        canvas.add(this);
+    }
+
+    /**
+     * Constructs an arrow from (0, 0) to (x1, y1).
+     */
+    public GArrow(GCanvas canvas, float x1, float y1) {
+        this(x1, y1);
+        canvas.add(this);
+    }
+
+    /**
+     * Constructs an arrow from (x0, y0) to (x1, y1).
+     */
+    public GArrow(GCanvas canvas, float x0, float y0, float x1, float y1) {
+        this(x0, y0, x1, y1);
+        canvas.add(this);
+    }
+
     public boolean hasArrowheadStart() {
         return arrowheadStart;
     }

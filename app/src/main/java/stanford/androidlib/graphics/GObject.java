@@ -1,4 +1,10 @@
 /*
+ * @version 2017/02/28
+ * - bug fix for setColor method
+ * - added more methods that take a GPoint for x/y location
+ * - alphabetized methods
+ * @version 2017/02/21
+ * - made setXxx methods return GObject
  * @version 2016/12/22
  * - added illegal arg checking to some methods e.g. setSize
  * @version 2016/02/17
@@ -11,7 +17,7 @@ import android.graphics.*;
 import android.support.annotation.CallSuper;
 
 /**
- * GObject is the superclass for all of the various kinds of graphical objects
+ * {@code GObject} is the superclass for all of the various kinds of graphical objects
  * such as lines, ovals, rectangles, ellipses, and other polygons.
  */
 public abstract class GObject {
@@ -38,6 +44,14 @@ public abstract class GObject {
     }
 
     /**
+     * Constructs a new empty object and adds it to the given canvas.
+     */
+    public GObject(GCanvas canvas) {
+        this();
+        canvas.add(this);
+    }
+
+    /**
      * Adds this GObject to the given graphical canvas.
      * A convenience method that just calls the canvas's add(GObject) method.
      */
@@ -52,6 +66,15 @@ public abstract class GObject {
      */
     public GObject addTo(GCanvas canvas, float x, float y) {
         canvas.add(this, x, y);
+        return this;
+    }
+
+    /**
+     * Adds this GObject to the given graphical canvas.
+     * A convenience method that just calls the canvas's add(GObject) method.
+     */
+    public GObject addTo(GCanvas canvas, GPoint location) {
+        canvas.add(this, location.getX(), location.getY());
         return this;
     }
 
@@ -74,11 +97,32 @@ public abstract class GObject {
     }
 
     /**
+     * Returns the max Y of this object.
+     */
+    public final float getBottomY() {
+        return getY() + getHeight();
+    }
+
+    /**
      * Returns the bounding box of this object, which is defined to be
      * the smallest rectangle that covers everything drawn by the figure.
      */
     public GRectangle getBounds() {
         return new GRectangle(getX(), getY(), getWidth(), getHeight());
+    }
+
+    /**
+     * Returns the x-value of the center of this object.
+     */
+    public final float getCenterX() {
+        return getX() + getWidth() / 2;
+    }
+
+    /**
+     * Returns the y-value of the center of this object.
+     */
+    public final float getCenterY() {
+        return getY() + getHeight() / 2;
     }
 
     /**
@@ -101,10 +145,25 @@ public abstract class GObject {
     }
 
     /**
+     * Returns the simple canvas this GObject is drawn inside of.
+     * If none, returns null.
+     */
+    public final GCanvas getGCanvas() {
+        return this.gcanvas;
+    }
+
+    /**
      * Returns the height of this object, which is defined to be the height of the bounding box.
      */
     public float getHeight() {
         return height;
+    }
+
+    /**
+     * Returns this object's leftmost x-coordinate.
+     */
+    public float getLeftX() {
+        return getX();
     }
 
     /**
@@ -122,10 +181,24 @@ public abstract class GObject {
     }
 
     /**
+     * Returns the max X of this object.
+     */
+    public final float getRightX() {
+        return getX() + getWidth();
+    }
+
+    /**
      * Returns the size of the bounding box for this object.
      */
     public final GDimension getSize() {
         return new GDimension(getWidth(), getHeight());
+    }
+
+    /**
+     * Returns this object's top y-coordinate.
+     */
+    public float getTopY() {
+        return getY();
     }
 
     /**
@@ -147,48 +220,6 @@ public abstract class GObject {
      */
     public float getY() {
         return y;
-    }
-
-    /**
-     * Returns this object's leftmost x-coordinate.
-     */
-    public float getLeftX() {
-        return getX();
-    }
-
-    /**
-     * Returns the x-value of the center of this object.
-     */
-    public final float getCenterX() {
-        return getX() + getWidth() / 2;
-    }
-
-    /**
-     * Returns the max X of this object.
-     */
-    public final float getRightX() {
-        return getX() + getWidth();
-    }
-
-    /**
-     * Returns the y-value of the center of this object.
-     */
-    public final float getCenterY() {
-        return getY() + getHeight() / 2;
-    }
-
-    /**
-     * Returns the max Y of this object.
-     */
-    public final float getBottomY() {
-        return getY() + getHeight();
-    }
-
-    /**
-     * Returns this object's top y-coordinate.
-     */
-    public float getTopY() {
-        return getY();
     }
 
     /**
@@ -232,11 +263,61 @@ public abstract class GObject {
     }
 
     /**
+     * Moves the object on the screen to the given x/y position.
+     */
+    public GObject moveTo(float x, float y) {
+        return setLocation(x, y);
+    }
+
+    /**
      * Moves this GObject to have the same location as the given other GObject.
      * @throws NullPointerException if gobj is null
      */
     public final GObject moveTo(GObject gobj) {
         return setLocation(gobj.getX(), gobj.getY());
+    }
+
+    /**
+     * Moves the object on the screen to the given point's x/y position.
+     */
+    public GObject moveTo(GPoint point) {
+        return setLocation(point);
+    }
+
+    /**
+     * Moves the object using displacements given in polar coordinates.
+     */
+    public final GObject moveToPolar(float r, float theta) {
+        double d = theta * 3.141592653589793D / 180.0D;
+        return moveTo((float) (r * Math.cos(d)), (float) (-r * Math.sin(d)));
+    }
+
+    /**
+     * All subclasses of GObject must define a paint method which allows the object to draw itself
+     * on the Graphics context passed in as the parameter g.
+     */
+    public abstract void paint(Canvas canvas);
+
+    /**
+     * Removes this object from its graphical canvas, if it is added to one.
+     * Equivalent to calling remove(thisGObject) on the canvas.
+     */
+    public GObject remove() {
+        if (this.gcanvas != null) {
+            this.gcanvas.remove(this);
+        }
+        return this;
+    }
+
+    /**
+     * Instructs this object to redraw itself by calling the postInvalidate method
+     * on its enclosing GCanvas as needed.
+     */
+    @CallSuper
+    public void repaint() {
+        if (gcanvas != null && !gcanvas.isAnimated()) {
+            gcanvas.postInvalidate();
+        }
     }
 
     /**
@@ -265,43 +346,8 @@ public abstract class GObject {
      * @param sf The factor used to scale all coordinates in both dimensions
      * @throws IllegalArgumentException if sf is not a positive number
      */
-    public final GObject scale(float sf) {
+    public GObject scale(float sf) {
         return scale(sf, sf);
-    }
-
-    /**
-     * Moves the object on the screen using the displacements dx and dy.
-     */
-    public final GObject translate(float dx, float dy) {
-        return setLocation(x + dx, y + dy);
-    }
-
-    /**
-     * Moves the object on the screen using the displacements dx and dy.
-     */
-    public final GObject moveTo(float x, float y) {
-        return setLocation(x, y);
-    }
-
-    /**
-     * Moves the object using displacements given in polar coordinates.
-     */
-    public final GObject moveToPolar(float r, float theta) {
-        double d = theta * 3.141592653589793D / 180.0D;
-        return moveTo((float) (r * Math.cos(d)), (float) (-r * Math.sin(d)));
-    }
-
-    /**
-     * All subclasses of GObject must define a paint method which allows the object to draw itself
-     * on the Graphics context passed in as the parameter g.
-     */
-    public abstract void paint(Canvas canvas);
-
-    @CallSuper
-    public void repaint() {
-        if (gcanvas != null && !gcanvas.isAnimated()) {
-            gcanvas.postInvalidate();
-        }
     }
 
     /**
@@ -353,94 +399,11 @@ public abstract class GObject {
     }
 
     /**
-     * Sets the canvas this object is in.
-     * If null is passed, this object will not be associated with any canvas.
-     */
-    public final GObject setCanvas(Canvas canvas) {
-        this.canvas = canvas;
-        repaint();
-        return this;
-    }
-
-    /**
-     * Sets the color used to display this object.
-     * @throws NullPointerException if paint is null.
-     */
-    public GObject setColor(Paint paint) {
-        if (paint == null) {
-            throw new NullPointerException();
-        }
-        GColor.matchColor(paint, this.paint);
-        repaint();
-        return this;
-    }
-
-    /**
-     * Sets the color used to display this object.
-     * @throws NullPointerException if paint is null.
-     */
-    public GObject setPaint(Paint paint) {
-        if (paint == null) {
-            throw new NullPointerException();
-        }
-        this.paint = paint;
-        repaint();
-        return this;
-    }
-
-    /**
-     * Sets the location of this object to the point (x, y).
-     */
-    public GObject setLocation(float x, float y) {
-        this.x = x;
-        this.y = y;
-        repaint();
-        return this;
-    }
-
-    /**
-     * Moves this GObject to have the same location as the given other GObject.
-     * @throws NullPointerException if gobj is null.
-     */
-    public final GObject setLocation(GObject gobj) {
-        setLocation(gobj.getX(), gobj.getY());
-        return this;
-    }
-
-    /**
-     * Sets the x-location of this object.
-     * The y-location is unchanged.
-     */
-    public final GObject setX(float x) {
-        setLocation(x, getY());
-        return this;
-    }
-
-    /**
-     * Sets the y-location of this object.
-     * The x-location is unchanged.
-     */
-    public final GObject setY(float y) {
-        setLocation(getX(), y);
-        return this;
-    }
-
-    /**
-     * Sets the object's rightmost x-coordinate to be the given value.
-     * This does not resize the object but moves it as though you had
-     * set its leftmost x-coordinate to rightX - getWidth().
-     */
-    public final GObject setRightX(float rightX) {
-        setX(rightX - getWidth());
-        return this;
-    }
-
-    /**
      * Sets the object's bottom y-coordinate to be the given value.
      * This does not resize the object but moves it as though you had
      * set its top y-coordinate to bottomY - getHeight().
      */
-    public final GObject setBottomY(float bottomY) {
+    public GObject setBottomY(float bottomY) {
         setY(bottomY - getHeight());
         return this;
     }
@@ -455,9 +418,23 @@ public abstract class GObject {
      * @param height The new height of the object
      * @throws IllegalArgumentException if width or height is negative
      */
-    public final GObject setBounds(float x, float y, float width, float height) {
+    public GObject setBounds(float x, float y, float width, float height) {
         setSize(width, height);
         setLocation(x, y);
+        return this;
+    }
+
+    /**
+     * Changes the bounds of this object to the specified values.
+     *
+     * @usage gimage.setBounds(x, y, width, height);
+     * @param location The new x/y-coordinates for the object
+     * @param size The new width/height of the object
+     * @throws IllegalArgumentException if width or height is negative
+     */
+    public GObject setBounds(GPoint location, GDimension size) {
+        setLocation(location);
+        setSize(size);
         return this;
     }
 
@@ -469,19 +446,40 @@ public abstract class GObject {
      * @param bounds A <code>GRectangle</code> specifying the new bounds
      * @throws IllegalArgumentException if rect's width or height is negative
      */
-    public final GObject setBounds(GRectangle bounds) {
+    public GObject setBounds(GRectangle bounds) {
         setBounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
         return this;
     }
 
     /**
-     * Sets whether this object is filled.
-     *
-     * @usage gobj.setFilled(fill);
-     * @param fill <code>true</code> if the object should be filled, <code>false</code> for an outline
+     * Sets the canvas this object is in.
+     * If null is passed, this object will not be associated with any canvas.
      */
-    public GObject setFilled(boolean fill) {
-        isFilled = fill;
+    public final GObject setCanvas(Canvas canvas) {
+        this.canvas = canvas;
+        repaint();
+        return this;
+    }
+
+    /**
+     * Sets the color used to display this object.
+     * This differs slightly from setPaint in that setPaint replaces ALL aspects of
+     * the paint, while setColor changes this object's color while retaining any other aspects of
+     * the paint such as font size.
+     * @throws NullPointerException if paint is null.
+     */
+    public GObject setColor(Paint paint) {
+        if (paint == null) {
+            throw new NullPointerException();
+        }
+        if (this.paint == null) {
+            this.paint = paint;
+        } else {
+            // BUGFIX: copy over the color from the parameter paint,
+            // while retaining other attributes of this.paint (e.g. font size)
+            GColor.matchColor(/* src */ paint, /* dst */ this.paint);
+        }
+        repaint();
         return this;
     }
 
@@ -503,12 +501,26 @@ public abstract class GObject {
     }
 
     /**
+     * Sets whether this object is filled.
+     *
+     * @usage gobj.setFilled(fill);
+     * @param fill <code>true</code> if the object should be filled, <code>false</code> for an outline
+     */
+    public GObject setFilled(boolean fill) {
+        isFilled = fill;
+        if (!fill) {
+            this.fillColor = null;
+        }
+        return this;
+    }
+
+    /**
      * Sets the canvas on which this GObject should be drawn.
      * You probably should not call this directly, and should call add(GObject) on
      * the canvas instead.
      * If gcanvas is null, this object will not be associated with any canvas.
      */
-    public final GObject setGCanvas(GCanvas gcanvas) {
+    public GObject setGCanvas(GCanvas gcanvas) {
         this.gcanvas = gcanvas;
         if (gcanvas == null) {
             this.canvas = null;
@@ -519,11 +531,55 @@ public abstract class GObject {
     }
 
     /**
-     * Returns the simple canvas this GObject is drawn inside of.
-     * If none, returns null.
+     * Sets the location of this object to the point (x, y).
      */
-    public final GCanvas getGCanvas() {
-        return this.gcanvas;
+    public GObject setLocation(float x, float y) {
+        this.x = x;
+        this.y = y;
+        repaint();
+        return this;
+    }
+
+    /**
+     * Sets the location of this object to the given point's (x, y) location.
+     */
+    public GObject setLocation(GPoint point) {
+        return setLocation(point.getX(), point.getY());
+    }
+
+    /**
+     * Moves this GObject to have the same location as the given other GObject.
+     * @throws NullPointerException if gobj is null.
+     */
+    public GObject setLocation(GObject gobj) {
+        setLocation(gobj.getX(), gobj.getY());
+        return this;
+    }
+
+    /**
+     * Sets the paint used to display this object.
+     * This differs slightly from setColor in that setPaint replaces ALL aspects of
+     * the paint, while setColor changes this object's color while retaining any other aspects of
+     * the paint such as font size.
+     * @throws NullPointerException if paint is null.
+     */
+    public GObject setPaint(Paint paint) {
+        if (paint == null) {
+            throw new NullPointerException();
+        }
+        this.paint = paint;
+        repaint();
+        return this;
+    }
+
+    /**
+     * Sets the object's rightmost x-coordinate to be the given value.
+     * This does not resize the object but moves it as though you had
+     * set its leftmost x-coordinate to rightX - getWidth().
+     */
+    public GObject setRightX(float rightX) {
+        setX(rightX - getWidth());
+        return this;
     }
 
     /**
@@ -534,11 +590,10 @@ public abstract class GObject {
      * @noshow
      * @throws NullPointerException if size is null
      */
-    public final GObject setSize(GDimension size) {
+    public GObject setSize(GDimension size) {
         setSize(size.getWidth(), size.getHeight());
         return this;
     }
-
 
     /**
      * Changes the size of this object to the specified width and height.
@@ -567,6 +622,24 @@ public abstract class GObject {
     }
 
     /**
+     * Sets the x-location of this object.
+     * The y-location is unchanged.
+     */
+    public GObject setX(float x) {
+        setLocation(x, getY());
+        return this;
+    }
+
+    /**
+     * Sets the y-location of this object.
+     * The x-location is unchanged.
+     */
+    public GObject setY(float y) {
+        setLocation(getX(), y);
+        return this;
+    }
+
+    /**
      * Returns a string representation of this object, including its
      * class name, x/y coordinates, width, and height.
      * Useful for debugging.
@@ -578,5 +651,12 @@ public abstract class GObject {
             className = className.substring(index + 1);
         }
         return className + ":x=" + getX() + ",y=" + getY() + ",w=" + getWidth() + ",h=" + getHeight();
+    }
+
+    /**
+     * Moves the object on the screen using the displacements dx and dy.
+     */
+    public GObject translate(float dx, float dy) {
+        return setLocation(x + dx, y + dy);
     }
 }

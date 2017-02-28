@@ -64,6 +64,51 @@ public class GLine extends GObject implements GScalable {
     }
 
     /**
+     * Constructs a line segment from its endpoints.  The point
+     * (<code>0</code>,&nbsp;<code>0</code>) defines the start of the
+     * line and the point (<code>0</code>,&nbsp;<code>0</code>) defines
+     * the end.
+     *
+     * @usage GLine gline = new GLine();
+     */
+    public GLine(GCanvas canvas) {
+        this();
+        canvas.add(this);
+    }
+
+    /**
+     * Constructs a line segment from its endpoints.  The point
+     * (<code>0</code>,&nbsp;<code>0</code>) defines the start of the
+     * line and the point (<code>x1</code>,&nbsp;<code>y1</code>) defines
+     * the end.
+     *
+     * @usage GLine gline = new GLine(x1, y1);
+     * @param x1 The x-coordinate of the end of the line
+     * @param y1 The y-coordinate of the end of the line
+     */
+    public GLine(GCanvas canvas, float x1, float y1) {
+        this(x1, y1);
+        canvas.add(this);
+    }
+
+    /**
+     * Constructs a line segment from its endpoints.  The point
+     * (<code>x0</code>,&nbsp;<code>y0</code>) defines the start of the
+     * line and the point (<code>x1</code>,&nbsp;<code>y1</code>) defines
+     * the end.
+     *
+     * @usage GLine gline = new GLine(x0, y0, x1, y1);
+     * @param x0 The x-coordinate of the start of the line
+     * @param y0 The y-coordinate of the start of the line
+     * @param x1 The x-coordinate of the end of the line
+     * @param y1 The y-coordinate of the end of the line
+     */
+    public GLine(GCanvas canvas, float x0, float y0, float x1, float y1) {
+        this(x0, y0, x1, y1);
+        canvas.add(this);
+    }
+
+    /**
      * Implements the <code>paint</code> operation for this graphical object.  This method
      * is not called directly by clients.
      * @noshow
