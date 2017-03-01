@@ -1,6 +1,8 @@
 /*
+ * @version 2017/03/01
+ * - added asJSON
  * @version 2016/02/25
- * - added toList, toMap
+ * - added asList, asMap
  * @version 2016/02/23
  * - initial version
  */
@@ -8,6 +10,9 @@
 package stanford.androidlib.data;
 
 import android.database.Cursor;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -43,6 +48,24 @@ public class SimpleRow extends SimpleCursor {
             list.add(value);
         }
         return list;
+    }
+
+    /**
+     * Returns this row's contents as a JSON object with the column names as the keys
+     * and the column values as the associated values for each key.
+     * @throws IllegalStateException if JSON data cannot be converted
+     */
+    public JSONObject asJSON() {
+        JSONObject json = new JSONObject();
+        Map<String, Object> map = asMap();
+        for (String key : map.keySet()) {
+            try {
+                json.put(key, map.get(key));
+            } catch (JSONException jsone) {
+                throw new IllegalStateException("error creating JSON object from row data", jsone);
+            }
+        }
+        return json;
     }
 
     /**

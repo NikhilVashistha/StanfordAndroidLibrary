@@ -1,4 +1,10 @@
 /*
+ * @version 2017/03/01
+ * - added toJson
+ * - added getColumnNames
+ * - added escape
+ * - added checking/throwing exceptions in some methods when database not found
+ * - TODO: change String[] return type to List<String>
  * @version 2017/02/19
  * - put executeSqlFile into a transaction for speed
  * @version 2017/02/15
@@ -13,10 +19,11 @@
 
 package stanford.androidlib.data;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.database.*;
+import android.database.sqlite.*;
 import android.support.annotation.RawRes;
 import android.util.Log;
+import org.json.*;
 import java.util.*;
 import stanford.androidlib.SimpleActivity;
 
@@ -54,16 +61,18 @@ public class SimpleDatabase {
 
     private static boolean logging = false;
 
+    // private constructor forbids instance construction
     private SimpleDatabase() {
         // empty
     }
 
     /**
-     * Sets whether Log.d statements should print as queries are run.
+     * Creates a database with the given name, if it doesn't exist.
+     * If it does already exist, simply opens it and returns it.
+     * Equivalent to openOrCreateDatabase on an activity.
      */
-    public SimpleDatabase setLogging(boolean logging) {
-        SimpleDatabase.logging = logging;
-        return INSTANCE;
+    public SQLiteDatabase create(String databaseName) {
+        return open(databaseName);
     }
 
     /**
@@ -72,6 +81,13 @@ public class SimpleDatabase {
      */
     public boolean delete(String databaseName) {
         return context.deleteDatabase(databaseName);
+    }
+
+    /**
+     * Escapes/quotes a string for use as a parameter in an SQL query.
+     */
+    public String escape(String s) {
+        return DatabaseUtils.sqlEscapeString(s);
     }
 
     /**
@@ -105,7 +121,7 @@ public class SimpleDatabase {
         if (filename.toLowerCase().endsWith(".sql")) {
             filename = filename.substring(0, filename.length() - 4);
         }
-        SQLiteDatabase db = context.openOrCreateDatabase(dbName);
+        SQLiteDatabase db = open(dbName);
         int id = context.getResourceId(filename, "raw");
         return executeSqlFile(db, id, listener);
     }
@@ -171,6 +187,45 @@ public class SimpleDatabase {
     }
 
     /**
+     * Returns the names of all columns in the given query's cursor as an array.
+     * The column names will appear in the array in their natural order in which
+     * they occur in the internal ordering of the query.
+     */
+    public String[] getColumnNames(Cursor cr) {
+        int cols = cr.getColumnCount();
+        String[] names = new String[cols];
+        for (int i = 0; i < cols; i++) {
+            names[i] = cr.getColumnName(i);
+        }
+        return names;
+    }
+
+    /**
+     * Returns the names of all columns in the given database table as an array.
+     * The column names will appear in the array in their natural order in which
+     * they occur in the internal ordering of the database.
+     * @throws SQLiteCantOpenDatabaseException if the given database does not exist
+     */
+    public String[] getColumnNames(String databaseName, String tableName) {
+        return getColumnNames(openOrThrow(databaseName), tableName);
+    }
+
+    /**
+     * Returns the names of all columns in the given database table as an array.
+     * The column names will appear in the array in their natural order in which
+     * they occur in the internal ordering of the database.
+     * @throws SQLiteCantOpenDatabaseException if the given database does not exist
+     * @throws SQLiteException if the given table does not exist
+     */
+    public String[] getColumnNames(SQLiteDatabase db, String tableName) {
+        String query = "SELECT * FROM " + tableName + " LIMIT 1";
+        Cursor cr = db.rawQuery(query, null);
+        String[] names = getColumnNames(cr);
+        cr.close();
+        return names;
+    }
+
+    /**
      * Returns an array of the names of all databases in this app.
      */
     public String[] getDatabaseNames() {
@@ -179,31 +234,34 @@ public class SimpleDatabase {
 
     /**
      * Returns the names of all tables in the given database as an array.
+     * The table names will appear in the array in their natural order in which
+     * they occur in the internal ordering of the database.
      * (Omits the private SQLite/Android table names like android_metadata.)
      * Reference: http://stackoverflow.com/questions/15383847/how-to-get-all-table-names-in-android-sqlite-database
+     * @throws SQLiteCantOpenDatabaseException if the given database does not exist
      */
     public String[] getTableNames(String databaseName) {
-        return getTableNames(context.openOrCreateDatabase(databaseName));
+        return getTableNames(openOrThrow(databaseName));
     }
 
     /**
      * Returns the names of all tables in the given database as an array.
+     * The table names will appear in the array in their natural order in which
+     * they occur in the internal ordering of the database.
      * (Omits the private SQLite/Android table names like android_metadata.)
      * Reference: http://stackoverflow.com/questions/15383847/how-to-get-all-table-names-in-android-sqlite-database
      */
     public String[] getTableNames(SQLiteDatabase db) {
-        Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
+        // here are the columns of the sqlite_master table:
+        // type="table", name="courses", tbl_name="courses", rootpage=4, sql="CREATE TABLE courses (...)"
 
         List<String> list = new ArrayList<>();
-        if (c.moveToFirst()) {
-            do {
-                String table = c.getString(0);
-                if (!PRIVATE_TABLE_NAMES.contains(table)) {
-                    list.add(table);
-                }
-            } while (c.moveToNext());
+        for (SimpleRow row : query(db, "SELECT name FROM sqlite_master WHERE type='table'")) {
+            String table = row.get("name");
+            if (!PRIVATE_TABLE_NAMES.contains(table)) {
+                list.add(table);
+            }
         }
-        c.close();
         return list.toArray(new String[list.size()]);
     }
 
@@ -213,6 +271,15 @@ public class SimpleDatabase {
      */
     public SQLiteDatabase open(String databaseName) {
         return context.openOrCreateDatabase(databaseName);
+    }
+
+    // helper to open an existing database, or throw an exception if it doesn't exist
+    private SQLiteDatabase openOrThrow(String databaseName) {
+        if (exists(databaseName)) {
+            return open(databaseName);
+        } else {
+            throw new SQLiteCantOpenDatabaseException("no such database: " + databaseName);
+        }
     }
 
     /**
@@ -236,9 +303,11 @@ public class SimpleDatabase {
      * <pre>
      * for (SimpleRow row : SimpleDatabase.with(this).query(db, myQuery)) { ... }
      * </pre>
+     *
+     * @throws SQLiteCantOpenDatabaseException if the given database does not exist
      */
     public SimpleCursor query(String databaseName, String query) {
-        SQLiteDatabase db = context.openOrCreateDatabase(databaseName);
+        SQLiteDatabase db = openOrThrow(databaseName);
         return query(db, query);
     }
 
@@ -309,9 +378,11 @@ public class SimpleDatabase {
      * <pre>
      * SimpleDatabase.with(this).queryTransaction(db, listener, query1, query2, query3));
      * </pre>
+     *
+     * @throws SQLiteCantOpenDatabaseException if the given database does not exist
      */
     public void queryTransaction(String databaseName, QueryProgressListener listener, String... queries) {
-        SQLiteDatabase db = context.openOrCreateDatabase(databaseName);
+        SQLiteDatabase db = openOrThrow(databaseName);
         queryTransaction(db, listener, queries);
     }
 
@@ -325,5 +396,88 @@ public class SimpleDatabase {
      */
     public static SimpleCursor rows(Cursor cursor) {
         return new SimpleCursor(cursor);
+    }
+
+    /**
+     * Sets whether Log.d statements should print as queries are run.
+     */
+    public SimpleDatabase setLogging(boolean logging) {
+        SimpleDatabase.logging = logging;
+        return INSTANCE;
+    }
+
+    /**
+     * Returns a {@code JSONObject} representing all of the data from the given database.
+     * The JSON object will store each table of data using its name as its key.
+     * The data of each table will be represented as described in {@code tableToJson}.
+     *
+     * @throws SQLiteCantOpenDatabaseException if the given database does not exist
+     */
+    public JSONObject toJson(String databaseName) {
+        return toJson(openOrThrow(databaseName));
+    }
+
+    /**
+     * Returns a {@code JSONObject} representing all of the data from the given database.
+     * The JSON object will store each table of data using its name as its key.
+     * The data of each table will be represented as described in {@code tableToJson}.
+     * @throws IllegalStateException if JSON data cannot be converted
+     */
+    public JSONObject toJson(SQLiteDatabase db) {
+        JSONObject dbJson = new JSONObject();
+        for (String tableName : getTableNames(db)) {
+            JSONObject tableJson = toJson(db, tableName);
+            try {
+                dbJson.put(tableName, tableJson);
+            } catch (JSONException jsone) {
+                throw new IllegalStateException("unable to convert table into JSON data", jsone);
+            }
+        }
+        return dbJson;
+    }
+
+    /**
+     * Returns a {@code JSONObject} representing all of the data from the given table
+     * from the given database.
+     * The JSON object will store each row of data using its "id" column as its key,
+     * or if there is no "id" column, by ascending integer indexes.
+     *
+     * @throws SQLiteCantOpenDatabaseException if the given database does not exist
+     * @throws SQLiteException if the given table does not exist in the given database
+     */
+    public JSONObject toJson(String databaseName, String tableName) {
+        return toJson(openOrThrow(databaseName), tableName);
+    }
+
+    /**
+     * Returns a {@code JSONObject} representing all of the data from the given table
+     * from the given database.
+     * The JSON object will store each row of data using its "id" column as its key,
+     * or if there is no "id" column, by ascending integer indexes.
+     *
+     * @throws SQLiteException if the given table does not exist in the given database
+     * @throws IllegalStateException if JSON data cannot be converted
+     */
+    public JSONObject toJson(SQLiteDatabase db, String tableName) {
+        JSONObject tableJson = new JSONObject();
+        int i = 0;
+        for (SimpleRow row : query(db, "SELECT * FROM " + tableName)) {
+            // todo: figure out primary key
+            JSONObject rowJson = row.asJSON();
+            try {
+                if (rowJson.has("id")) {
+                    // use "id" as primary key column
+                    tableJson.put(String.valueOf(rowJson.get("id")), rowJson);
+                } else {
+                    // store with integer indexes; pseudo-array
+                    tableJson.put(String.valueOf(i), rowJson);
+                    i++;
+                }
+            } catch (JSONException jsone) {
+                throw new IllegalStateException("unable to convert table rows into JSON data", jsone);
+            }
+        }
+
+        return tableJson;
     }
 }
