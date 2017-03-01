@@ -5,128 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cf3740b6-5971-4fe2-9a4a-27ea47f00ae3" name="Default" comment="">
-      <change type="DELETED" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/Color.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/cache.properties.lock" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/fileHashes.bin" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/stanford-android-lib.jar" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/stanford-android-lib.jar" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.idea/misc.xml" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.idea/workspace.xml" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/app.iml" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/app.iml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/Version.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/Version.java" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GArrow.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GArrow.java" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCanvas.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCanvas.java" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCompound.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCompound.java" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GImage.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GImage.java" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLabel.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLabel.java" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLine.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLine.java" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GObject.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GObject.java" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GOval.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GOval.java" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GPolygon.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GPolygon.java" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GRect.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GRect.java" />
+      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GColor.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GColor.java" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GSprite.java" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GSprite.java" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/index.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/index.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/allclasses-frame.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/allclasses-frame.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/allclasses-noframe.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/allclasses-noframe.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/constant-values.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/constant-values.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/deprecated-list.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/deprecated-list.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/help-doc.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/help-doc.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/index-all.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/index-all.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/index.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/index.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/overview-frame.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/overview-frame.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/overview-summary.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/overview-summary.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/overview-tree.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/overview-tree.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/serialized-form.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/serialized-form.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/AnimationLoop.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/AnimationLoop.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/AutoSaveFields.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/AutoSaveFields.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/IORuntimeException.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/IORuntimeException.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/MissingMethodException.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/MissingMethodException.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/OnSwipeListener.OnScaleListenerImpl.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/OnSwipeListener.OnScaleListenerImpl.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/OnSwipeListener.OnSwipeAdapterImpl.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/OnSwipeListener.OnSwipeAdapterImpl.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/OnSwipeListener.OnSwipeListenerImpl.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/OnSwipeListener.OnSwipeListenerImpl.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/OnSwipeListener.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/OnSwipeListener.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/PermissionRuntimeException.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/PermissionRuntimeException.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/ReflectionRuntimeException.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/ReflectionRuntimeException.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleActivity.ToastLength.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleActivity.ToastLength.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleActivity.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleActivity.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleAdapter.ViewProvider.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleAdapter.ViewProvider.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleAdapter.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleAdapter.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleBitmap.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleBitmap.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleCamera.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleCamera.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleCanvas.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleCanvas.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleDialog.DialogAdapter.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleDialog.DialogAdapter.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleDialog.DialogListener.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleDialog.DialogListener.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleDialog.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleDialog.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleEvents.EnterKeyPressListener.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleEvents.EnterKeyPressListener.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleEvents.EnterKeyPressSuppressor.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleEvents.EnterKeyPressSuppressor.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleEvents.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleEvents.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleFragment.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleFragment.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleIO.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleIO.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleIntentService.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleIntentService.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleList.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleList.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleLocalization.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleLocalization.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleMedia.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleMedia.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleNotification.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleNotification.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimplePreferences.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimplePreferences.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleProgressDialog.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleProgressDialog.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleService.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleService.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleSpeech.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleSpeech.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleTask.TaskExecutor.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleTask.TaskExecutor.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleTask.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleTask.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleView.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/SimpleView.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/Version.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/Version.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/data/SimpleCursor.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/data/SimpleCursor.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/data/SimpleDatabase.QueryProgressListener.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/data/SimpleDatabase.QueryProgressListener.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/data/SimpleDatabase.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/data/SimpleDatabase.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/data/SimpleRow.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/data/SimpleRow.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/data/package-frame.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/data/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/data/package-summary.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/data/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/data/package-tree.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/data/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GArrow.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GArrow.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GCanvas.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GCanvas.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GColor.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GColor.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GCompound.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GCompound.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GDimension.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GDimension.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GFillable.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GFillable.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GImage.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GImage.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GLabel.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GLabel.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GLine.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GLine.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GMath.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GMath.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GObject.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GObject.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GOval.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GOval.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GPoint.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GPoint.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GPolygon.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GPolygon.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GRect.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GRect.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GRectangle.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GRectangle.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GResizable.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GResizable.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GScalable.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GScalable.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GSprite.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/GSprite.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/package-frame.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/package-summary.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/package-tree.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/graphics/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/json/JSONRuntimeException.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/json/JSONRuntimeException.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/json/package-frame.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/json/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/json/package-summary.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/json/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/json/package-tree.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/json/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/package-frame.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/package-summary.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/package-tree.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/util/CollectionUtils.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/util/CollectionUtils.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/util/IntentUtils.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/util/IntentUtils.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/util/RandomGenerator.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/util/RandomGenerator.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/util/package-frame.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/util/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/util/package-summary.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/util/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/util/package-tree.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/util/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/xml/XML.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/xml/XML.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/xml/XMLTokener.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/xml/XMLTokener.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/xml/package-frame.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/xml/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/xml/package-summary.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/xml/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/xml/package-tree.html" afterPath="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/javadoc/stanford/androidlib/xml/package-tree.html" />
     </list>
     <ignored path="StanfordAndroidLibrary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -162,31 +52,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GSprite.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GSprite.java" pinned="false" current-in-tab="true">
         <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GSprite.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="39" column="1" selection-start-line="39" selection-start-column="1" selection-end-line="39" selection-end-column="1" />
+            <state relative-caret-position="198">
+              <caret line="1137" column="8" selection-start-line="1137" selection-start-column="8" selection-end-line="1137" selection-end-column="8" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Version.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Version.java" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/Version.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GObject.java" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GObject.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
+            <state relative-caret-position="210">
+              <caret line="9" column="67" selection-start-line="9" selection-start-column="67" selection-end-line="9" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -195,28 +75,8 @@
       <file leaf-file-name="GColor.java" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GColor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GCanvas.java" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCanvas.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="471">
-              <caret line="235" column="20" selection-start-line="235" selection-start-column="20" selection-end-line="235" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GLabel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLabel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="471">
-              <caret line="225" column="42" selection-start-line="225" selection-start-column="42" selection-end-line="225" selection-end-column="42" />
+            <state relative-caret-position="210">
+              <caret line="7" column="30" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -1913,11 +1773,11 @@
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GImage.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCompound.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GArrow.java" />
-        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GColor.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCanvas.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GObject.java" />
-        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GSprite.java" />
         <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/Version.java" />
+        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GColor.java" />
+        <option value="$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GSprite.java" />
       </list>
     </option>
   </component>
@@ -1977,10 +1837,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -1988,77 +1844,13 @@
               <option name="myItemId" value="StanfordAndroidLibrary" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gradle Scripts" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="StanfordAndroidLibrary" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="StanfordAndroidLibrary" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="androidlib" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="StanfordAndroidLibrary" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="androidlib" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="graphics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="StanfordAndroidLibrary" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2347,7 +2139,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21315068" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1769863" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2591,7 +2383,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="15" column="1" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2700,9 +2491,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/Version.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="9" column="67" selection-start-line="9" selection-start-column="67" selection-end-line="9" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GLabel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="471">
+        <state relative-caret-position="842">
           <caret line="225" column="42" selection-start-line="225" selection-start-column="42" selection-end-line="225" selection-end-column="42" />
           <folding />
         </state>
@@ -2710,7 +2517,7 @@
     </entry>
     <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GCanvas.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="471">
+        <state relative-caret-position="842">
           <caret line="235" column="20" selection-start-line="235" selection-start-column="20" selection-end-line="235" selection-end-column="20" />
           <folding />
         </state>
@@ -2718,32 +2525,16 @@
     </entry>
     <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GColor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
+        <state relative-caret-position="210">
+          <caret line="7" column="30" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/graphics/GSprite.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="39" column="1" selection-start-line="39" selection-start-column="1" selection-end-line="39" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/data/docs/stanford/StanfordAndroidLibrary/app/src/main/java/stanford/androidlib/Version.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+        <state relative-caret-position="198">
+          <caret line="1137" column="8" selection-start-line="1137" selection-start-column="8" selection-end-line="1137" selection-end-column="8" />
           <folding />
         </state>
       </provider>

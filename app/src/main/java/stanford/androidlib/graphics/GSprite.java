@@ -1,4 +1,6 @@
 /*
+ * @version 2017/03/01
+ * - bug fix for setCollisionMarginTop/Left (were also setting bottom/right margins)
  * @version 2017/02/28
  * - added constructors that take a GCanvas
  * - added get/setShape
@@ -1133,7 +1135,11 @@ public class GSprite extends GObject {
      * Sets a collision margin for this sprite on the left side only.
      */
     public GSprite setCollisionMarginLeft(float pxLeft) {
-        return setCollisionMarginX(pxLeft);
+        return setCollisionMargin(
+                /* left */   pxLeft,
+                /* top */    getCollisionMarginTop(),
+                /* right */  getCollisionMarginRight(),
+                /* bottom */ getCollisionMarginBottom());
     }
 
     /**
@@ -1151,7 +1157,11 @@ public class GSprite extends GObject {
      * Sets a collision margin for this sprite on the top side.
      */
     public GSprite setCollisionMarginTop(float pxTop) {
-        return setCollisionMarginY(pxTop);
+        return setCollisionMargin(
+                /* left */   getCollisionMarginLeft(),
+                /* top */    pxTop,
+                /* right */  getCollisionMarginRight(),
+                /* bottom */ getCollisionMarginBottom());
     }
 
     /**

@@ -14,7 +14,7 @@ import android.graphics.Paint;
  * your own Paint object.
  */
 public final class GColor {
-    GColor() {
+    private GColor() {
         // empty
     }
 
