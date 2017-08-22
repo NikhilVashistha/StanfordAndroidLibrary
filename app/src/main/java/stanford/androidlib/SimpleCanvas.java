@@ -9,7 +9,9 @@
 
 package stanford.androidlib;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.*;
 import android.support.annotation.CallSuper;
 import android.support.annotation.DrawableRes;
@@ -106,25 +108,50 @@ public abstract class SimpleCanvas extends View
      * Returns the simple activity that this canvas is inside of.
      */
     public SimpleActivity getSimpleActivity() {
-        if (this.getContext() instanceof SimpleActivity) {
-            return (SimpleActivity) this.getContext();
+        Activity activity = this.getActivity();
+        if (activity instanceof SimpleActivity) {
+            return (SimpleActivity) activity;
         } else {
             return SimpleActivity.getCurrentActivity();
         }
     }
 
+
+    // TODO: remove bitmap methods from SimpleCanvas after 16sp
+
     /**
      * Returns the bitmap that corresponds to the given resource ID.
      */
     public Bitmap getBitmap(@DrawableRes int id) {
-        return BitmapFactory.decodeResource(getContext().getResources(), id);
+        return SimpleBitmap.with(getContext()).get(id);
     }
 
     /**
      * Returns the bitmap that corresponds to the given resource ID.
      */
     public Bitmap getScaledBitmap(@DrawableRes int id, float width, float height) {
-        return scaleBitmap(getBitmap(id), width, height);
+        return SimpleBitmap.with(getContext()).get(id, width, height);
+    }
+
+    /**
+     * Returns the bitmap that corresponds to the given resource ID.
+     */
+    public Bitmap getScaledBitmap(@DrawableRes int id, float scaleFactor) {
+        return SimpleBitmap.with(getContext()).scale(id, scaleFactor);
+    }
+
+    /**
+     * Returns the bitmap that corresponds to the given resource ID.
+     */
+    public Bitmap getScaledBitmapToWidth(@DrawableRes int id, float width) {
+        return SimpleBitmap.with(getContext()).scaleToWidth(id, width);
+    }
+
+    /**
+     * Returns the bitmap that corresponds to the given resource ID.
+     */
+    public Bitmap getScaledBitmapToHeight(@DrawableRes int id, float height) {
+        return SimpleBitmap.with(getContext()).scaleToHeight(id, height);
     }
 
     /**
@@ -132,9 +159,7 @@ public abstract class SimpleCanvas extends View
      * clockwise about its center point.
      */
     public Bitmap rotateBitmap(Bitmap bitmap, float degrees) {
-        float centerX = bitmap.getWidth() / 2f;
-        float centerY = bitmap.getHeight() / 2f;
-        return rotateBitmap(bitmap, degrees, centerX, centerY);
+        return SimpleBitmap.with(getContext()).rotate(bitmap, degrees);
     }
 
 
@@ -143,37 +168,43 @@ public abstract class SimpleCanvas extends View
      * clockwise about the point (rx, ry).
      */
     public Bitmap rotateBitmap(Bitmap bitmap, float degrees, float rx, float ry) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(degrees, rx, ry);
-        return Bitmap.createBitmap(bitmap,
-                0, 0, bitmap.getWidth(), bitmap.getHeight(),
-                matrix, /* filter */ true);
+        return SimpleBitmap.with(getContext()).rotate(bitmap, degrees, rx, ry);
+    }
+
+    /**
+     * Returns a new bitmap which is the given bitmap resized by the given
+     * factor.  For example, if the scale factor is 0.5f, the image will
+     * shrink to half its current size.
+     */
+    public Bitmap scaleBitmap(Bitmap bitmap, float scaleFactor) {
+        return SimpleBitmap.with(getContext()).scale(bitmap, scaleFactor);
     }
 
     /**
      * Returns a new bitmap which is the given bitmap resized to the given size.
      */
     public Bitmap scaleBitmap(Bitmap bitmap, float width, float height) {
-        return Bitmap.createScaledBitmap(bitmap, (int) width, (int) height, /* filter */ true);
+        return SimpleBitmap.with(getContext()).scale(bitmap, width, height);
     }
 
     /**
      * Returns a new bitmap which is the given bitmap resized to have
      * the given width, and a proportionally scaled height to match.
      */
-    public Bitmap scaleToWidth(Bitmap bitmap, float width) {
-        float height = bitmap.getHeight() * width / bitmap.getWidth();
-        return scaleBitmap(bitmap, width, height);
+    public Bitmap scaleBitmapToWidth(Bitmap bitmap, float width) {
+        return SimpleBitmap.with(getContext()).scaleToWidth(bitmap, width);
     }
 
     /**
      * Returns a new bitmap which is the given bitmap resized to have
      * the given height, and a proportionally scaled width to match.
      */
-    public Bitmap scaleToHeight(Bitmap bitmap, float height) {
-        float width = bitmap.getWidth() * height / bitmap.getHeight();
-        return scaleBitmap(bitmap, width, height);
+    public Bitmap scaleBitmapToHeight(Bitmap bitmap, float height) {
+        return SimpleBitmap.with(getContext()).scaleToHeight(bitmap, height);
     }
+
+
+    // TODO: remove bitmap methods from SimpleCanvas after 16sp
 
     /**
      * Returns the drawing canvas found inside of this object.
@@ -241,8 +272,24 @@ public abstract class SimpleCanvas extends View
      * Returns a new font typeface created using the given parameters.
      */
     public Typeface createFont(Typeface familyName, int style) {
-        Typeface font = Typeface.create(familyName, style);
-        return font;
+        return Typeface.create(familyName, style);
+    }
+
+    /**
+     * Returns the activity that this canvas is inside.
+     * If the canvas is not inside an Activity (such as if it is inside a fragment), returns null.
+     */
+    public Activity getActivity() {
+        // based on code from: http://stackoverflow.com/questions/8276634/android-get-hosting-activity-from-a-view
+        Context context = getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity) context;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        return null;
+
     }
 
     /**

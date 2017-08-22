@@ -1,4 +1,20 @@
 /**
+ * @version 2017/02/17
+ * - added SimpleTask.TaskExecutor implementation
+ * @version 2017/02/10
+ * - added log() that takes a string tag
+ * @version 2017/02/06
+ * - added more getXxxExtra methods
+ * - added getRequestCodeFor(Class) and startActivityForResult overload w/o req code
+ * @version 2016/12/23
+ * - bug fix in $/find methods to return T extends View
+ * @version 2016/12/22
+ * - added layoutID to avoid need for onCreate
+ * - added auto-inference of default layout ID
+ * - added debug log messages displaying library version
+ * - added init() and start() methods like Stanford/ACM Java lib
+ * @version 2016/12/13
+ * - added $ method (alias of find())
  * @version 2016/03/02
  * - major refactor to break up SimpleActivity god class and incorporate:
  *     SimpleCamera,
@@ -86,6 +102,7 @@ import java.net.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import stanford.androidlib.data.SimpleDatabase;
 import stanford.androidlib.util.IntentUtils;
 
 /**
@@ -118,8 +135,10 @@ public abstract class SimpleActivity extends AppCompatActivity implements
         RadioGroup.OnCheckedChangeListener,
         OnSwipeListener.OnSwipeListenerImpl,
         OnSwipeListener.OnScaleListenerImpl,
+        SimpleDatabase.QueryProgressListener,
         SimpleDialog.DialogListener,
-        SimpleEvents.EnterKeyPressListener {
+        SimpleEvents.EnterKeyPressListener,
+        SimpleTask.TaskExecutor {
 
     /// begin class constants
 
@@ -223,6 +242,13 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     // next unique view ID to hand out from generateViewId
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
 
+    // map between classes and their automatically-generated request codes
+    private static final Map<Class<? extends Activity>, Integer> ACTIVITY_TO_REQUEST_CODE = new HashMap<>();
+    private static final Map<Integer, Class<? extends Activity>> REQUEST_CODE_TO_ACTIVITY = new HashMap<>();
+
+    // whether we have log-printed the Stanford Android lib version yet
+    private static boolean sPrintedVersionYet = false;
+
     /**
      * Return the activity that is currently active on the screen.
      * This method is used as a convenience by some other classes like SimpleCanvas.
@@ -262,6 +288,8 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     /// begin fields (instance variables)
 
     private boolean traceLifecycleMethods = false;
+    private boolean isContentViewSet = false;   // has setContentView been called?
+    private @LayoutRes int layoutID = -1;
     private PowerManager.WakeLock wakeLock = null;
 
     /// end fields (instance variables)
@@ -269,6 +297,39 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     // instance initializer (runs before any constructor)
     {
         currentActivity = this;
+
+        // make sure that this activity's class is in our map from classes to request codes
+        getRequestCodeFor(getClass());
+    }
+
+    /**
+     * Constructs a new simple activity with no known layout resource ID.
+     * Suggested idiom: In your subclass, write a zero-arg constructor that calls setLayoutID.
+     */
+    public SimpleActivity() {
+        if (!sPrintedVersionYet) {
+            sPrintedVersionYet = true;
+            final String stars = "******************************************************************************************";
+            Log.d("StanfordAndroidLibrary", stars);
+            Log.d("StanfordAndroidLibrary", stars);
+            Log.d("StanfordAndroidLibrary", "** Stanford Android Library, by Marty Stepp, version " + Version.getLibraryVersion() + "                 **");
+            Log.d("StanfordAndroidLibrary", "** For documentation and updates, visit " + Version.getLibraryUrl() + " **");
+            Log.d("StanfordAndroidLibrary", stars);
+            Log.d("StanfordAndroidLibrary", stars);
+        }
+    }
+
+    /**
+     * Sets the layout to use for this activity as it is being created.
+     * This class's version of this method prevents it from being called multiple times.
+     * @param layoutID the ID of the layout to use
+     */
+    @Override
+    public void setContentView(@LayoutRes int layoutID) {
+        if (!isContentViewSet) {
+            super.setContentView(layoutID);
+            isContentViewSet = true;
+        }
     }
 
     /**
@@ -336,7 +397,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * does not need to typecast the returned result.
      */
     @SuppressWarnings("unchecked")
-    public <T> T find(@IdRes int id) {
+    public <T extends View> T $(@IdRes int id) {
         return (T) super.findViewById(id);
     }
 
@@ -345,8 +406,62 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * does not need to typecast the returned result.
      */
     @SuppressWarnings("unchecked")
-    public <T> T findById(@IdRes int id) {
+    public <T extends View> T $(@NonNull View parent, @IdRes int id) {
+        return (T) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends View> T find(@IdRes int id) {
         return (T) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends View> T find(@NonNull View parent, @IdRes int id) {
+        return (T) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends View> T findById(@IdRes int id) {
+        return (T) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends View> T findById(@NonNull View parent, @IdRes int id) {
+        return (T) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public Button $B(@IdRes int id) {
+        return (Button) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public Button $B(@NonNull View parent, @IdRes int id) {
+        return (Button) parent.findViewById(id);
     }
 
     /**
@@ -361,8 +476,60 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * Returns a widget of the given specific type so that casting is not needed as it would be
      * with findViewById.
      */
+    public Button findButton(@NonNull View parent, @IdRes int id) {
+        return (Button) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public CalendarView $CV(@IdRes int id) {
+        return (CalendarView) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public CalendarView $CV(@NonNull View parent, @IdRes int id) {
+        return (CalendarView) parent.findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
     public CalendarView findCalendarView(@IdRes int id) {
         return (CalendarView) findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
+    public CalendarView findCalendarView(@NonNull View parent, @IdRes int id) {
+        return (CalendarView) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public CheckBox $CB(@IdRes int id) {
+        return (CheckBox) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public CheckBox $CB(@NonNull View parent, @IdRes int id) {
+        return (CheckBox) parent.findViewById(id);
     }
 
     /**
@@ -377,8 +544,60 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * Returns a widget of the given specific type so that casting is not needed as it would be
      * with findViewById.
      */
+    public CheckBox findCheckBox(@NonNull View parent, @IdRes int id) {
+        return (CheckBox) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public DatePicker $DP(@IdRes int id) {
+        return (DatePicker) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public DatePicker $DP(@NonNull View parent, @IdRes int id) {
+        return (DatePicker) parent.findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
     public DatePicker findDatePicker(@IdRes int id) {
         return (DatePicker) findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
+    public DatePicker findDatePicker(@NonNull View parent, @IdRes int id) {
+        return (DatePicker) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public EditText $ET(@IdRes int id) {
+        return (EditText) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public EditText $ET(@NonNull View parent, @IdRes int id) {
+        return (EditText) parent.findViewById(id);
     }
 
     /**
@@ -393,8 +612,60 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * Returns a widget of the given specific type so that casting is not needed as it would be
      * with findViewById.
      */
+    public EditText findEditText(@NonNull View parent, @IdRes int id) {
+        return (EditText) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public GridView $GV(@IdRes int id) {
+        return (GridView) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public GridView $GV(@NonNull View parent, @IdRes int id) {
+        return (GridView) parent.findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
     public GridView findGridView(@IdRes int id) {
         return (GridView) findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
+    public GridView findGridView(@NonNull View parent, @IdRes int id) {
+        return (GridView) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public ImageButton $IB(@IdRes int id) {
+        return (ImageButton) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public ImageButton $IB(@NonNull View parent, @IdRes int id) {
+        return (ImageButton) parent.findViewById(id);
     }
 
     /**
@@ -409,8 +680,60 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * Returns a widget of the given specific type so that casting is not needed as it would be
      * with findViewById.
      */
+    public ImageButton findImageButton(@NonNull View parent, @IdRes int id) {
+        return (ImageButton) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public ImageView $IV(@IdRes int id) {
+        return (ImageView) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public ImageView $IV(@NonNull View parent, @IdRes int id) {
+        return (ImageView) parent.findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
     public ImageView findImageView(@IdRes int id) {
         return (ImageView) findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
+    public ImageView findImageView(@NonNull View parent, @IdRes int id) {
+        return (ImageView) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public ListView $LV(@IdRes int id) {
+        return (ListView) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public ListView $LV(@NonNull View parent, @IdRes int id) {
+        return (ListView) parent.findViewById(id);
     }
 
     /**
@@ -425,8 +748,60 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * Returns a widget of the given specific type so that casting is not needed as it would be
      * with findViewById.
      */
+    public ListView findListView(@NonNull View parent, @IdRes int id) {
+        return (ListView) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public ProgressBar $PB(@IdRes int id) {
+        return (ProgressBar) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public ProgressBar $PB(@NonNull View parent, @IdRes int id) {
+        return (ProgressBar) parent.findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
     public ProgressBar findProgressBar(@IdRes int id) {
         return (ProgressBar) findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
+    public ProgressBar findProgressBar(@NonNull View parent, @IdRes int id) {
+        return (ProgressBar) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public RadioButton $RB(@IdRes int id) {
+        return (RadioButton) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public RadioButton $RB(@NonNull View parent, @IdRes int id) {
+        return (RadioButton) parent.findViewById(id);
     }
 
     /**
@@ -441,8 +816,60 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * Returns a widget of the given specific type so that casting is not needed as it would be
      * with findViewById.
      */
+    public RadioButton findRadioButton(@NonNull View parent, @IdRes int id) {
+        return (RadioButton) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public RadioGroup $RG(@IdRes int id) {
+        return (RadioGroup) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public RadioGroup $RG(@NonNull View parent, @IdRes int id) {
+        return (RadioGroup) parent.findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
     public RadioGroup findRadioGroup(@IdRes int id) {
         return (RadioGroup) findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
+    public RadioGroup findRadioGroup(@NonNull View parent, @IdRes int id) {
+        return (RadioGroup) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public RatingBar $RBar(@IdRes int id) {
+        return (RatingBar) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public RatingBar $RBar(@NonNull View parent, @IdRes int id) {
+        return (RatingBar) parent.findViewById(id);
     }
 
     /**
@@ -457,8 +884,60 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * Returns a widget of the given specific type so that casting is not needed as it would be
      * with findViewById.
      */
+    public RatingBar findRatingBar(@NonNull View parent, @IdRes int id) {
+        return (RatingBar) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public ScrollView $SCV(@IdRes int id) {
+        return (ScrollView) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public ScrollView $SCV(@NonNull View parent, @IdRes int id) {
+        return (ScrollView) parent.findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
     public ScrollView findScrollView(@IdRes int id) {
         return (ScrollView) findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
+    public ScrollView findScrollView(@NonNull View parent, @IdRes int id) {
+        return (ScrollView) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public SearchView $SEV(@IdRes int id) {
+        return (SearchView) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public SearchView $SEV(@NonNull View parent, @IdRes int id) {
+        return (SearchView) parent.findViewById(id);
     }
 
     /**
@@ -473,8 +952,60 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * Returns a widget of the given specific type so that casting is not needed as it would be
      * with findViewById.
      */
+    public SearchView findSearchView(@NonNull View parent, @IdRes int id) {
+        return (SearchView) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public SeekBar $SB(@IdRes int id) {
+        return (SeekBar) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public SeekBar $SB(@NonNull View parent, @IdRes int id) {
+        return (SeekBar) parent.findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
     public SeekBar findSeekBar(@IdRes int id) {
         return (SeekBar) findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
+    public SeekBar findSeekBar(@NonNull View parent, @IdRes int id) {
+        return (SeekBar) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public Space $Space(@IdRes int id) {
+        return (Space) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public Space $Space(@NonNull View parent, @IdRes int id) {
+        return (Space) parent.findViewById(id);
     }
 
     /**
@@ -489,8 +1020,60 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * Returns a widget of the given specific type so that casting is not needed as it would be
      * with findViewById.
      */
+    public Space findSpace(@NonNull View parent, @IdRes int id) {
+        return (Space) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public Spinner $SP(@IdRes int id) {
+        return (Spinner) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public Spinner $SP(@NonNull View parent, @IdRes int id) {
+        return (Spinner) parent.findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
     public Spinner findSpinner(@IdRes int id) {
         return (Spinner) findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
+    public Spinner findSpinner(@NonNull View parent, @IdRes int id) {
+        return (Spinner) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public StackView $SV(@IdRes int id) {
+        return (StackView) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public StackView $SV(@NonNull View parent, @IdRes int id) {
+        return (StackView) parent.findViewById(id);
     }
 
     /**
@@ -505,8 +1088,60 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * Returns a widget of the given specific type so that casting is not needed as it would be
      * with findViewById.
      */
+    public StackView findStackView(@NonNull View parent, @IdRes int id) {
+        return (StackView) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public Switch $SW(@IdRes int id) {
+        return (Switch) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public Switch $SW(@NonNull View parent, @IdRes int id) {
+        return (Switch) parent.findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
     public Switch findSwitch(@IdRes int id) {
         return (Switch) findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
+    public Switch findSwitch(@NonNull View parent, @IdRes int id) {
+        return (Switch) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public TextView $TV(@IdRes int id) {
+        return (TextView) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public TextView $TV(@NonNull View parent, @IdRes int id) {
+        return (TextView) parent.findViewById(id);
     }
 
     /**
@@ -521,8 +1156,60 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * Returns a widget of the given specific type so that casting is not needed as it would be
      * with findViewById.
      */
+    public TextView findTextView(@NonNull View parent, @IdRes int id) {
+        return (TextView) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public TimePicker $TP(@IdRes int id) {
+        return (TimePicker) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public TimePicker $TP(@NonNull View parent, @IdRes int id) {
+        return (TimePicker) parent.findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
     public TimePicker findTimePicker(@IdRes int id) {
         return (TimePicker) findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
+    public TimePicker findTimePicker(@NonNull View parent, @IdRes int id) {
+        return (TimePicker) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public ToggleButton $TB(@IdRes int id) {
+        return (ToggleButton) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public ToggleButton $TB(@NonNull View parent, @IdRes int id) {
+        return (ToggleButton) parent.findViewById(id);
     }
 
     /**
@@ -537,8 +1224,60 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * Returns a widget of the given specific type so that casting is not needed as it would be
      * with findViewById.
      */
+    public ToggleButton findToggleButton(@NonNull View parent, @IdRes int id) {
+        return (ToggleButton) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public Toolbar $TBar(@IdRes int id) {
+        return (Toolbar) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public Toolbar $TBar(@NonNull View parent, @IdRes int id) {
+        return (Toolbar) parent.findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
     public Toolbar findToolbar(@IdRes int id) {
         return (Toolbar) findViewById(id);
+    }
+
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
+    public Toolbar findToolbar(@NonNull View parent, @IdRes int id) {
+        return (Toolbar) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public ViewGroup $VG(@IdRes int id) {
+        return (ViewGroup) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public ViewGroup $VG(@NonNull View parent, @IdRes int id) {
+        return (ViewGroup) parent.findViewById(id);
     }
 
     /**
@@ -551,6 +1290,33 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     }
 
     /**
+     * Returns a ViewGroup of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends ViewGroup> T findViewGroup(@NonNull View parent, @IdRes int id) {
+        return (T) parent.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public ZoomButton $ZB(@IdRes int id) {
+        return (ZoomButton) super.findViewById(id);
+    }
+
+    /**
+     * An alias for findViewById, but written in such a way that the caller
+     * does not need to typecast the returned result.
+     */
+    @SuppressWarnings("unchecked")
+    public ZoomButton $ZB(@NonNull View parent, @IdRes int id) {
+        return (ZoomButton) parent.findViewById(id);
+    }
+
+    /**
      * Returns a widget of the given specific type so that casting is not needed as it would be
      * with findViewById.
      */
@@ -558,9 +1324,175 @@ public abstract class SimpleActivity extends AppCompatActivity implements
         return (ZoomButton) findViewById(id);
     }
 
+    /**
+     * Returns a widget of the given specific type so that casting is not needed as it would be
+     * with findViewById.
+     */
+    public ZoomButton findZoomButton(@NonNull View parent, @IdRes int id) {
+        return (ZoomButton) parent.findViewById(id);
+    }
+
+    /**
+     * Returns all direct children of this view group that are instances of the given class.
+     * An alias for SimpleView.with(this).findChildren.
+     */
+    public final <T extends View> ArrayList<T> findChildren(@IdRes int parentID, @NonNull Class<T> viewClass) {
+        return SimpleView.with(this).findChildren(parentID, viewClass);
+    }
+
+    /**
+     * Returns all direct children of this view group that are instances of the given class.
+     * An alias for SimpleView.with(this).findChildren.
+     */
+    public final <T extends View> ArrayList<T> findChildren(@NonNull ViewGroup parent, @NonNull Class<T> viewClass) {
+        return SimpleView.with(this).findChildren(parent, viewClass);
+    }
+
+    /**
+     * Returns all direct children of this view group that are instances of one of the given classes.
+     * An alias for SimpleView.with(this).findChildren.
+     */
+    @SafeVarargs
+    public final ArrayList<View> findChildren(@IdRes int parentID, Class<? extends View>... viewClasses) {
+        return SimpleView.with(this).findChildren(parentID, viewClasses);
+    }
+
+    /**
+     * Returns all direct children of this view group that are instances of one of the given classes.
+     * An alias for SimpleView.with(this).findChildren.
+     */
+    @SafeVarargs
+    public final ArrayList<View> findChildren(@NonNull ViewGroup parent, Class<? extends View>... viewClasses) {
+        return SimpleView.with(this).findChildren(parent, viewClasses);
+    }
+
+    /**
+     * Returns all direct children of this view group that use the given tag.
+     * An alias for SimpleView.with(this).findChildren.
+     */
+    public ArrayList<View> findChildren(@IdRes int parentID, @NonNull Object tag) {
+        return SimpleView.with(this).findChildren(parentID, tag);
+    }
+
+    /**
+     * Returns all direct children of this view group that use the given tag.
+     * An alias for SimpleView.with(this).findChildren.
+     */
+    public ArrayList<View> findChildren(@NonNull ViewGroup parent, @NonNull Object tag) {
+        return SimpleView.with(this).findChildren(parent, tag);
+    }
+
+    /**
+     * Returns all children, grandchildren, etc of this view group that are instances of the given class.
+     * An alias for SimpleView.with(this).findDescendents.
+     */
+    public final <T extends View> ArrayList<T> findDescendents(@IdRes int parentID, @NonNull Class<T> viewClass) {
+        return SimpleView.with(this).findDescendents(parentID, viewClass);
+    }
+
+    /**
+     * Returns all children, grandchildren, etc of this view group that are instances of the given class.
+     * An alias for SimpleView.with(this).findDescendents.
+     */
+    public final <T extends View> ArrayList<T> findDescendents(@NonNull ViewGroup parent, @NonNull Class<T> viewClass) {
+        return SimpleView.with(this).findDescendents(parent, viewClass);
+    }
+
+    /**
+     * Returns all children, grandchildren, etc of this view group that are instances of one of the given classes.
+     * An alias for SimpleView.with(this).findDescendents.
+     */
+    @SafeVarargs
+    public final ArrayList<View> findDescendents(@IdRes int parentID, Class<? extends View>... viewClasses) {
+        return SimpleView.with(this).findDescendents(parentID, viewClasses);
+    }
+
+    /**
+     * Returns all children, grandchildren, etc of this view group that are instances of one of the given classes.
+     * An alias for SimpleView.with(this).findDescendents.
+     */
+    @SafeVarargs
+    public final ArrayList<View> findDescendents(@NonNull ViewGroup parent, Class<? extends View>... viewClasses) {
+        return SimpleView.with(this).findDescendents(parent, viewClasses);
+    }
+
+    /**
+     * Returns all children, grandchildren, etc of this view group that use the given tag.
+     * An alias for SimpleView.with(this).findDescendents.
+     */
+    public ArrayList<View> findDescendents(@IdRes int parentID, @NonNull Object tag) {
+        return SimpleView.with(this).findDescendents(parentID, tag);
+    }
+
+    /**
+     * Returns all children, grandchildren, etc of this view group that use the given tag.
+     * An alias for SimpleView.with(this).findDescendents.
+     */
+    public ArrayList<View> findDescendents(@NonNull ViewGroup parent, @NonNull Object tag) {
+        return SimpleView.with(this).findDescendents(parent, tag);
+    }
+
+    /**
+     * Returns all children, grandchildren, etc of this view group that are instances of the given class.
+     * An alias for SimpleView.with(this).findDescendents.
+     */
+    public <T extends View> ArrayList<T> $$(@IdRes int parentID, @NonNull Class<T> viewClass) {
+        return SimpleView.with(this).findDescendents(parentID, viewClass);
+    }
+
+    /**
+     * Returns all children, grandchildren, etc of this view group that are instances of the given class.
+     * An alias for SimpleView.with(this).findDescendents.
+     */
+    public <T extends View> ArrayList<T> $$(@NonNull ViewGroup parent, @NonNull Class<T> viewClass) {
+        return SimpleView.with(this).findDescendents(parent, viewClass);
+    }
+
+    /**
+     * Returns all children, grandchildren, etc of this view group that are instances of one of the given classes.
+     * An alias for SimpleView.with(this).findDescendents.
+     */
+    @SafeVarargs
+    public final ArrayList<View> $$(@IdRes int parentID, Class<? extends View>... viewClasses) {
+        return SimpleView.with(this).findDescendents(parentID, viewClasses);
+    }
+
+    /**
+     * Returns all children, grandchildren, etc of this view group that are instances of one of the given classes.
+     * An alias for SimpleView.with(this).findDescendents.
+     */
+    @SafeVarargs
+    public final ArrayList<View> $$(@NonNull ViewGroup parent, Class<? extends View>... viewClasses) {
+        return SimpleView.with(this).findDescendents(parent, viewClasses);
+    }
+
+    /**
+     * Returns all children, grandchildren, etc of this view group that use the given tag.
+     * An alias for SimpleView.with(this).findDescendents.
+     */
+    public ArrayList<View> $$(@IdRes int parentID, @NonNull Object tag) {
+        return SimpleView.with(this).findDescendents(parentID, tag);
+    }
+
+    /**
+     * Returns all children, grandchildren, etc of this view group that use the given tag.
+     * An alias for SimpleView.with(this).findDescendents.
+     */
+    public ArrayList<View> $$(@NonNull ViewGroup parent, @NonNull Object tag) {
+        return SimpleView.with(this).findDescendents(parent, tag);
+    }
+
     /// end methods for finding various widgets by ID
 
     /// begin methods related to fragments
+
+    /**
+     * Returns a fragment with the given ID found inside this activity.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends Fragment> T $F(@IdRes int id) {
+        return (T) getFragmentManager().findFragmentById(id);
+    }
 
     /**
      * Returns a fragment with the given ID found inside this activity.
@@ -746,6 +1678,34 @@ public abstract class SimpleActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * Returns true if the given resource name maps to a resource in this app.
+     * @param fullName a full resource name such as "R.id.foo"
+     */
+    public boolean hasResource(@NonNull String fullName) {
+        int id = getResourceId(fullName);
+        return id >= 0;
+    }
+
+    /**
+     * Returns true if the given resource name/type maps to a resource in this app.
+     * @param name a resource name such as "foo" for R.drawable.foo
+     * @param type a resource type such as "drawable" for R.drawable.foo
+     */
+    public boolean hasResource(@NonNull String name, @NonNull String type) {
+        int id = getResourceId(name, type);
+        return id >= 0;
+    }
+
+    /**
+     * Returns true if the given resource ID maps to a resource in this app.
+     * @param id a resource ID such as R.drawable.foo
+     */
+    public boolean hasResource(@IdRes int id) {
+        String resourceName = getResourceName(id);
+        return resourceName != null && !resourceName.isEmpty();
+    }
+
     // whether this field should be filtered out or not by getAllResourceIds
     private boolean shouldFilterField(String fieldName) {
         return RESOURCE_NAMES_TO_FILTER.contains(fieldName)
@@ -830,7 +1790,7 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * Returns the bitmap image for the resource file with the given ID.
      */
     public Bitmap getBitmap(@DrawableRes int id) {
-        return BitmapFactory.decodeResource(getResources(), id);
+        return SimpleBitmap.with(this).get(id);
     }
 
     /**
@@ -838,19 +1798,21 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      * @throws IORuntimeException if the URL cannot be read or is not a valid image.
      */
     public Bitmap getBitmap(@NonNull String url) {
-        try {
-            URL theUrl = new URL(url);
-            return BitmapFactory.decodeStream(theUrl.openStream());
-        } catch (MalformedURLException mfurle) {
-            throw new IllegalArgumentException("Invalid URL: " + url, mfurle);
-        } catch (IOException ioe) {
-            throw new IORuntimeException(ioe);
-        }
+        return SimpleBitmap.with(this).get(url);
     }
 
     /// end methods related to app resources
 
     /// begin empty event listener methods
+
+    /**
+     * Attaches a listener so that this activity's onEnterKeyPress method will be called
+     * when the Enter key is pressed on the view with the given ID.
+     * Now also supports keyboard cursor movement with arrow keys and Home/End for physical keyboards.
+     */
+    public void handleEnterKeyPress(@IdRes int viewID) {
+        handleEnterKeyPress(findViewById(viewID));
+    }
 
     /**
      * Attaches a listener so that this activity's onEnterKeyPress method will be called
@@ -1229,7 +2191,176 @@ public abstract class SimpleActivity extends AppCompatActivity implements
                     throw new IORuntimeException("SimpleActivity.onActivityResult: unable to decode bitmap from photo gallery", fnfe);
                 }
             }
+        } else {
+            // if this is an auto-generated request code, look it up and invoke the other overload
+            // of onActivityResult using the appropriate class
+            if (REQUEST_CODE_TO_ACTIVITY.containsKey(requestCode)) {
+                Class<? extends Activity> activityClass = REQUEST_CODE_TO_ACTIVITY.get(requestCode);
+                if (!intent.hasExtra("requestCode")) {
+                    intent.putExtra("requestCode", requestCode);
+                }
+                if (!intent.hasExtra("resultCode")) {
+                    intent.putExtra("resultCode", resultCode);
+                }
+                onActivityResult(activityClass, intent);
+            }
         }
+    }
+
+    /**
+     * Called when various activities return their results.
+     * A simplified version that avoids request/result codes and simply passes you a reference to
+     * the Class object representing the class of the activity that returned.
+     * Note: If you still for some reason need to know the "request code" or "result code" provided
+     * by the other overload of onActivityResult, we put them into the intent as extra data with
+     * the names "requestCode" and "resultCode" (case-sensitive).
+     */
+    protected void onActivityResult(Class<?> activityClass, Intent intent) {
+        // empty; override me
+
+        // (implementation note: I declare the parameter here as Class<?> rather than
+        // the more accurate Class<? extends Activity> so the header is shorter and simpler,
+        // which I deem to be valuable for students.
+    }
+
+    /**
+     * Required method of SimpleTask.TaskExecutor interface.
+     * This implementation is empty; override it if you want to be notified before your SimpleTask executes.
+     */
+    public void onPreExecute() {
+        // empty; override me
+    }
+
+    /**
+     * Required method of SimpleTask.TaskExecutor interface.
+     * This implementation is empty; override it to supply code for your SimpleTask.
+     */
+    public void doInBackground(String... items) {
+        // empty; override me
+    }
+
+    /**
+     * Required method of SimpleTask.TaskExecutor interface.
+     * This implementation is empty; override it if you want to be notified of progress of your SimpleTask.
+     */
+    public void onProgressUpdate(int progress) {
+        // empty; override me
+    }
+
+    /**
+     * Required method of SimpleTask.TaskExecutor interface.
+     * This implementation is empty; override it if you want to be notified after your SimpleTask executes.
+     */
+    public void onPostExecute() {
+        // empty; override me
+    }
+
+    /**
+     * Required method of SimpleDatabase.QueryProgressListener interface.
+     * This implementation is empty; override it if you want to be notified of progress of long SimpleDatabase queries.
+     */
+    public void queryUpdated(String query, double completed) {
+        // empty; override me
+    }
+
+    /**
+     * Attaches an event listener for the appropriate event that will call a method whose name is
+     * the same as the given event name,
+     * passing it the given parameters as appropriate.
+     * This is a thin wrapper around SimpleEvents.listen; see the documentation there for more details.
+     */
+    public void event(@IdRes int viewID, @NonNull String eventName) {
+        SimpleEvents.with(this).listen(viewID, eventName, /* methodName */ eventName);   // no params
+    }
+
+    /**
+     * Attaches an event listener for the appropriate event that will call a method whose name is
+     * the same as the given event name,
+     * passing it the given parameters as appropriate.
+     * This is a thin wrapper around SimpleEvents.listen; see the documentation there for more details.
+     */
+    public void event(@NonNull View view, @NonNull String eventName) {
+        SimpleEvents.with(this).listen(view, eventName, /* methodName */ eventName);   // no params
+    }
+
+    /**
+     * Attaches an event listener for the appropriate event that will call the method with the given name,
+     * passing it the given parameters as appropriate.
+     * This is a thin wrapper around SimpleEvents.listen; see the documentation there for more details.
+     * @param viewID the ID of the widget on which to listen for the event
+     * @param eventName event's name such as "click" or "onClick" (case-insensitive)
+     * @param methodName the exact name of the method to invoke on the context object (case-sensitive) such as "fooBar" for "public void fooBar()"
+     * @param params any parameters that you would like to pass to the given method (can be omitted if it accepts no parameters or only a View arg)
+     * @throws IllegalArgumentException if the given event is not supported, the given method does not exist, is static, abstract, non-accessible, or does not accept the given number of parameters
+     * @throws RuntimeException if the given method experiences any run-time error related to its reflection.
+     */
+    public void event(@IdRes int viewID, @NonNull String eventName, @NonNull String methodName, Object... params) {
+        SimpleEvents.with(this).listen(viewID, eventName, methodName, params);
+    }
+
+    /**
+     * Attaches an event listener for the appropriate event that will call the method with the given name,
+     * passing it the given parameters as appropriate.
+     * This is a thin wrapper around SimpleEvents.listen; see the documentation there for more details.
+     * @param view the widget on which to listen for the event
+     * @param eventName event's name such as "click" or "onClick" (case-insensitive)
+     * @param methodName the exact name of the method to invoke on the context object (case-sensitive) such as "fooBar" for "public void fooBar()"
+     * @param params any parameters that you would like to pass to the given method (can be omitted if it accepts no parameters or only a View arg)
+     * @throws IllegalArgumentException if the given event is not supported, the given method does not exist, is static, abstract, non-accessible, or does not accept the given number of parameters
+     * @throws RuntimeException if the given method experiences any run-time error related to its reflection.
+     */
+    public void event(@NonNull View view, @NonNull String eventName, @NonNull String methodName, Object... params) {
+        SimpleEvents.with(this).listen(view, eventName, methodName, params);
+    }
+
+    /**
+     * Attaches an event listener for the appropriate event that will call a method whose name is
+     * the same as the given event name,
+     * passing it the given parameters as appropriate.
+     * This is a thin wrapper around SimpleEvents.listen; see the documentation there for more details.
+     */
+    public void listen(@IdRes int viewID, @NonNull String eventName) {
+        SimpleEvents.with(this).listen(viewID, eventName, /* methodName */ eventName);   // no params
+    }
+
+    /**
+     * Attaches an event listener for the appropriate event that will call a method whose name is
+     * the same as the given event name,
+     * passing it the given parameters as appropriate.
+     * This is a thin wrapper around SimpleEvents.listen; see the documentation there for more details.
+     */
+    public void listen(@NonNull View view, @NonNull String eventName) {
+        SimpleEvents.with(this).listen(view, eventName, /* methodName */ eventName);   // no params
+    }
+
+    /**
+     * Attaches an event listener for the appropriate event that will call the method with the given name,
+     * passing it the given parameters as appropriate.
+     * This is a thin wrapper around SimpleEvents.listen; see the documentation there for more details.
+     * @param viewID the ID of the widget on which to listen for the event
+     * @param eventName event's name such as "click" or "onClick" (case-insensitive)
+     * @param methodName the exact name of the method to invoke on the context object (case-sensitive) such as "fooBar" for "public void fooBar()"
+     * @param params any parameters that you would like to pass to the given method (can be omitted if it accepts no parameters or only a View arg)
+     * @throws IllegalArgumentException if the given event is not supported, the given method does not exist, is static, abstract, non-accessible, or does not accept the given number of parameters
+     * @throws RuntimeException if the given method experiences any run-time error related to its reflection.
+     */
+    public void listen(@IdRes int viewID, @NonNull String eventName, @NonNull String methodName, Object... params) {
+        SimpleEvents.with(this).listen(viewID, eventName, methodName, params);
+    }
+
+    /**
+     * Attaches an event listener for the appropriate event that will call the method with the given name,
+     * passing it the given parameters as appropriate.
+     * This is a thin wrapper around SimpleEvents.listen; see the documentation there for more details.
+     * @param view the widget on which to listen for the event
+     * @param eventName event's name such as "click" or "onClick" (case-insensitive)
+     * @param methodName the exact name of the method to invoke on the context object (case-sensitive) such as "fooBar" for "public void fooBar()"
+     * @param params any parameters that you would like to pass to the given method (can be omitted if it accepts no parameters or only a View arg)
+     * @throws IllegalArgumentException if the given event is not supported, the given method does not exist, is static, abstract, non-accessible, or does not accept the given number of parameters
+     * @throws RuntimeException if the given method experiences any run-time error related to its reflection.
+     */
+    public void listen(@NonNull View view, @NonNull String eventName, @NonNull String methodName, Object... params) {
+        SimpleEvents.with(this).listen(view, eventName, methodName, params);
     }
 
     /// end event listener methods
@@ -1793,6 +2924,28 @@ public abstract class SimpleActivity extends AppCompatActivity implements
 
     /**
      * Returns an 'extra' parameter with the given name from this activity's intent.
+     * If there is no such 'extra' parameter, returns an empty list of 0 elements.
+     */
+    public ArrayList<Integer> getIntegerArrayListExtra(@NonNull String name) {
+        return getIntegerArrayListExtra(name, /* defaultValue */ new ArrayList<Integer>());
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public ArrayList<Integer> getIntegerArrayListExtra(@NonNull String name, ArrayList<Integer> defaultValue) {
+        Intent intent = getIntent();
+        ArrayList<Integer> result = intent.getIntegerArrayListExtra(name);
+        if (result == null) {
+            return defaultValue;
+        } else {
+            return result;
+        }
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this activity's intent.
      * If there is no such 'extra' parameter, returns 0.
      */
     public long getLongExtra(@NonNull String name) {
@@ -1810,6 +2963,29 @@ public abstract class SimpleActivity extends AppCompatActivity implements
 
     /**
      * Returns an 'extra' parameter with the given name from this activity's intent.
+     * If there is no such 'extra' parameter, returns null.
+     */
+    public <T extends Serializable> T getSerializableExtra(@NonNull String name) {
+        return getSerializableExtra(name, /* defaultValue */ null);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends Serializable> T getSerializableExtra(@NonNull String name, T defaultValue) {
+        Intent intent = getIntent();
+        T result = (T) intent.getSerializableExtra(name);
+        if (result == null) {
+            return defaultValue;
+        } else {
+            return result;
+        }
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this activity's intent.
      * If there is no such 'extra' parameter, returns an empty string.
      */
     public String getStringExtra(@NonNull String name) {
@@ -1823,6 +2999,50 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     public String getStringExtra(@NonNull String name, String defaultValue) {
         Intent intent = getIntent();
         String result = intent.getStringExtra(name);
+        if (result == null) {
+            return defaultValue;
+        } else {
+            return result;
+        }
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this activity's intent.
+     * If there is no such 'extra' parameter, returns an empty array of 0 elements.
+     */
+    public String[] getStringArrayExtra(@NonNull String name) {
+        return getStringArrayExtra(name, /* defaultValue */ new String[0]);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public String[] getStringArrayExtra(@NonNull String name, String[] defaultValue) {
+        Intent intent = getIntent();
+        String[] result = intent.getStringArrayExtra(name);
+        if (result == null) {
+            return defaultValue;
+        } else {
+            return result;
+        }
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this activity's intent.
+     * If there is no such 'extra' parameter, returns an empty list of 0 elements.
+     */
+    public ArrayList<String> getStringArrayListExtra(@NonNull String name) {
+        return getStringArrayListExtra(name, /* defaultValue */ new ArrayList<String>());
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public ArrayList<String> getStringArrayListExtra(@NonNull String name, ArrayList<String> defaultValue) {
+        Intent intent = getIntent();
+        ArrayList<String> result = intent.getStringArrayListExtra(name);
         if (result == null) {
             return defaultValue;
         } else {
@@ -2196,8 +3416,75 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     @Override
     @CallSuper
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         traceLifecycleLog("onCreate", "bundle=" + savedInstanceState);
+        super.onCreate(savedInstanceState);
+        if (this.layoutID >= 0) {
+            setContentView(layoutID);
+        } else if (!isContentViewSet) {
+            String layoutGuessIdStr = getDefaultLayoutIdName();
+            int layoutID = getResourceId(layoutGuessIdStr);
+            if (layoutID > 0) {
+                this.layoutID = layoutID;
+                setContentView(layoutID);
+            }
+        }
+        init();
+    }
+
+    /**
+     * Code to run when activity is being created.
+     * This implementation is empty, but can be overridden in subclass.
+     */
+    protected void init() {
+        // empty; override me
+    }
+
+    /**
+     * Code to run when activity is being started.
+     * This implementation is empty, but can be overridden in subclass.
+     */
+    protected void start() {
+        // empty; override me
+    }
+
+    // e.g. MySimpleCoolActivity =&gt; "R.layout.activity_my_simple_cool"
+    private String getDefaultLayoutIdName() {
+        return getDefaultLayoutIdName(this.getClass());
+    }
+
+    /**
+     * Returns a default layout ID string for the given object's class,
+     * e.g. MySimpleCoolActivity =&gt; "R.layout.activity_my_simple_cool".
+     */
+    public static String getDefaultLayoutIdName(Object o) {
+        return getDefaultLayoutIdName(o.getClass());
+    }
+
+    /**
+     * Returns a default layout ID string for the given class,
+     * e.g. MySimpleCoolActivity =&gt; "R.layout.activity_my_simple_cool".
+     */
+    public static String getDefaultLayoutIdName(Class<?> clazz) {
+        String className = clazz.getSimpleName();
+        className = className.replaceAll("Activity$", "");   // "MySimpleCool"
+        className = className.replaceAll("Fragment$", "");
+        String layoutName = "R.layout."
+                + (Activity.class.isAssignableFrom(clazz) ? "activity" : "fragment")
+                + "_";
+        for (int i = 0; i < className.length(); i++) {
+            char ch = className.charAt(i);
+            if (i == 0) {
+                layoutName += Character.toLowerCase(ch);
+            } else {
+                // precede uppercase camel letters by underscore
+                char prev = className.charAt(i - 1);
+                if (Character.isLowerCase(prev) && Character.isUpperCase(ch)) {
+                    layoutName += "_";
+                }
+                layoutName += Character.toLowerCase(ch);
+            }
+        }
+        return layoutName;
     }
 
     /**
@@ -2206,8 +3493,8 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     @Override
     @CallSuper
     protected void onDestroy() {
-        super.onDestroy();
         traceLifecycleLog("onDestroy");
+        super.onDestroy();
     }
 
     /**
@@ -2216,8 +3503,8 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     @Override
     @CallSuper
     protected void onPause() {
-        super.onPause();
         traceLifecycleLog("onPause");
+        super.onPause();
     }
 
     /**
@@ -2226,8 +3513,8 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     @Override
     @CallSuper
     protected void onRestart() {
-        super.onRestart();
         traceLifecycleLog("onRestart");
+        super.onRestart();
     }
 
     /**
@@ -2237,8 +3524,8 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     @Override
     @CallSuper
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
         traceLifecycleLog("onRestoreInstanceState", "bundle=" + savedInstanceState);
+        super.onRestoreInstanceState(savedInstanceState);
         if (isAutoSaveFields()) {
             restoreAllFields(savedInstanceState);
         }
@@ -2250,8 +3537,8 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     @Override
     @CallSuper
     protected void onResume() {
-        super.onResume();
         traceLifecycleLog("onResume");
+        super.onResume();
     }
 
     /**
@@ -2261,8 +3548,8 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     @Override
     @CallSuper
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         traceLifecycleLog("onSaveInstanceState");
+        super.onSaveInstanceState(outState);
         if (isAutoSaveFields()) {
             saveAllFields(outState);
         }
@@ -2274,8 +3561,9 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     @Override
     @CallSuper
     protected void onStart() {
-        super.onStart();
         traceLifecycleLog("onStart");
+        super.onStart();
+        start();
     }
 
     /**
@@ -2285,8 +3573,8 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     @Override
     @CallSuper
     protected void onStop() {
-        super.onStop();
         traceLifecycleLog("onStop");
+        super.onStop();
         SimpleSpeech.with(this).shutdown();
     }
 
@@ -2353,6 +3641,42 @@ public abstract class SimpleActivity extends AppCompatActivity implements
      */
     public void startActivityForResult(@NonNull Class<? extends Activity> activityClass, int requestCode, Object... parameters) {
         __startActivityHelper(activityClass, /* forResult */ true, requestCode, parameters);
+    }
+
+    /**
+     * Starts the given activity and passes it the given 'extra' parameters.
+     * A "request code" will be internally auto-generated and passed.
+     * You can check for this code later by calling getRequestCodeFor(Class).
+     */
+    public void startActivityForResult(@NonNull Class<? extends Activity> activityClass, Object... parameters) {
+        int requestCode = getRequestCodeFor(activityClass);
+        __startActivityHelper(activityClass, /* forResult */ true, requestCode, parameters);
+    }
+
+    /**
+     * Returns a request code for the given activity class that can be passed to startActivityForResult.
+     */
+    public int getRequestCodeFor(@NonNull Class<? extends Activity> activityClass) {
+        if (ACTIVITY_TO_REQUEST_CODE.containsKey(activityClass)) {
+            return ACTIVITY_TO_REQUEST_CODE.get(activityClass);
+        }
+
+        // request code must be between 0 and 65535 and unique for each class
+        int code = activityClass.hashCode() & 0xffff;
+        while (code == REQ_CODE_PHOTO_GALLERY
+                || code == REQ_CODE_REQUEST_PERMISSIONS
+                || code == REQ_CODE_TAKE_PICTURE
+                || (REQUEST_CODE_TO_ACTIVITY.containsKey(code) && REQUEST_CODE_TO_ACTIVITY.get(code) != activityClass)) {
+            code = (code + 1) & 0xffff;
+        }
+
+        // add into bi-directional mapping between activity classes and auto-generated request codes
+        if (!REQUEST_CODE_TO_ACTIVITY.containsKey(code)) {
+            REQUEST_CODE_TO_ACTIVITY.put(code, activityClass);
+            ACTIVITY_TO_REQUEST_CODE.put(activityClass, code);
+        }
+
+        return code;
     }
 
     private void __startActivityHelper(@NonNull Class<? extends Activity> activityClass,
@@ -2633,6 +3957,20 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     }
 
     /**
+     * Prints a debug (.d) log message containing the given text.
+     */
+    public void log(String tag, Object message) {
+        Log.d(tag, String.valueOf(message));
+    }
+
+    /**
+     * Prints a debug (.d) log message containing the given text.
+     */
+    public void log(String tag, String message) {
+        Log.d(tag, message);
+    }
+
+    /**
      * Prints a WTF (.wtf) log message containing the given text and exception.
      */
     public void log(String message, Throwable exception) {
@@ -2817,9 +4155,12 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     /**
      * Pops up a Toast notification of the given time length to display the given text.
      * The length must be Toast.LENGTH_SHORT or Toast.LENGTH_LONG.
+     * Will also echo the toasted notification to the app's log as an "i" (info) message
+     * with the tag of "SimpleActivity Toast".
      */
     public void toast(String text, @ToastLength int length) {
         Toast.makeText(this, text, length).show();
+        Log.i("SimpleActivity Toast", text);
     }
 
     /// end notification/toast methods
@@ -3512,6 +4853,22 @@ public abstract class SimpleActivity extends AppCompatActivity implements
     /// end permission and security methods
 
     /// begin layout inflater methods
+
+    /**
+     * Returns the resource ID of the layout to use for this activity, as passed to the
+     * constructor or setLayoutID.
+     */
+    public @LayoutRes int getLayoutID() {
+        return layoutID;
+    }
+
+    /**
+     * Sets the resource ID of the layout to use for this activity.
+     * Does not re-lay-out the activity.
+     */
+    public void setLayoutID(@LayoutRes int layoutID) {
+        this.layoutID = layoutID;
+    }
 
     /**
      * A shortcut for getting the layout inflater and asking it to inflate

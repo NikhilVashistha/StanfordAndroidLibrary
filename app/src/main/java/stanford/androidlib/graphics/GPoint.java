@@ -1,12 +1,22 @@
 package stanford.androidlib.graphics;
 
-/* Class: GPoint */
 /**
  * This class is a double-precision version of the <code>Point</code> class
  * in <code>java.awt</code>.
  */
 public class GPoint {
-/* Constructor: GPoint() */
+    /**
+     * The serialization code for this class.  This value should be incremented
+     * whenever you change the structure of this class in an incompatible way,
+     * typically by adding a new instance variable.
+     */
+    static final long serialVersionUID = 1L;
+
+
+    // private fields
+    private float xc;
+    private float yc;
+
     /**
      * Constructs a new <code>GPoint</code> at the origin (0, 0).
      *
@@ -16,7 +26,6 @@ public class GPoint {
         this(0, 0);
     }
 
-/* Constructor: GPoint(x, y) */
     /**
      * Constructs a new <code>GPoint</code> with the specified coordinates.
      *
@@ -29,7 +38,6 @@ public class GPoint {
         yc = y;
     }
 
-/* Constructor: GPoint(p) */
     /**
      * Constructs a new <code>GPoint</code> from an existing one.
      *
@@ -40,7 +48,6 @@ public class GPoint {
         this(p.xc, p.yc);
     }
 
-/* Method: getX() */
     /**
      * Returns the x coordinate of this <code>GPoint</code>.
      *
@@ -51,7 +58,6 @@ public class GPoint {
         return xc;
     }
 
-/* Method: getY() */
     /**
      * Returns the y coordinate of this <code>GPoint</code>.
      *
@@ -62,7 +68,6 @@ public class GPoint {
         return yc;
     }
 
-/* Method: setLocation(x, y) */
     /**
      * Sets the location of the <code>GPoint</code> to the specified <code>x</code>
      * and <code>y</code> values.
@@ -71,23 +76,22 @@ public class GPoint {
      * @param x The new x-coordinate for the point
      * @param y The new y-coordinate for the point
      */
-    public void setLocation(float x, float y) {
+    public GPoint setLocation(float x, float y) {
         xc = x;
         yc = y;
+        return this;
     }
 
-/* Method: setLocation(p) */
     /**
      * Sets the location of the <code>GPoint</code> to that of an existing one.
      *
      * @usage pt.setLocation(p);
      * @param p An existing <code>GPoint</code> specifying the new location
      */
-    public void setLocation(GPoint p) {
-        setLocation(p.xc, p.yc);
+    public GPoint setLocation(GPoint p) {
+        return setLocation(p.xc, p.yc);
     }
 
-/* Method: getLocation() */
     /**
      * Returns a new <code>GPoint</code> whose coordinates are the same as this one.
      *
@@ -98,7 +102,6 @@ public class GPoint {
         return new GPoint(xc, yc);
     }
 
-/* Method: translate(dx, dy) */
     /**
      * Adjusts the coordinates of a point by the specified <code>dx</code> and
      * <code>dy</code> offsets.
@@ -107,12 +110,12 @@ public class GPoint {
      * @param dx The change in the x direction (positive is rightward)
      * @param dy The change in the y direction (positive is downward)
      */
-    public void translate(float dx, float dy) {
+    public GPoint translate(float dx, float dy) {
         xc += dx;
         yc += dy;
+        return this;
     }
 
-/* Method: hashCode() */
     /**
      * Returns an integer hash code for the point.  The hash code for a
      * <code>GPoint</code> is constructed from the hash codes from the
@@ -124,10 +127,9 @@ public class GPoint {
      * @noshow
      */
     public int hashCode() {
-        return new Float((float) xc).hashCode() ^ (37 * new Float((float) yc).hashCode());
+        return Float.valueOf((float) xc).hashCode() ^ (37 * Float.valueOf((float) yc).hashCode());
     }
 
-/* Method: equals(obj) */
     /**
      * Tests whether two <code>GPoint</code> objects are equal.
      * Because floating-point values are inexact, this method checks for
@@ -141,12 +143,13 @@ public class GPoint {
      * @noshow
      */
     public boolean equals(Object obj) {
-        if (!(obj instanceof GPoint)) return false;
+        if (!(obj instanceof GPoint)) {
+            return false;
+        }
         GPoint pt = (GPoint) obj;
         return ((float) xc == (float) pt.xc) && ((float) yc == (float) pt.yc);
     }
 
-/* Method: toString() */
     /**
      * Converts this <code>GPoint</code> to its string representation.
      *
@@ -157,16 +160,4 @@ public class GPoint {
     public String toString() {
         return "(" + (float) xc + ", " + (float) yc + ")";
     }
-
-    /* Private instance variables */
-    private float xc;
-    private float yc;
-
-/* Serial version UID */
-    /**
-     * The serialization code for this class.  This value should be incremented
-     * whenever you change the structure of this class in an incompatible way,
-     * typically by adding a new instance variable.
-     */
-    static final long serialVersionUID = 1L;
 }

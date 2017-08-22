@@ -1,13 +1,10 @@
 package stanford.androidlib.graphics;
 
-/* Interface: GResizable */
 /**
  * Specifies the characteristics of a graphical object that supports the
  * <code>setSize</code> and <code>setBounds</code> methods.
  */
 public interface GResizable {
-
-/* Method: setSize(width, height) */
     /**
      * Changes the size of this object to the specified width and height.
      *
@@ -15,9 +12,8 @@ public interface GResizable {
      * @param width The new width of the object
      * @param height The new height of the object
      */
-    public void setSize(float width, float height);
+    public GObject setSize(float width, float height);
 
-/* Method: setSize(size) */
     /**
      * Changes the size of this object as specified by the <code>GDimension</code>
      * object.
@@ -25,9 +21,8 @@ public interface GResizable {
      * @usage gobj.setSize(size);
      * @param size A <code>GDimension</code> object specifying the new size
      */
-    public void setSize(GDimension size);
+    public GObject setSize(GDimension size);
 
-/* Method: setBounds(x, y, width, height) */
     /**
      * Changes the bounds of this object to the specified values.
      *
@@ -37,9 +32,8 @@ public interface GResizable {
      * @param width The new width of the object
      * @param height The new height of the object
      */
-    public void setBounds(float x, float y, float width, float height);
+    public GObject setBounds(float x, float y, float width, float height);
 
-/* Method: setBounds(bounds) */
     /**
      * Changes the bounds of this object to the values from the specified
      * <code>GRectangle</code>.
@@ -47,6 +41,5 @@ public interface GResizable {
      * @usage gobj.setBounds(bounds);
      * @param bounds A <code>GRectangle</code> specifying the new bounds
      */
-    public void setBounds(GRectangle bounds);
-
+    public GObject setBounds(GRectangle bounds);
 }

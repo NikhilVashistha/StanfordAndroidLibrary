@@ -1,4 +1,16 @@
 /**
+ * @version 2017/02/17
+ * - added SimpleTask.TaskExecutor implementation
+ * @version 2017/02/12
+ * - made it so that if you don't write onCreateView, I try to auto-inflate your fragment for you
+ *   by auto-inferring its layout ID (e.g. FooFragment => R.layout.fragment_foo)
+ * @version 2017/02/06
+ * - added more getXxxExtra methods
+ * - added $A() to get simple activity
+ * - added log, println methods (mirror of SimpleActivity versions, for convenience)
+ * @version 2016/12/22
+ * - added layoutID to avoid need for on*** lifecycle methods
+ * - added init(), start() to match Stanford/ACM Java lib
  * @version 2016/01/27
  * - added setTraceLifecycle
  * @version 2016/01/25
@@ -13,12 +25,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.CallSuper;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
-
 import java.io.Serializable;
+import java.lang.reflect.*;
+import java.util.*;
 
 /**
  * A SimpleFragment is meant as a drop-in replacement for Android's Fragment
@@ -49,11 +63,29 @@ public class SimpleFragment extends DialogFragment implements
         ScaleGestureDetector.OnScaleGestureListener,
         CompoundButton.OnCheckedChangeListener,
         RadioGroup.OnCheckedChangeListener,
+        SimpleTask.TaskExecutor,
         TextToSpeech.OnInitListener,
         OnSwipeListener.OnSwipeListenerImpl,
         OnSwipeListener.OnScaleListenerImpl {
 
+    private @LayoutRes int layoutID = -1;
     private boolean traceLifecycleMethods = false;
+
+    /**
+     * Constructs a new simple fragment with no known layout resource ID.
+     * Suggested idiom: In your subclass, write a zero-arg constructor that calls setLayoutID.
+     */
+    public SimpleFragment() {
+        // empty
+    }
+
+    /**
+     * Returns the resource ID of the layout to use for this fragment, as passed to the
+     * constructor or setLayoutID.
+     */
+    public @LayoutRes int getLayoutID() {
+        return layoutID;
+    }
 
     /**
      * Returns the activity that contains this fragment as a SimpleActivity.
@@ -64,7 +96,194 @@ public class SimpleFragment extends DialogFragment implements
     }
 
     /**
-     * Returns an 'extra' parameter with the given name from this activity's intent.
+     * Returns the activity that contains this fragment as a SimpleActivity.
+     * @throws ClassCastException If the activity containing this fragment does not extend SimpleActivity.
+     */
+    public SimpleActivity $A() {
+        return getSimpleActivity();
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns false.
+     */
+    public boolean getBooleanExtra(@NonNull String name) {
+        return getBooleanExtra(name, /* defaultValue */ false);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public boolean getBooleanExtra(@NonNull String name, boolean defaultValue) {
+        Intent intent = getActivity().getIntent();
+        return intent.getBooleanExtra(name, defaultValue);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns 0.0.
+     */
+    public double getDoubleExtra(@NonNull String name) {
+        return getDoubleExtra(name, /* defaultValue */ 0.0);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public double getDoubleExtra(@NonNull String name, double defaultValue) {
+        Intent intent = getActivity().getIntent();
+        return intent.getFloatExtra(name, (float) defaultValue);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns 0.
+     */
+    public int getIntExtra(@NonNull String name) {
+        return getIntExtra(name, /* defaultValue */ 0);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public int getIntExtra(@NonNull String name, int defaultValue) {
+        Intent intent = getActivity().getIntent();
+        return intent.getIntExtra("name", defaultValue);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns an empty list of 0 elements.
+     */
+    public ArrayList<Integer> getIntegerArrayListExtra(@NonNull String name) {
+        return getIntegerArrayListExtra(name, /* defaultValue */ new ArrayList<Integer>());
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public ArrayList<Integer> getIntegerArrayListExtra(@NonNull String name, ArrayList<Integer> defaultValue) {
+        Intent intent = getActivity().getIntent();
+        ArrayList<Integer> result = intent.getIntegerArrayListExtra(name);
+        if (result == null) {
+            return defaultValue;
+        } else {
+            return result;
+        }
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns 0.
+     */
+    public long getLongExtra(@NonNull String name) {
+        return getLongExtra(name, /* defaultValue */ 0L);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public long getLongExtra(@NonNull String name, long defaultValue) {
+        Intent intent = getActivity().getIntent();
+        return intent.getLongExtra("name", defaultValue);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns null.
+     */
+    public <T extends Serializable> T getSerializableExtra(@NonNull String name) {
+        return getSerializableExtra(name, /* defaultValue */ null);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends Serializable> T getSerializableExtra(@NonNull String name, T defaultValue) {
+        Intent intent = getActivity().getIntent();
+        T result = (T) intent.getSerializableExtra(name);
+        if (result == null) {
+            return defaultValue;
+        } else {
+            return result;
+        }
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns an empty string.
+     */
+    public String getStringExtra(@NonNull String name) {
+        return getStringExtra(name, /* defaultValue */ "");
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public String getStringExtra(@NonNull String name, String defaultValue) {
+        Intent intent = getActivity().getIntent();
+        String result = intent.getStringExtra(name);
+        if (result == null) {
+            return defaultValue;
+        } else {
+            return result;
+        }
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns an empty array of 0 elements.
+     */
+    public String[] getStringArrayExtra(@NonNull String name) {
+        return getStringArrayExtra(name, /* defaultValue */ new String[0]);
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public String[] getStringArrayExtra(@NonNull String name, String[] defaultValue) {
+        Intent intent = getActivity().getIntent();
+        String[] result = intent.getStringArrayExtra(name);
+        if (result == null) {
+            return defaultValue;
+        } else {
+            return result;
+        }
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns an empty list of 0 elements.
+     */
+    public ArrayList<String> getStringArrayListExtra(@NonNull String name) {
+        return getStringArrayListExtra(name, /* defaultValue */ new ArrayList<String>());
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
+     * If there is no such 'extra' parameter, returns the given default value.
+     */
+    public ArrayList<String> getStringArrayListExtra(@NonNull String name, ArrayList<String> defaultValue) {
+        Intent intent = getActivity().getIntent();
+        ArrayList<String> result = intent.getStringArrayListExtra(name);
+        if (result == null) {
+            return defaultValue;
+        } else {
+            return result;
+        }
+    }
+
+    /**
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
      * If there is no such 'extra' parameter, returns null.
      */
     @SuppressWarnings("unchecked")
@@ -73,7 +292,7 @@ public class SimpleFragment extends DialogFragment implements
     }
 
     /**
-     * Returns an 'extra' parameter with the given name from this activity's intent.
+     * Returns an 'extra' parameter with the given name from this fragment's activity's intent.
      * If there is no such 'extra' parameter, returns null.
      */
     @SuppressWarnings("unchecked")
@@ -86,6 +305,21 @@ public class SimpleFragment extends DialogFragment implements
         }
     }
 
+    /**
+     * Sets the resource ID of the layout to use for this fragment.
+     * Does not re-lay-out the fragment.
+     */
+    public void setLayoutID(@LayoutRes int layoutID) {
+        this.layoutID = layoutID;
+    }
+
+    /// begin findViewById convenience methods
+
+
+
+    /// end findViewById convenience methods
+
+
     /// begin lifecycle methods
 
     /**
@@ -96,6 +330,23 @@ public class SimpleFragment extends DialogFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         traceLifecycleLog("onActivityCreated", "bundle=" + savedInstanceState);
+        init();
+    }
+
+    /**
+     * Code to run when fragment is being created.
+     * This implementation is empty, but can be overridden in subclass.
+     */
+    protected void init() {
+        // empty; override me
+    }
+
+    /**
+     * Code to run when activity is being started.
+     * This implementation is empty, but can be overridden in subclass.
+     */
+    protected void start() {
+        // empty; override me
     }
 
     /**
@@ -133,12 +384,36 @@ public class SimpleFragment extends DialogFragment implements
      * Activity lifecycle method.
      */
     @Override
-
     // commenting out CallSuper because auto-generated onCreateView doesn't do it,
     // so I don't want the default generated class to already contain a compiler error
     // @CallSuper
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         traceLifecycleLog("onCreateView", "bundle=" + savedInstanceState);
+        if (layoutID >= 0) {
+            return inflater.inflate(layoutID, container, /* attachToRoot */ false);
+        }
+
+        // see if this class has an onCreateView method
+        Method method = null;
+        try {
+            method = getClass().getDeclaredMethod("onCreateView");
+        } catch (NoSuchMethodException nsme) {
+            // empty
+        }
+
+        if (method == null) {
+            // subclass has no onCreateView method; stub one in
+
+            // get layout ID, e.g. R.layout.fragment_foo
+            String layoutIdName = SimpleActivity.getDefaultLayoutIdName(this);
+            layoutIdName = layoutIdName.replace("R.layout.", "");   // "fragment_foo"
+            Activity act = getActivity();
+            int layoutID = act.getResources().getIdentifier(
+                    layoutIdName, "layout", act.getPackageName());  // R.layout.fragment_foo
+            if (layoutID > 0) {
+                return inflater.inflate(layoutID, container, /* attachToRoot */ false);
+            }
+        }
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -200,6 +475,7 @@ public class SimpleFragment extends DialogFragment implements
     public void onStart() {
         super.onStart();
         traceLifecycleLog("onStart");
+        start();
     }
 
     /**
@@ -575,5 +851,104 @@ public class SimpleFragment extends DialogFragment implements
         // empty; override me
     }
 
+    /**
+     * Required method of SimpleTask.TaskExecutor interface.
+     * This implementation is empty; override it if you want to be notified before your SimpleTask executes.
+     */
+    public void onPreExecute() {
+        // empty; override me
+    }
+
+    /**
+     * Required method of SimpleTask.TaskExecutor interface.
+     * This implementation is empty; override it to supply code for your SimpleTask.
+     */
+    public void doInBackground(String... items) {
+        // empty; override me
+    }
+
+    /**
+     * Required method of SimpleTask.TaskExecutor interface.
+     * This implementation is empty; override it if you want to be notified of progress of your SimpleTask.
+     */
+    public void onProgressUpdate(int progress) {
+        // empty; override me
+    }
+
+    /**
+     * Required method of SimpleTask.TaskExecutor interface.
+     * This implementation is empty; override it if you want to be notified after your SimpleTask executes.
+     */
+    public void onPostExecute() {
+        // empty; override me
+    }
+
     /// end empty event listener methods (copied from SimpleActivity)
+
+    /// begin log/print/toast convenience methods
+
+    /**
+     * Prints a debug (.d) log message containing the given text.
+     */
+    public void log(Object message) {
+        Log.d("SimpleFragment log", String.valueOf(message));
+    }
+
+    /**
+     * Prints a debug (.d) log message containing the given text.
+     */
+    public void log(String message) {
+        Log.d("SimpleFragment log", message);
+    }
+
+    /**
+     * Prints a debug (.d) log message containing the given text.
+     */
+    public void log(String tag, Object message) {
+        Log.d(tag, String.valueOf(message));
+    }
+
+    /**
+     * Prints a debug (.d) log message containing the given text.
+     */
+    public void log(String tag, String message) {
+        Log.d(tag, message);
+    }
+
+    /**
+     * Prints a WTF (.wtf) log message containing the given text and exception.
+     */
+    public void log(String message, Throwable exception) {
+        Log.wtf("SimpleFragment log", message, exception);
+    }
+
+    /**
+     * Prints a WTF (.wtf) log message containing the given exception.
+     */
+    public void log(Throwable exception) {
+        Log.wtf("SimpleFragment log", "exception was thrown", exception);
+    }
+
+    /**
+     * Prints a verbose (.v) log message containing the given formatted string.
+     */
+    public void printf(String message, Object... args) {
+        Log.v("SimpleActivity printf", String.format(message, args));
+    }
+
+    /**
+     * Prints a verbose (.v) log message containing the given text.
+     */
+    public void println(Object message) {
+        Log.v("SimpleFragment println", String.valueOf(message));
+    }
+
+    /**
+     * Prints a verbose (.v) log message containing the given text.
+     */
+    public void println(String message) {
+        Log.v("SimpleFragment println", message);
+    }
+    
+    /// end log/print/toast convenience methods
 }

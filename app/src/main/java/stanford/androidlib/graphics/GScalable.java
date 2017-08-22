@@ -15,7 +15,7 @@ public interface GScalable {
      * @param sx The factor used to scale all coordinates in the x direction
      * @param sy The factor used to scale all coordinates in the y direction
      */
-    public void scale(float sx, float sy);
+    public GObject scale(float sx, float sy);
 
 /* Method: scale(sf) */
     /**
@@ -25,6 +25,6 @@ public interface GScalable {
      * @usage gobj.scale(sf);
      * @param sf The factor used to scale all coordinates in both dimensions
      */
-    public void scale(float sf);
+    public GObject scale(float sf);
 
 }

@@ -1,4 +1,7 @@
 /*
+ * @version 2017/02/06
+ * - added get/set [shared] StringSet
+ * - added generic get() (with type parameter T)
  * @version 2016/03/02
  * - initial version
  */
@@ -9,6 +12,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.view.View;
+import java.util.*;
 
 /**
  * A utility class for getting and setting preferences.
@@ -22,11 +27,30 @@ public final class SimplePreferences {
     private static final SimplePreferences INSTANCE = new SimplePreferences();
 
     /**
-     * Returns a singleton SimpleMedia instance bound to the given context.
+     * Returns a singleton SimplePreferences instance bound to the given context.
      */
     public static SimplePreferences with(Activity context) {
         SimplePreferences.context = context;
         return INSTANCE;
+    }
+
+    /**
+     * Returns a singleton SimplePreferences instance bound to the given context.
+     * The context must be an Activity, or an IllegalArgumentException will be thrown.
+     */
+    public static SimplePreferences with(Context context) {
+        if (!(context instanceof Activity)) {
+            throw new IllegalArgumentException("context must be an Activity");
+        }
+        SimplePreferences.context = (Activity) context;
+        return INSTANCE;
+    }
+
+    /**
+     * Returns a singleton SimplePreferences instance bound to the given view's context.
+     */
+    public static SimplePreferences with(View context) {
+        return with(context.getContext());
     }
 
     private SimplePreferences() {
@@ -138,6 +162,37 @@ public final class SimplePreferences {
     }
 
     /**
+     * Returns the preference with the given name and value from the app's global preferences.
+     * If there is no such shared preference, returns an empty set.
+     */
+    public Set<String> getStringSet(@NonNull String name) {
+        return getStringSet(name, /* defaultValue */ new LinkedHashSet<String>());
+    }
+
+    /**
+     * Returns the preference with the given name and value from the app's global preferences.
+     * If there is no such shared preference, returns the given default value.
+     */
+    public Set<String> getStringSet(@NonNull String name, Set<String> defaultValue) {
+        SharedPreferences prefs = context.getPreferences(Context.MODE_PRIVATE);
+        return prefs == null ? defaultValue : prefs.getStringSet(name, defaultValue);
+    }
+
+    /**
+     * Returns the preference with the given name and value from the app's global preferences.
+     * If there is no such shared preference, returns the given default value.
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T get(@NonNull String name, T defaultValue) {
+        SharedPreferences prefs = context.getPreferences(Context.MODE_PRIVATE);
+        if (prefs == null || !prefs.contains(name)) {
+            return defaultValue;
+        } else {
+            return (T) prefs.getAll().get(name);
+        }
+    }
+
+    /**
      * Returns the shared preference with the given name and value from the given shared preference filename.
      * If there is no such shared preference, returns false.
      */
@@ -223,6 +278,37 @@ public final class SimplePreferences {
     }
 
     /**
+     * Returns the shared preference with the given name and value from the app's global preferences.
+     * If there is no such shared preference, returns an empty set.
+     */
+    public Set<String> getSharedStringSet(@NonNull String filename, @NonNull String name) {
+        return getSharedStringSet(filename, name, /* defaultValue */ new LinkedHashSet<String>());
+    }
+
+    /**
+     * Returns the shared preference with the given name and value from the app's global preferences.
+     * If there is no such shared preference, returns the given default value.
+     */
+    public Set<String> getSharedStringSet(@NonNull String filename, @NonNull String name, Set<String> defaultValue) {
+        SharedPreferences prefs = context.getSharedPreferences(filename, Context.MODE_PRIVATE);
+        return prefs == null ? defaultValue : prefs.getStringSet(name, defaultValue);
+    }
+
+    /**
+     * Returns the shared preference with the given name and value from the given shared preference filename.
+     * If there is no such shared preference, returns the given default value.
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T getShared(@NonNull String filename, @NonNull String name, T defaultValue) {
+        SharedPreferences prefs = context.getSharedPreferences(filename, Context.MODE_PRIVATE);
+        if (prefs == null || !prefs.contains(name)) {
+            return defaultValue;
+        } else {
+            return (T) prefs.getAll().get(name);
+        }
+    }
+
+    /**
      * Returns true if this activity contains a preference with the given name.
      * Equivalent to contains(name).
      */
@@ -297,6 +383,32 @@ public final class SimplePreferences {
     }
 
     /**
+     * Sets a preference with the given name and value into the app's global preferences.
+     */
+    public SimplePreferences set(@NonNull String name, Iterable<String> value) {
+        SharedPreferences prefs = context.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        Set<String> set = new LinkedHashSet<>();
+        for (String s : value) {
+            set.add(s);
+        }
+        prefsEditor.putStringSet(name, set);
+        prefsEditor.apply();   // or commit();
+        return this;
+    }
+
+    /**
+     * Sets a preference with the given name and value into the app's global preferences.
+     */
+    public SimplePreferences set(@NonNull String name, Set<String> value) {
+        SharedPreferences prefs = context.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putStringSet(name, value);
+        prefsEditor.apply();   // or commit();
+        return this;
+    }
+
+    /**
      * Sets a shared preference with the given name and value into the given shared preference filename.
      */
     public SimplePreferences setShared(@NonNull String filename, @NonNull String name, boolean value) {
@@ -347,6 +459,32 @@ public final class SimplePreferences {
         SharedPreferences prefs = context.getSharedPreferences(filename, Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = prefs.edit();
         prefsEditor.putString(name, value);
+        prefsEditor.apply();   // or commit();
+        return this;
+    }
+
+    /**
+     * Sets a shared preference with the given name and value into the given shared preference filename.
+     */
+    public SimplePreferences setShared(@NonNull String filename, @NonNull String name, Iterable<String> value) {
+        SharedPreferences prefs = context.getSharedPreferences(filename, Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        Set<String> set = new LinkedHashSet<>();
+        for (String s : value) {
+            set.add(s);
+        }
+        prefsEditor.putStringSet(name, set);
+        prefsEditor.apply();   // or commit();
+        return this;
+    }
+
+    /**
+     * Sets a shared preference with the given name and value into the given shared preference filename.
+     */
+    public SimplePreferences setShared(@NonNull String filename, @NonNull String name, Set<String> value) {
+        SharedPreferences prefs = context.getSharedPreferences(filename, Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putStringSet(name, value);
         prefsEditor.apply();   // or commit();
         return this;
     }

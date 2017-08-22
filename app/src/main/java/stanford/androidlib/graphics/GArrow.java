@@ -42,6 +42,30 @@ public class GArrow extends GLine {
         super(x0, y0, x1, y1);
     }
 
+    /**
+     * Constructs an arrow at (0, 0) of length 0.
+     */
+    public GArrow(GCanvas canvas) {
+        this();
+        canvas.add(this);
+    }
+
+    /**
+     * Constructs an arrow from (0, 0) to (x1, y1).
+     */
+    public GArrow(GCanvas canvas, float x1, float y1) {
+        this(x1, y1);
+        canvas.add(this);
+    }
+
+    /**
+     * Constructs an arrow from (x0, y0) to (x1, y1).
+     */
+    public GArrow(GCanvas canvas, float x0, float y0, float x1, float y1) {
+        this(x0, y0, x1, y1);
+        canvas.add(this);
+    }
+
     public boolean hasArrowheadStart() {
         return arrowheadStart;
     }
@@ -50,12 +74,14 @@ public class GArrow extends GLine {
         return arrowheadStart;
     }
 
-    public void setArrowheadStart(boolean value) {
+    public GArrow setArrowheadStart(boolean value) {
         arrowheadStart = value;
+        return this;
     }
 
-    public void setArrowheadEnd(boolean value) {
+    public GArrow setArrowheadEnd(boolean value) {
         arrowheadEnd = value;
+        return this;
     }
 
     @Override
@@ -114,16 +140,18 @@ public class GArrow extends GLine {
         return arrowSize;
     }
 
-    public void setArrowSize(float arrowSize) {
+    public GArrow setArrowSize(float arrowSize) {
         this.arrowSize = arrowSize;
+        return this;
     }
 
     public boolean isClosed() {
         return closed;
     }
 
-    public void setClosed(boolean closed) {
+    public GArrow setClosed(boolean closed) {
         this.closed = closed;
+        return this;
     }
 
     private float polarMoveX(float x, float r, float theta) {

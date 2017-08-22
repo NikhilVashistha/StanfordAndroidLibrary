@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
+import android.view.View;
 import android.widget.*;
 import java.util.*;
 
@@ -31,6 +32,13 @@ public final class SimpleList {
     public static SimpleList with(Context context) {
         SimpleList.context = context;
         return INSTANCE;
+    }
+
+    /**
+     * Returns a singleton SimpleList instance bound to the given view's context.
+     */
+    public static SimpleList with(View context) {
+        return with(context.getContext());
     }
 
     private SimpleList() {
@@ -102,7 +110,7 @@ public final class SimpleList {
      * Sets the items currently in the given list view to those stored in the given ArrayList.
      */
     @SuppressWarnings("unchecked")
-    public SimpleList setItems(AdapterView<?> listView, ArrayList<String> items) {
+    public SimpleList setItems(AdapterView<?> listView, Collection<String> items) {
         if (listView.getAdapter() instanceof ArrayAdapter) {
             ArrayAdapter<String> adapter = (ArrayAdapter<String>) listView.getAdapter();
             adapter.setNotifyOnChange(false);
@@ -116,7 +124,7 @@ public final class SimpleList {
             adapter.setNotifyOnChange(true);
             adapter.notifyDataSetChanged();
         } else {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, items);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, new ArrayList<>(items));
             if (listView instanceof ListView) {
                 ((ListView) listView).setAdapter(adapter);
             } else if (listView instanceof Spinner) {
@@ -130,7 +138,7 @@ public final class SimpleList {
      * Sets the items currently in the list with the given ID to those stored in the given ArrayList.
      * For this method to work, the context passed to with() must be an activity.
      */
-    public SimpleList setItems(@IdRes int id, ArrayList<String> items) {
+    public SimpleList setItems(@IdRes int id, Collection<String> items) {
         AdapterView<?> listView = (AdapterView<?>) ((Activity) context).findViewById(id);
         return setItems(listView, items);
     }

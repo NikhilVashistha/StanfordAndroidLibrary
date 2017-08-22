@@ -14,7 +14,14 @@ import java.util.ArrayList;
  * of a polygon.
  */
 public class GPolygon extends GObject implements GFillable, GScalable {
-    /* Private instance variables */
+    /**
+     * The serialization code for this class.  This value should be incremented
+     * whenever you change the structure of this class in an incompatible way,
+     * typically by adding a new instance variable.
+     */
+    static final long serialVersionUID = 1L;
+
+    // private fields
     private float xScale;
     private float yScale;
     private float rotation;
@@ -22,10 +29,7 @@ public class GPolygon extends GObject implements GFillable, GScalable {
     private Path path;
     private boolean cacheValid;
     private boolean complete;
-    private boolean isFilled;
-    private Paint fillColor;
 
-/* Constructor: GPolygon() */
     /**
      * Constructs a new empty polygon at the origin.
      *
@@ -37,7 +41,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
         clear();
     }
 
-/* Constructor: GPolygon(x, y) */
     /**
      * Constructs a new empty polygon at (<code>x</code>, <code>y</code>).
      *
@@ -50,7 +53,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
         setLocation(x, y);
     }
 
-/* Constructor: GPolygon(points) */
     /**
      * Constructs a new polygon from the specified array of <code>GPoint</code>
      * objects.  The polygon is automatically marked as complete.
@@ -64,7 +66,40 @@ public class GPolygon extends GObject implements GFillable, GScalable {
         markAsComplete();
     }
 
-/* Method: addVertex(x, y) */
+    /**
+     * Constructs a new empty polygon at the origin.
+     *
+     * @usage GPolygon gpoly = new GPolygon();
+     */
+    public GPolygon(GCanvas canvas) {
+        this();
+        canvas.add(this);
+    }
+
+    /**
+     * Constructs a new empty polygon at (<code>x</code>, <code>y</code>).
+     *
+     * @usage GPolygon gpoly = new GPolygon(x, y);
+     * @param x The x-coordinate of the origin of the polygon
+     * @param y The y-coordinate of the origin of the polygon
+     */
+    public GPolygon(GCanvas canvas, float x, float y) {
+        this(x, y);
+        canvas.add(this);
+    }
+
+    /**
+     * Constructs a new polygon from the specified array of <code>GPoint</code>
+     * objects.  The polygon is automatically marked as complete.
+     *
+     * @usage GPolygon gpoly = new GPolygon(points);
+     * @param points An array of <code>GPoint</code> objects specifying the vertices
+     */
+    public GPolygon(GCanvas canvas, GPoint[] points) {
+        this(points);
+        canvas.add(this);
+    }
+
     /**
      * Adds a vertex at (<code>x</code>, <code>y</code>) relative to the polygon origin.
      *
@@ -72,15 +107,15 @@ public class GPolygon extends GObject implements GFillable, GScalable {
      * @param x The x-coordinate of the vertex relative to the polygon origin
      * @param y The y-coordinate of the vertex relative to the polygon origin
      */
-    public void addVertex(float x, float y) {
+    public GPolygon addVertex(float x, float y) {
         if (complete) {
             throw new IllegalStateException("You can't add vertices to a GPolygon that has been "
                     + "marked as complete.");
         }
         vertices.addVertex(x, y);
+        return this;
     }
 
-/* Method: addEdge(dx, dy) */
     /**
      * Adds an edge to the polygon whose components are given by the displacements
      * <code>dx</code> and <code>dy</code> from the last vertex.
@@ -89,15 +124,15 @@ public class GPolygon extends GObject implements GFillable, GScalable {
      * @param dx The x displacement through which the edge moves
      * @param dy The y displacement through which the edge moves
      */
-    public void addEdge(float dx, float dy) {
+    public GPolygon addEdge(float dx, float dy) {
         if (complete) {
             throw new IllegalStateException("You can't add edges to a GPolygon that has been "
                     + "marked as complete.");
         }
         vertices.addEdge(dx, dy);
+        return this;
     }
 
-/* Method: addPolarEdge(r, theta) */
     /**
      * Adds an edge to the polygon specified in polar coordinates.  The length of the
      * edge is given by <code>r</code>, and the edge extends in direction <code>theta</code>,
@@ -107,15 +142,15 @@ public class GPolygon extends GObject implements GFillable, GScalable {
      * @param r The length of the edge
      * @param theta The angle at which the edge extends measured in degrees
      */
-    public final void addPolarEdge(float r, float theta) {
+    public final GPolygon addPolarEdge(float r, float theta) {
         if (complete) {
             throw new IllegalStateException("You can't add edges to a GPolygon that has been "
                     + "marked as complete.");
         }
         vertices.addEdge(r * GMath.cosDegrees(theta), -r * GMath.sinDegrees(theta));
+        return this;
     }
 
-/* Method: addArc(arcWidth, arcHeight, start, sweep) */
     /**
      * Adds a series of edges to the polygon that simulates the arc specified by
      * the parameters.  The <i>x</i> and <i>y</i> parameters for the arc bounding
@@ -128,15 +163,15 @@ public class GPolygon extends GObject implements GFillable, GScalable {
      * @param start The angle at which the arc begins
      * @param sweep The extent of the arc
      */
-    public void addArc(float arcWidth, float arcHeight, float start, float sweep) {
+    public GPolygon addArc(float arcWidth, float arcHeight, float start, float sweep) {
         if (complete) {
             throw new IllegalStateException("You can't add edges to a GPolygon that has been "
                     + "marked as complete.");
         }
         vertices.addArc(arcWidth, arcHeight, start, sweep);
+        return this;
     }
 
-/* Method: getCurrentPoint() */
     /**
      * Returns the coordinates of the last vertex added to the polygon, or <code>null</code>
      * if the polygon is empty.
@@ -148,7 +183,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
         return vertices.getCurrentPoint();
     }
 
-/* Method: scale(sx, sy) */
     /**
      * Scales the polygon by the scale factors <code>sx</code> and <code>sy</code>.
      *
@@ -156,83 +190,24 @@ public class GPolygon extends GObject implements GFillable, GScalable {
      * @param sx The factor used to scale all coordinates in the x direction
      * @param sy The factor used to scale all coordinates in the y direction
      */
-    public void scale(float sx, float sy) {
+    @Override
+    public GObject scale(float sx, float sy) {
         xScale *= sx;
         yScale *= sy;
+        return this;
     }
 
-/* Method: scale(sf) */
-    /**
-     * Scales the object on the screen by the scale factor <code>sf</code>, which applies
-     * in both dimensions.
-     *
-     * @usage gobj.scale(sf);
-     * @param sf The factor used to scale all coordinates in both dimensions
-     */
-    public final void scale(float sf) {
-        scale(sf, sf);
-    }
-
-/* Method: rotate(theta) */
     /**
      * Rotates the polygon around its origin by the angle theta, measured in degrees.
      *
      * @usage gpoly.rotate(theta);
      * @param theta The angle of rotation in degrees counterclockwise
      */
-    public void rotate(float theta) {
+    public GPolygon rotate(float theta) {
         rotation += theta;
+        return this;
     }
 
-/* Method: setFilled(fill) */
-    /**
-     * Sets whether this object is filled.
-     *
-     * @usage gobj.setFilled(fill);
-     * @param fill <code>true</code> if the object should be filled, <code>false</code> for an outline
-     */
-    public void setFilled(boolean fill) {
-        isFilled = fill;
-    }
-
-/* Method: isFilled() */
-    /**
-     * Returns whether this object is filled.
-     *
-     * @usage if (gobj.isFilled()) . . .
-     * @return The color used to display the object
-     */
-    public boolean isFilled() {
-        return isFilled;
-    }
-
-/* Method: setFillColor(color) */
-    /**
-     * Sets the color used to display the filled region of this object.
-     *
-     * @usage gobj.setFillColor(color);
-     * @param color The color used to display the filled region of this object
-     */
-    public void setFillColor(Paint color) {
-        fillColor = new Paint(color);
-        fillColor.setStyle(Paint.Style.FILL);
-        isFilled = true;
-    }
-
-/* Method: getFillColor() */
-    /**
-     * Returns the color used to display the filled region of this object.  If
-     * none has been set, <code>getFillColor</code> returns the color of the
-     * object.
-     *
-     * @usage Color color = gobj.getFillColor();
-     * @return The color used to display the filled region of this object
-     */
-    public Paint getFillColor() {
-        return (fillColor == null) ? getColor() : fillColor;
-    }
-
-/* Method: getBounds() */
     /**
      * Returns the bounding box of this object, which is defined to be the
      * smallest rectangle that covers everything drawn by the figure.
@@ -244,7 +219,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
         return vertices.getBounds(getX(), getY(), xScale, yScale, rotation);
     }
 
-/* Method: contains(x, y) */
     /**
      * Checks to see whether a point is inside the object.
      *
@@ -258,7 +232,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
         return vertices.contains((x - getX()) / xScale, (y - getY()) / yScale);
     }
 
-/* Method: paint(g) */
     /**
      * Implements the <code>paint</code> operation for this graphical object.  This method
      * is not called directly by clients.
@@ -288,7 +261,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
         canvas.drawPath(path, getPaint());
     }
 
-/* Method: recenter() */
     /**
      * Recalculates the vertices of the polygon so that they are positioned
      * relative to the geometric center of the object.  This method allows
@@ -297,12 +269,12 @@ public class GPolygon extends GObject implements GFillable, GScalable {
      *
      * @usage gpoly.recenter();
      */
-    public void recenter() {
+    public GPolygon recenter() {
         vertices.recenter();
         cacheValid = false;
+        return this;
     }
 
-/* Method: clone() */
     /**
      * Overrides <code>clone</code> in <code>Object</code> to make sure
      * that the vertex list is copied rather than shared.
@@ -318,165 +290,25 @@ public class GPolygon extends GObject implements GFillable, GScalable {
         }
     }
 
-/* Inherited method: setLocation(x, y) */
-/**
- * @inherited GObject#void setLocation(float x, float y)
- * Sets the location of this object to the point (<code>x</code>, <code>y</code>).
- */
-
-/* Inherited method: setLocation(pt) */
-/**
- * @inherited GObject#void setLocation(GPoint pt)
- * Sets the location of this object to the specified point.
- */
-
-/* Inherited method: getLocation() */
-/**
- * @inherited GObject#GPoint getLocation()
- * Returns the location of this object as a <code>GPoint</code>.
- */
-
-/* Inherited method: getX() */
-/**
- * @inherited GObject#float getX()
- * Returns the x-coordinate of the object.
- */
-
-/* Inherited method: getY() */
-/**
- * @inherited GObject#float getY()
- * Returns the y-coordinate of the object.
- */
-
-/* Inherited method: move(dx, dy) */
-/**
- * @inherited GObject#void move(float dx, float dy)
- * Moves the object on the screen using the displacements <code>dx</code> and <code>dy</code>.
- */
-
-/* Inherited method: movePolar(r, theta) */
-/**
- * @inherited GObject#void movePolar(float r, float theta)
- * Moves the object using displacements given in polar coordinates.
- */
-
-/* Inherited method: getSize() */
-/**
- * @inherited GObject#GDimension getSize()
- * Returns the size of the bounding box for this object.
- */
-
-/* Inherited method: getWidth() */
-/**
- * @inherited GObject#float getWidth()
- * Returns the width of this object, which is defined to be
- * the width of the bounding box.
- */
-
-/* Inherited method: getHeight() */
-/**
- * @inherited GObject#float getHeight()
- * Returns the height of this object, which is defined to be
- * the height of the bounding box.
- */
-
-/* Inherited method: contains(pt) */
-/**
- * @inherited GObject#boolean contains(GPoint pt)
- * Checks to see whether a point is inside the object.
- */
-
-/* Inherited method: sendToFront() */
-/**
- * @inherited GObject#void sendToFront()
- * Moves this object to the front of the display in the <i>z</i> dimension.
- */
-
-/* Inherited method: sendToBack() */
-/**
- * @inherited GObject#void sendToBack()
- * Moves this object to the back of the display in the <i>z</i> dimension.
- */
-
-/* Inherited method: sendForward() */
-/**
- * @inherited GObject#void sendForward()
- * Moves this object one step toward the front in the <i>z</i> dimension.
- */
-
-/* Inherited method: sendBackward() */
-/**
- * @inherited GObject#void sendBackward()
- * Moves this object one step toward the back in the <i>z</i> dimension.
- */
-
-/* Inherited method: setColor(color) */
-/**
- * @inherited GObject#void setColor(Color color)
- * Sets the color used to display this object.
- */
-
-/* Inherited method: getColor() */
-/**
- * @inherited GObject#Color getColor()
- * Returns the color used to display this object.
- */
-
-/* Inherited method: setVisible(visible) */
-/**
- * @inherited GObject#void setVisible(boolean visible)
- * Sets whether this object is visible.
- */
-
-/* Inherited method: isVisible() */
-/**
- * @inherited GObject#boolean isVisible()
- * Checks to see whether this object is visible.
- */
-
-/* Inherited method: addMouseListener(listener) */
-/**
- * @inherited GObject#void addMouseListener(MouseListener listener)
- * Adds a mouse listener to this graphical object.
- */
-
-/* Inherited method: removeMouseListener(listener) */
-/**
- * @inherited GObject#void removeMouseListener(MouseListener listener)
- * Removes a mouse listener from this graphical object.
- */
-
-/* Inherited method: addMouseMotionListener(listener) */
-/**
- * @inherited GObject#void addMouseMotionListener(MouseMotionListener listener)
- * Adds a mouse motion listener to this graphical object.
- */
-
-/* Inherited method: removeMouseMotionListener(listener) */
-/**
- * @inherited GObject#void removeMouseMotionListener(MouseMotionListener listener)
- * Removes a mouse motion listener from this graphical object.
- */
-
-/* Protected method: repaint() */
     /**
      * Overrides <code>repaint</code> in <code>GObject</code> to invalidate the
      * cached polygon.
      * @noshow
      */
+    @Override
     public void repaint() {
         cacheValid = false;
         super.repaint();
     }
 
-/* Protected method: markAsComplete() */
     /**
      * Calling this method makes it illegal to add or remove vertices from the
      * polygon.  Subclasses can invoke this method to protect the integrity of
      * the structure from changes by the client.
      */
-    protected void markAsComplete() {
+    protected GPolygon markAsComplete() {
         complete = true;
+        return this;
     }
 
 /* Protected method: clear() */
@@ -485,7 +317,7 @@ public class GPolygon extends GObject implements GFillable, GScalable {
      * scale and rotation factors to the their default values.  Subclasses can
      * use this method to reconstruct a polygon.
      */
-    protected void clear() {
+    protected GPolygon clear() {
         if (complete) {
             throw new IllegalStateException("You can't clear a GPolygon that has been "
                     + "marked as complete.");
@@ -495,23 +327,18 @@ public class GPolygon extends GObject implements GFillable, GScalable {
         xScale = 1.0f;
         yScale = 1.0f;
         cacheValid = false;
+        return this;
     }
 
-/* Serial version UID */
-    /**
-     * The serialization code for this class.  This value should be incremented
-     * whenever you change the structure of this class in an incompatible way,
-     * typically by adding a new instance variable.
-     */
-    static final long serialVersionUID = 1L;
-
-    /* Package class: VertexList */
     /**
      * The <code>VertexList</code> class represents a list of vertices.
      */
     private static class VertexList implements Serializable {
+        // private fields
+        private ArrayList<GPoint> vertices;
+        private float cx;
+        private float cy;
 
-/* Constructor: new VertexList() */
         /**
          * Creates a new <code>VertexList</code> with no elements.
          */
@@ -521,7 +348,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
             cy = 0;
         }
 
-/* Constructor: new VertexList(oldList) */
         /**
          * Creates a new <code>VertexList</code> that is a clone of the old one.
          */
@@ -532,7 +358,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
             }
         }
 
-/* Method: addVertex(x, y) */
         /**
          * Adds the specified vertex to the end of the list.
          */
@@ -542,7 +367,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
             vertices.add(new GPoint(cx, cy));
         }
 
-/* Method: addEdge(dx, dy) */
         /**
          * Adds the specified edge to the end of the list.
          */
@@ -552,7 +376,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
             vertices.add(new GPoint(cx, cy));
         }
 
-/* Method: addArc(arcWidth, arcHeight, start, sweep) */
         /**
          * Adds a series of edges to the polygon that simulates the arc specified by
          * the parameters.  The <i>x</i> and <i>y</i> parameters for the arc bounding
@@ -579,7 +402,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
             }
         }
 
-/* Method: add(array) */
         /**
          * Adds copies of the points to the end of the vertex list.
          */
@@ -596,7 +418,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
             return vertices.get(index);
         }
 
-/* Method: remove(vertex) */
         /**
          * Removes the specified vertex from the list.
          */
@@ -604,7 +425,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
             vertices.remove(vertex);
         }
 
-/* Method: clear() */
         /**
          * Removes all vertices from the list.
          */
@@ -612,7 +432,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
             vertices.clear();
         }
 
-/* Method: size() */
         /**
          * Returns the number of vertices in the list.
          */
@@ -620,7 +439,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
             return vertices.size();
         }
 
-/* Method: getCurrentPoint() */
         /**
          * Returns the coordinates of the last vertex added to the polygon, or <code>null</code>
          * if the polygon is empty.
@@ -629,7 +447,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
             return (vertices.size() == 0) ? null : new GPoint(cx, cy);
         }
 
-/* Method: getBounds(x0, y0, xScale, yScale, rotation) */
         /**
          * Returns the bounding box for the polygon.
          */
@@ -663,7 +480,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
             return new GRectangle(xMin, yMin, xMax - xMin, yMax - yMin);
         }
 
-/* Method: contains(x, y) */
         /**
          * Returns <code>true</code> if the polygon described by this
          * <code>VertexList</code> contains the specified point.
@@ -683,7 +499,6 @@ public class GPolygon extends GObject implements GFillable, GScalable {
             return isContained;
         }
 
-/* Method: recenter() */
         /**
          * Recalculates the vertices of the polygon so that they are positioned
          * relative to the geometric center of the object.  This method allows
@@ -718,10 +533,5 @@ public class GPolygon extends GObject implements GFillable, GScalable {
                 vertex.translate(-xc, -yc);
             }
         }
-
-        /* Private instance variables */
-        private ArrayList<GPoint> vertices;
-        private float cx;
-        private float cy;
     }
 }

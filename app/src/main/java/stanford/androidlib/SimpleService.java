@@ -1,6 +1,5 @@
 package stanford.androidlib;
 
-import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
@@ -8,7 +7,6 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import stanford.androidlib.util.IntentUtils;
@@ -28,7 +26,8 @@ import stanford.androidlib.util.IntentUtils;
  * override the {@code onStartInThread} method which will be run by our {@code onStartCommand}
  * in its own thread for each request.
  */
-public abstract class SimpleService extends Service {
+public abstract class SimpleService extends Service
+        implements SimpleTask.TaskExecutor {
     private HandlerThread hThread;
 
     /**
@@ -67,7 +66,6 @@ public abstract class SimpleService extends Service {
 
     /**
      * Override this method to handle each incoming request.
-     * @param intent
      */
     public void onStartInThread(Intent intent) {
         // empty; override me

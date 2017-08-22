@@ -36,6 +36,17 @@ public final class SimpleLocalization {
     }
 
     /**
+     * Returns a singleton SimpleLocalization instance bound to the given view's context.
+     */
+    public static SimpleLocalization with(View context) {
+        Context newContext = context.getContext();
+        if (SimpleLocalization.context == null || newContext != null) {
+            SimpleLocalization.context = newContext;
+        }
+        return INSTANCE;
+    }
+
+    /**
      * Returns true if this app is running in a Left-to-Right (LTR) layout.
      */
     public boolean isLTR() {

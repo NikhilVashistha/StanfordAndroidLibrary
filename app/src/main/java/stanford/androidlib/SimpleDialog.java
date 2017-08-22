@@ -40,7 +40,7 @@ public final class SimpleDialog {
     private static final SimpleDialog INSTANCE = new SimpleDialog();
 
     /**
-     * Returns a singleton SimpleMedia instance bound to the given context.
+     * Returns a singleton SimpleDialog instance bound to the given context.
      */
     public static SimpleDialog with(Context context) {
         SimpleDialog.context = context;
@@ -50,6 +50,13 @@ public final class SimpleDialog {
             throw new IllegalArgumentException("context passed must be a SimpleActivity or a class that implements the DialogListener interface");
         }
         return INSTANCE;
+    }
+
+    /**
+     * Returns a singleton SimpleDialog instance bound to the given view's context.
+     */
+    public static SimpleDialog with(View context) {
+        return with(context.getContext());
     }
 
     /**
@@ -178,8 +185,20 @@ public final class SimpleDialog {
      * will be called to notify you when they press OK.
      */
     public AlertDialog showAlertDialog(String message) {
+        return showAlertDialog(message, /* title */ "");
+    }
+
+    /**
+     * Shows an alert dialog to display a message to the user.
+     * When the user is done with the dialog, your activity's onAlertDialogClose method
+     * will be called to notify you when they press OK.
+     */
+    public AlertDialog showAlertDialog(String message, String title) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(String.valueOf(message));
+        if (title != null && !title.isEmpty()) {
+            builder.setTitle(title);
+        }
         builder.setPositiveButton(dialogSettings.getOkText(), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 listener.onAlertDialogClose((AlertDialog) dialog);
@@ -203,6 +222,17 @@ public final class SimpleDialog {
     }
 
     /**
+     * Shows an alert dialog to display a message to the user.
+     * When the user is done with the dialog, your activity's onAlertDialogClose method
+     * will be called to notify you when they press OK.
+     */
+    public AlertDialog showAlertDialog(@StringRes int messageID, @StringRes int titleID) {
+        String message = context.getResources().getString(messageID);
+        String title = context.getResources().getString(titleID);
+        return showAlertDialog(message, title);
+    }
+
+    /**
      * Shows an confirm dialog to ask a yes/no question to the user.
      * When the user is done with the dialog, your activity's onAlertDialogClose method
      * will be called to notify you if they press Yes, or onAlertDialogCancel if they press No.
@@ -219,11 +249,25 @@ public final class SimpleDialog {
     public AlertDialog showConfirmDialog(String message,
                                          String positiveButtonText,
                                          String negativeButtonText) {
+        return showConfirmDialog(message, positiveButtonText, negativeButtonText, /* title */ "");
+    }
+    /**
+     * Shows an confirm dialog to ask a yes/no question to the user.
+     * When the user is done with the dialog, your activity's onAlertDialogClose method
+     * will be called to notify you if they press Yes, or onAlertDialogCancel if they press No.
+     */
+    public AlertDialog showConfirmDialog(String message,
+                                         String positiveButtonText,
+                                         String negativeButtonText,
+                                         String title) {
         positiveButtonText = dialogSettings.getYesText(positiveButtonText);
         negativeButtonText = dialogSettings.getNoText(negativeButtonText);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(message);
+        builder.setMessage(String.valueOf(message));
+        if (title != null && !title.isEmpty()) {
+            builder.setTitle(title);
+        }
         builder.setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 Button button = ((AlertDialog) dialog).getButton(id);
@@ -255,10 +299,23 @@ public final class SimpleDialog {
     public AlertDialog showConfirmDialog(@StringRes int messageID,
                                          @StringRes int positiveButtonTextID,
                                          @StringRes int negativeButtonTextID) {
+        return showConfirmDialog(messageID, positiveButtonTextID, negativeButtonTextID, /* titleID */ -1);
+    }
+
+    /**
+     * Shows an confirm dialog to ask a yes/no question to the user.
+     * When the user is done with the dialog, your activity's onAlertDialogClose method
+     * will be called to notify you if they press Yes, or onDialogNegativeClick if they press No.
+     */
+    public AlertDialog showConfirmDialog(@StringRes int messageID,
+                                         @StringRes int positiveButtonTextID,
+                                         @StringRes int negativeButtonTextID,
+                                         @StringRes int titleID) {
         String message = messageID > 0 ? context.getResources().getString(messageID) : null;
         String positiveButtonText = positiveButtonTextID > 0 ? context.getResources().getString(positiveButtonTextID) : null;
         String negativeButtonText = negativeButtonTextID > 0 ? context.getResources().getString(negativeButtonTextID) : null;
-        return showConfirmDialog(message, positiveButtonText, negativeButtonText);
+        String title = titleID > 0 ? context.getResources().getString(titleID) : null;
+        return showConfirmDialog(message, positiveButtonText, negativeButtonText, title);
     }
 
     /**
@@ -276,8 +333,20 @@ public final class SimpleDialog {
      * will be called, passing the string that was typed by the user.
      */
     public AlertDialog showInputDialog(String message, String positiveButtonText) {
+        return showInputDialog(message, positiveButtonText, /* title */ "");
+    }
+
+    /**
+     * Shows an input dialog to prompt the user for a single text input string.
+     * When the user is done with the dialog, your activity's onInputDialogClose method
+     * will be called, passing the string that was typed by the user.
+     */
+    public AlertDialog showInputDialog(String message, String positiveButtonText, String title) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message);
+        if (title != null && !title.isEmpty()) {
+            builder.setTitle(title);
+        }
 
         // hack so that inner key listener can find the OK button later
         final Button[] buttons = new Button[1];
@@ -325,9 +394,21 @@ public final class SimpleDialog {
      */
     public AlertDialog showInputDialog(@StringRes int messageID,
                                        @StringRes int positiveButtonTextID) {
+        return showInputDialog(messageID, positiveButtonTextID, /* titleID */ -1);
+    }
+
+    /**
+     * Shows an input dialog to prompt the user for a single text input string.
+     * When the user is done with the dialog, your activity's onInputDialogClose method
+     * will be called, passing the string that was typed by the user.
+     */
+    public AlertDialog showInputDialog(@StringRes int messageID,
+                                       @StringRes int positiveButtonTextID,
+                                       @StringRes int titleID) {
         String message = messageID > 0 ? context.getResources().getString(messageID) : null;
         String positiveButtonText = positiveButtonTextID > 0 ? context.getResources().getString(positiveButtonTextID) : null;
-        return showInputDialog(message, positiveButtonText);
+        String title = titleID > 0 ? context.getResources().getString(titleID) : null;
+        return showInputDialog(message, positiveButtonText, title);
     }
 
     /**
@@ -357,7 +438,7 @@ public final class SimpleDialog {
     private AlertDialog __showMultiInputDialogHelper(String message, final String... prompts) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         if (message != null && !message.isEmpty()) {
-            builder.setMessage(message);
+            builder.setTitle(message);
         }
         LinearLayout layout = new TableLayout(context);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -418,8 +499,49 @@ public final class SimpleDialog {
      * When the user is done with the dialog, your activity's onInputDialogClose method
      * will be called, passing the string that was typed by the user.
      */
+    public AlertDialog showListInputDialog(@ArrayRes int itemsID) {
+        String[] items = context.getResources().getStringArray(itemsID);
+        return showListInputDialog(items);
+    }
+
+    /**
+     * Shows a list input dialog to allow the user to tap one of several choices.
+     * When the user is done with the dialog, your activity's onInputDialogClose method
+     * will be called, passing the string that was typed by the user.
+     */
+    public AlertDialog showListInputDialog(String message, @ArrayRes int itemsID) {
+        String[] items = context.getResources().getStringArray(itemsID);
+        return showListInputDialogHelper(message, items);
+    }
+
+    /**
+     * Shows a list input dialog to allow the user to tap one of several choices.
+     * When the user is done with the dialog, your activity's onInputDialogClose method
+     * will be called, passing the string that was typed by the user.
+     */
     public AlertDialog showListInputDialog(final String... items) {
+        return showListInputDialogHelper(/* message */ "", items);
+    }
+
+    /**
+     * Shows a list input dialog to allow the user to tap one of several choices.
+     * When the user is done with the dialog, your activity's onInputDialogClose method
+     * will be called, passing the string that was typed by the user.
+     */
+    public AlertDialog showListInputDialogWithMessage(final String message, final String... items) {
+        return showListInputDialogHelper(message, items);
+    }
+
+    /**
+     * Shows a list input dialog to allow the user to tap one of several choices.
+     * When the user is done with the dialog, your activity's onInputDialogClose method
+     * will be called, passing the string that was typed by the user.
+     */
+    private AlertDialog showListInputDialogHelper(final String message, final String... items) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        if (message != null && !message.isEmpty()) {
+            builder.setTitle(message);
+        }
         builder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int index) {
                 listener.onInputDialogClose((AlertDialog) dialog, items[index]);
@@ -429,16 +551,6 @@ public final class SimpleDialog {
         AlertDialog dialog = builder.create();
         dialog.show();
         return dialog;
-    }
-
-    /**
-     * Shows a list input dialog to allow the user to tap one of several choices.
-     * When the user is done with the dialog, your activity's onInputDialogClose method
-     * will be called, passing the string that was typed by the user.
-     */
-    public AlertDialog showListInputDialog(@ArrayRes int itemsID) {
-        String[] items = context.getResources().getStringArray(itemsID);
-        return showListInputDialog(items);
     }
 
     /**
@@ -462,11 +574,40 @@ public final class SimpleDialog {
      */
     public AlertDialog showCheckboxInputDialog(final boolean[] checkedItems,
                                                final String... items) {
+        return showCheckboxInputDialog(/* message */ "", checkedItems, items);
+    }
+
+    /**
+     * Shows a multiple-checkbox dialog to prompt the user to check/uncheck any subset
+     * of a group of multiple checkbox input items.
+     * When the user is done with the dialog, your activity's onMultiInputDialogClose method
+     * will be called, passing an array of item strings that were checked by the user.
+     * No items will be initially checked.
+     */
+    public AlertDialog showCheckboxInputDialogWithMessage(final String message, final String... items) {
+        final boolean[] checkedItems = new boolean[items.length];
+        return showCheckboxInputDialog(message, checkedItems, items);
+    }
+
+    /**
+     * Shows a multiple-checkbox dialog to prompt the user to check/uncheck any subset
+     * of a group of multiple checkbox input items.
+     * When the user is done with the dialog, your activity's onMultiInputDialogClose method
+     * will be called, passing an array of item strings that were checked by the user.
+     * Pass an array of booleans to indicate which items are initially checked, if any.
+     */
+    public AlertDialog showCheckboxInputDialog(final String message,
+                                               final boolean[] checkedItems,
+                                               final String... items) {
+        final boolean[] checkedItemsToUse = checkedItems == null ? new boolean[items.length] : checkedItems;
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMultiChoiceItems(items, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+        if (message != null && !message.isEmpty()) {
+            builder.setTitle(message);
+        }
+        builder.setMultiChoiceItems(items, checkedItemsToUse, new DialogInterface.OnMultiChoiceClickListener() {
             public void onClick(DialogInterface dialog, int index, boolean isChecked) {
-                if (index >= 0 && index < checkedItems.length) {
-                    checkedItems[index] = isChecked;
+                if (index >= 0 && index < checkedItemsToUse.length) {
+                    checkedItemsToUse[index] = isChecked;
                 }
             }
         });
@@ -476,15 +617,15 @@ public final class SimpleDialog {
             public void onClick(DialogInterface dialog, int which) {
                 // build an array of all items that are checked
                 int checkedCount = 0;
-                for (boolean bool : checkedItems) {
+                for (boolean bool : checkedItemsToUse) {
                     if (bool) {
                         checkedCount++;
                     }
                 }
                 String[] checkedItemStrings = new String[checkedCount];
                 int index = 0;
-                for (int i = 0; i < checkedItems.length; i++) {
-                    if (checkedItems[i]) {
+                for (int i = 0; i < checkedItemsToUse.length; i++) {
+                    if (checkedItemsToUse[i]) {
                         checkedItemStrings[index] = items[i];
                         index++;
                     }
@@ -522,6 +663,31 @@ public final class SimpleDialog {
     }
 
     /**
+     * Shows a multiple-checkbox dialog to prompt the user to check/uncheck any subset
+     * of a group of multiple checkbox input items.
+     * When the user is done with the dialog, your activity's onMultiInputDialogClose method
+     * will be called, passing an array of item strings that were checked by the user.
+     */
+    public AlertDialog showCheckboxInputDialog(@StringRes int messageID, @ArrayRes int itemsID) {
+        String message = context.getResources().getString(messageID);
+        String[] items = context.getResources().getStringArray(itemsID);
+        return showCheckboxInputDialog(message, /* checkedItems */ null, items);
+    }
+
+    /**
+     * Shows a multiple-checkbox dialog to prompt the user to check/uncheck any subset
+     * of a group of multiple checkbox input items.
+     * When the user is done with the dialog, your activity's onMultiInputDialogClose method
+     * will be called, passing an array of item strings that were checked by the user.
+     * Pass an array of booleans to indicate which items are initially checked, if any.
+     */
+    public AlertDialog showCheckboxInputDialog(@StringRes int messageID, boolean[] checkedItems, @ArrayRes int itemsID) {
+        String message = context.getResources().getString(messageID);
+        String[] items = context.getResources().getStringArray(itemsID);
+        return showCheckboxInputDialog(message, checkedItems, items);
+    }
+
+    /**
      * Shows a radio button dialog to prompt the user to check exactly one
      * of a group of multiple radio button input items.
      * When the user is done with the dialog, your activity's onInputDialogClose method
@@ -536,10 +702,34 @@ public final class SimpleDialog {
      * of a group of multiple radio button input items.
      * When the user is done with the dialog, your activity's onInputDialogClose method
      * will be called, passing the item string that was checked by the user.
+     */
+    public AlertDialog showRadioInputDialogWithMessage(String message, String... items) {
+        return showRadioInputDialog(message, /* checkedIndex */ -1, items);
+    }
+
+    /**
+     * Shows a radio button dialog to prompt the user to check exactly one
+     * of a group of multiple radio button input items.
+     * When the user is done with the dialog, your activity's onInputDialogClose method
+     * will be called, passing the item string that was checked by the user.
      * Pass an integer to represent the index that should be initially checked.
      */
     public AlertDialog showRadioInputDialog(int checkedIndex, final String... items) {
+        return showRadioInputDialog(/* message */ "", checkedIndex, items);
+    }
+
+    /**
+     * Shows a radio button dialog to prompt the user to check exactly one
+     * of a group of multiple radio button input items.
+     * When the user is done with the dialog, your activity's onInputDialogClose method
+     * will be called, passing the item string that was checked by the user.
+     * Pass an integer to represent the index that should be initially checked.
+     */
+    public AlertDialog showRadioInputDialog(String message, int checkedIndex, final String... items) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        if (message != null && !message.isEmpty()) {
+            builder.setTitle(message);
+        }
         if (checkedIndex >= items.length) {
             checkedIndex = items.length - 1;
         }
@@ -582,11 +772,34 @@ public final class SimpleDialog {
      * of a group of multiple radio button input items.
      * When the user is done with the dialog, your activity's onInputDialogClose method
      * will be called, passing the item string that was checked by the user.
+     */
+    public AlertDialog showRadioInputDialogWithMessage(@StringRes int messageID, @ArrayRes int itemsID) {
+        return showRadioInputDialog(messageID, /* checkedIndex */ 0, itemsID);
+    }
+
+    /**
+     * Shows a radio button dialog to prompt the user to check exactly one
+     * of a group of multiple radio button input items.
+     * When the user is done with the dialog, your activity's onInputDialogClose method
+     * will be called, passing the item string that was checked by the user.
      * Pass an integer to represent the index that should be initially checked.
      */
     public AlertDialog showRadioInputDialog(int checkedIndex, @ArrayRes int itemsID) {
         String[] items = context.getResources().getStringArray(itemsID);
         return showRadioInputDialog(checkedIndex, items);
+    }
+
+    /**
+     * Shows a radio button dialog to prompt the user to check exactly one
+     * of a group of multiple radio button input items.
+     * When the user is done with the dialog, your activity's onInputDialogClose method
+     * will be called, passing the item string that was checked by the user.
+     * Pass an integer to represent the index that should be initially checked.
+     */
+    public AlertDialog showRadioInputDialog(@StringRes int messageID, int checkedIndex, @ArrayRes int itemsID) {
+        String message = context.getResources().getString(messageID);
+        String[] items = context.getResources().getStringArray(itemsID);
+        return showRadioInputDialog(message, checkedIndex, items);
     }
 
     /**
